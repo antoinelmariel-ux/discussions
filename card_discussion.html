@@ -97,8 +97,32 @@
       width:350px;height:200px;perspective:1000px;
       transform:translateX(-50px);
       opacity:0;transition:all .5s ease;
+      position:relative;
     }
     .card-container.visible{ opacity:1; transform:translateX(0); }
+
+    .expert-button{
+      position:absolute;
+      top:-18px;
+      right:-18px;
+      width:46px;
+      height:46px;
+      border-radius:50%;
+      border:none;
+      background:var(--accent-grad);
+      color:var(--text-inverse);
+      font-size:1.6rem;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      box-shadow:0 10px 25px rgba(240,138,36,0.35);
+      cursor:pointer;
+      transition:transform .3s ease, box-shadow .3s ease;
+      z-index:5;
+    }
+    .expert-button:hover:not([disabled]){ transform:translateY(-4px) scale(1.05); box-shadow:0 12px 30px rgba(240,138,36,0.45); }
+    .expert-button:active:not([disabled]){ transform:translateY(0) scale(1); }
+    .expert-button[disabled]{ opacity:0.4; cursor:not-allowed; box-shadow:none; }
 
     .discussion-card{
       width:100%;height:100%;position:relative;
@@ -210,6 +234,47 @@
       gap:20px;
     }
 
+    .expert-modal-content{
+      max-width:640px;
+    }
+
+    .expert-situation,
+    .expert-advice{
+      background:var(--surface-muted);
+      border-radius:14px;
+      padding:18px;
+      border:1px solid rgba(0,133,124,0.2);
+      box-shadow:0 6px 18px rgba(11,49,74,0.08);
+    }
+
+    .expert-section-title{
+      font-size:.9rem;
+      text-transform:uppercase;
+      letter-spacing:1.5px;
+      font-weight:700;
+      color:var(--primary-1);
+      margin-bottom:10px;
+    }
+
+    .expert-category{
+      font-weight:700;
+      margin-bottom:6px;
+      color:var(--primary-2);
+    }
+
+    .expert-situation-text{
+      font-size:1rem;
+      line-height:1.6;
+    }
+
+    .expert-advice-text p{
+      margin-bottom:12px;
+      line-height:1.65;
+      text-align:left;
+    }
+
+    .expert-advice-text p:last-child{ margin-bottom:0; }
+
     .modal-title{
       font-size:1.6rem;
       font-weight:700;
@@ -311,6 +376,7 @@
 
     <!-- Carte de discussion avec effet flip -->
     <div class="card-container" id="cardContainer">
+      <button class="expert-button" id="expertAdviceBtn" type="button" title="Voir les recommandations des experts" aria-label="Afficher les recommandations des experts">💡</button>
       <div class="discussion-card" id="discussionCard">
         <!-- Face avant (dos de carte) -->
         <div class="card-face card-front">
@@ -352,80 +418,217 @@
     </div>
   </div>
 
+  <div class="modal-overlay" id="expertAdviceModal" aria-hidden="true">
+    <div class="modal-content expert-modal-content" role="dialog" aria-modal="true" aria-labelledby="expertAdviceTitle">
+      <div class="expert-situation">
+        <div class="expert-section-title">Situation</div>
+        <div class="expert-category" id="expertAdviceCategory"></div>
+        <p class="expert-situation-text" id="expertAdviceSituation"></p>
+      </div>
+      <div class="expert-advice">
+        <div class="expert-section-title" id="expertAdviceTitle">Recommandations des experts</div>
+        <div class="expert-advice-text" id="expertAdviceContent"></div>
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-primary" id="closeExpertAdvice" type="button">Fermer</button>
+      </div>
+    </div>
+  </div>
+
   <!-- Données XML intégrées -->
   <script type="text/xml" id="cardsData">
     <cards>
       <card category="Gestion des émotions">
         <content>Ton enfant de 3 ans se met à hurler parce que tu refuses un deuxième biscuit. Quelle première phrase pourrais-tu lui dire pour valider son émotion tout en gardant la limite ?</content>
+        <advice>
+          Commence par respirer avec lui et mets-toi à sa hauteur pour maintenir la connexion. Décris ce que tu observes : « Tu es très déçu parce que je dis non au biscuit » puis laisse-lui quelques secondes pour décharger sans jugement.
+
+          Rappelle ensuite la limite calmement en expliquant le pourquoi : « Notre corps a besoin de faire une pause avec le sucre ». Propose une alternative claire comme un verre d’eau ou un jeu de transition afin qu’il sente qu’il n’est pas laissé seul avec sa frustration.
+        </advice>
       </card>
       <card category="Coopération quotidienne">
         <content>Au moment de se brosser les dents, ton enfant se cache sous la table en criant « Non ! ». Comment pourrais-tu reformuler la consigne pour créer une alliance et avancer ensemble ?</content>
+        <advice>
+          Utilise un ton ludique et descriptif : « J’ai deux brosses super-héros qui cherchent un volontaire, laquelle choisissons-nous ? ». Cette reformulation réintroduit le jeu et lui permet de se sentir acteur plutôt qu’opposé.
+
+          Offre un micro-choix pour restaurer son sentiment de contrôle : « Tu préfères que je commence par les dents du haut ou du bas ? ». En l’invitant dans la tâche, tu maintiens la limite tout en nourrissant l’alliance.
+        </advice>
       </card>
       <card category="Frustration et apprentissages">
         <content>Après avoir perdu à un jeu de société, ton enfant renverse le plateau. Quelle invitation à la réflexion pourrais-tu lui proposer pour l’aider à nommer sa frustration ?</content>
+        <advice>
+          Valide d’abord son vécu avant de chercher une solution : « Tu aurais aimé gagner et c’est dur quand la partie s’arrête comme ça ». Reste près de lui physiquement pour qu’il sente que tu accueilles son émotion.
+
+          Quand l’intensité baisse, propose une question ouverte : « Qu’est-ce qui t’aiderait la prochaine fois quand tu sens la colère arriver ? ». Encourage-le à imaginer une stratégie concrète (respirer, demander une pause, serrer un coussin) et co-créez un plan pour la prochaine partie.
+        </advice>
       </card>
       <card category="Rivalités fraternelles">
         <content>Deux frères se disputent la même peluche et commencent à se pousser. Comment pourrais-tu intervenir pour reconnaître les besoins de chacun avant de chercher une solution ?</content>
+        <advice>
+          Stoppe le geste en posant une main rassurante entre eux et rappelle la règle de sécurité : « Je vois deux enfants qui veulent la même peluche, et je ne laisserai personne se faire mal ». Parle lentement pour inviter tout le monde à ralentir.
+
+          Donne la parole à tour de rôle : « J’écoute d’abord Paul, puis Léa ». Reformule leurs besoins (jouer, être rassuré, avoir un tour) puis sollicite leur créativité : « Quelles idées avez-vous pour que chacun soit satisfait ? ». Cette médiation les aide à apprendre la coopération plutôt que l’arbitrage automatique.
+        </advice>
       </card>
       <card category="Rituels du soir">
         <content>À l’heure du coucher, ton enfant réclame encore une histoire et dit qu’il n’est pas fatigué. Quelle routine apaisante pourrais-tu co-construire pour sécuriser la transition vers le sommeil ?</content>
+        <advice>
+          Annonce la fin de journée avec un rituel prévisible : « Dans cinq minutes, nous passerons en mode dodo ». Utilise des repères sensoriels constants (lampe douce, musique calme) pour préparer le corps à ralentir.
+
+          Co-créez une séquence en trois temps : moment de connexion (câlin, mini jeu), histoire courte, puis rituel autonome (respiration, massage des mains). En lui donnant un rôle actif dans cette routine, tu facilites l’acceptation de la limite tout en nourrissant la sécurité.
+        </advice>
       </card>
       <card category="Limites bienveillantes">
         <content>Ton enfant tape son parent quand la frustration monte. Quelle formulation claire et ferme, mais reliée, peux-tu utiliser pour rappeler la règle et proposer une alternative ?</content>
+        <advice>
+          Garde un ton posé et rapproche-toi sans agressivité : « Je vois que tu es très en colère, et je ne te laisserai pas taper ». Nomme ce que tu protèges (ton corps, le sien, la relation) pour que la règle fasse sens.
+
+          Propose immédiatement un geste de substitution : « Tu peux serrer ce coussin ou taper tes pieds par terre pour dire ta colère ». Reste à proximité pour l’aider à traverser l’émotion, puis débriefe plus tard quand tout le monde est revenu au calme.
+        </advice>
       </card>
       <card category="Autonomie accompagnée">
         <content>Il refuse de s’habiller seul mais rejette ton aide. Quel choix limité inspiré de l’éducation positive pourrais-tu offrir pour qu’il se sente compétent ?</content>
+        <advice>
+          Valide son besoin d’autonomie : « Tu aimerais y arriver tout seul et en même temps c’est difficile ce matin ». Évite d’imposer ton rythme immédiatement, offre-lui plutôt un espace de réussite progressive.
+
+          Propose deux options gagnantes : « Tu choisis de mettre le tee-shirt et je t’aide pour le pantalon, ou l’inverse ». En explicitant que vous formez une équipe, il perçoit ton soutien sans se sentir envahi.
+        </advice>
       </card>
       <card category="Transitions douces">
         <content>Au parc, il est l’heure de partir mais ton enfant crie qu’il veut rester. Quelle stratégie d’anticipation ou de fermeture positive pourrais-tu proposer pour respecter le cadre sans rupture brutale ?</content>
+        <advice>
+          Préviens quelques minutes avant le départ avec un signal clair : « Encore deux tours de toboggan et nous partons ». Laisse-le choisir comment vivre ces deux tours pour renforcer son sentiment de maîtrise.
+
+          À l’heure dite, invite-le à un rituel de clôture : remercier le parc, saluer un copain ou prendre une photo mentale. Ensuite, propose une perspective agréable pour la suite (choisir la musique de la voiture, raconter son moment préféré). Cette continuité l’aide à changer d’activité sans se sentir arraché.
+        </advice>
       </card>
       <card category="Communication émotionnelle">
         <content>Ton enfant te dit « je te déteste » après un refus. Quelle réponse pourrait témoigner de ton ancrage et ouvrir un dialogue sur ce qu’il ressent vraiment ?</content>
+        <advice>
+          Reçois ses mots sans les prendre personnellement : « Tu es tellement fâché que tu dis des mots très forts ». Ta stabilité lui montre que l’émotion peut être exprimée sans que la relation se brise.
+
+          Invite-le à préciser ce qui se passe dedans : « Qu’est-ce qui te pique autant ? » ou « De quoi aurais-tu besoin maintenant ? ». Lorsque le calme revient, explique que toutes les émotions sont bienvenues mais que vous cherchez ensemble des mots qui respectent chacun.
+        </advice>
       </card>
       <card category="Empathie sociale">
         <content>Il revient de l’école triste car un camarade ne veut plus jouer avec lui. Comment l’aider à accueillir sa peine tout en explorant ce dont il a besoin pour se sentir soutenu ?</content>
+        <advice>
+          Accueille sa tristesse avant de chercher une solution : « C’est douloureux quand un ami s’éloigne, je suis là ». Encourage-le à raconter la scène pour qu’il puisse la digérer émotionnellement.
+
+          Demande-lui ce qui l’aiderait : un câlin, du temps seul, ou réfléchir à une invitation. Ensuite, explore ensemble différentes options (parler au camarade, proposer un autre jeu, demander de l’aide à l’enseignant) pour qu’il retrouve du pouvoir d’agir.
+        </advice>
       </card>
       <card category="Réparation et responsabilité">
         <content>Ton enfant casse volontairement le dessin de sa sœur. Quelle conversation pourrais-tu amorcer pour l’accompagner vers la réparation plutôt que la punition ?</content>
+        <advice>
+          Mets en pause l’élan punitif et décris factuellement : « Le dessin de ta sœur est déchiré et elle est très déçue ». Vérifie ce qu’il se passait pour lui juste avant l’acte afin de comprendre l’émotion sous-jacente.
+
+          Parlez ensuite de réparation : « Que peux-tu faire pour prendre soin de sa sœur et de votre lien ? ». Laisse-le proposer (recoller, refaire un dessin, offrir un temps ensemble) et soutiens-le dans la mise en œuvre pour qu’il expérimente la responsabilité plutôt que la honte.
+        </advice>
       </card>
       <card category="Participation aux tâches">
         <content>Chaque matin, il refuse de mettre son bol dans l’évier. Quelle manière ludique pourrais-tu co-créer pour transformer la consigne en responsabilité valorisante ?</content>
+        <advice>
+          Transforme la consigne en mission : « J’ai besoin du chef des bols pour lancer le lave-vaisselle, tu es partant ? ». Un rituel nommé (mission fusée, équipe service) valorise sa participation.
+
+          Instaurez ensemble un tableau de réussite relationnelle : au lieu de récompenses matérielles, propose un moment de partage quand la mission est remplie (danse du matin, tape dans la main). Il sent alors que sa contribution compte réellement pour la famille.
+        </advice>
       </card>
       <card category="Gestion de ta propre émotion">
         <content>Tu sens la colère monter après une succession de refus. Quelle phrase d’auto-coaching ou micro-pause peux-tu utiliser pour revenir dans une présence calme avant de répondre ?</content>
+        <advice>
+          Offre-toi une pause consciente : pose la main sur ton ventre et inspire profondément en te disant « Je peux ralentir et choisir ma réponse ». Ce micro-rituel signale à ton corps que tu reprends les commandes.
+
+          Si besoin, verbalise à ton enfant : « J’ai besoin de quelques secondes pour me calmer et revenir te voir ». En modélisant cette autorégulation, tu lui montres que prendre soin de ses émotions est une compétence à cultiver ensemble.
+        </advice>
       </card>
       <card category="Usage des écrans">
         <content>Ton enfant réclame « encore cinq minutes » de dessin animé et la négociation dégénère. Comment poser un cadre clair tout en proposant un plan de sortie qui respecte vos besoins ?</content>
+        <advice>
+          Clarifie le cadre à froid : définissez à l’avance le nombre d’épisodes ou le minuteur, et annonce l’approche de la fin quelques minutes avant l’arrêt effectif. Ainsi, l’enfant sait à quoi s’attendre.
+
+          Au moment de couper, propose une activité passerelle : choisir une chanson, préparer le goûter, bouger le corps. Rappelle que la limite est non négociable tout en reconnaissant sa frustration : « Tu voulais continuer, c’est difficile de s’arrêter, je suis avec toi ».
+        </advice>
       </card>
       <card category="Partenariat avec l’école">
         <content>L’enseignant signale que ton enfant coupe souvent la parole en classe. Quelle discussion à la maison pourrait encourager la conscience de soi et l’écoute active ?</content>
+        <advice>
+          Partage l’information sans accusation : « Ton enseignant m’a dit que tu as beaucoup d’idées et qu’il est parfois difficile de laisser les autres parler ». Invite-le à raconter sa version pour qu’il se sente entendu.
+
+          Explore avec lui des stratégies d’autorégulation : lever la main, compter jusqu’à trois, noter son idée. Envisagez ensemble un signe discret avec l’enseignant ou un carnet d’idées. En l’impliquant dans le plan, tu développes son sentiment de compétence sociale.
+        </advice>
       </card>
       <card category="Motivation intrinsèque">
         <content>Ton enfant rechigne à faire ses devoirs sans récompense. Comment pourrais-tu l’aider à identifier ce qui rend l’apprentissage important pour lui, plutôt que d’imposer une carotte ?</content>
+        <advice>
+          Relie la tâche à ses projets : « Qu’aimes-tu faire qui nécessite de savoir lire/compter ? ». Discuter de ses passions (bandes dessinées, expériences scientifiques, bricolage) donne du sens à l’effort.
+
+          Fractionnez le travail en objectifs atteignables avec des pauses choisies ensemble. Félicite le processus (persévérance, stratégies utilisées) plutôt que le résultat pour renforcer la fierté intrinsèque.
+        </advice>
       </card>
       <card category="Gestion du stress parental">
         <content>Tu te sens submergé par les pleurs du soir et crains de perdre patience. Quel rituel de connexion courte pourrais-tu instaurer pour nourrir le lien avant d’aborder le problème ?</content>
+        <advice>
+          Avant la crise, prévois un rituel ancre : cinq minutes de câlin silencieux, une chanson douce ou un massage des mains. Ce moment nourrit ta propre réserve émotionnelle et rassure ton enfant.
+
+          Identifie ensuite un co-régulateur possible (partenaire, proche, respiration guidée) pour t’accorder un relais lorsque la tension monte. Plus tu anticipes tes besoins de soutien, plus tu peux rester disponible sans te sacrifier.
+        </advice>
       </card>
       <card category="Courses au supermarché">
         <content>Au magasin, ton enfant se roule par terre pour obtenir une friandise. Quelle démarche en trois temps (connexion, limite, solution) pourrais-tu appliquer sur le moment ?</content>
+        <advice>
+          Connecte-toi d’abord à son vécu : mets-toi à sa hauteur et reconnais son envie « Tu la trouves très tentante cette friandise ! ». Le simple fait d’être vu apaise souvent l’intensité.
+
+          Réaffirme ensuite la limite : « Aujourd’hui nous n’achetons pas de bonbon » tout en proposant une alternative préparée (choisir le fruit du goûter, noter la friandise pour une autre occasion). Terminez par une action concrète pour le remettre en mouvement : porter la liste, aider à scanner un article, respirer ensemble.
+        </advice>
       </card>
       <card category="Questions existentielles">
         <content>Ton enfant de 5 ans te demande si Mamie va mourir bientôt. Comment répondre avec honnêteté et douceur tout en accueillant ses émotions ?</content>
+        <advice>
+          Réponds avec des mots simples et vrais : « Tout le monde meurt un jour, et nous ne savons pas quand. Pour l’instant Mamie est vivante et nous pouvons profiter d’elle ». Évite les promesses impossibles tout en restant rassurant.
+
+          Autorise ses émotions : « C’est normal que cette question fasse peur ou rende triste ». Propose-lui une action réconfortante (dessiner pour Mamie, regarder des photos, faire un câlin) afin de transformer l’angoisse en lien.
+        </advice>
       </card>
       <card category="Matins pressés">
         <content>Les départs à l’école sont chaotiques et se terminent en cris. Quelle stratégie de préparation la veille et de choix partagés pourrait fluidifier la routine ?</content>
+        <advice>
+          Préparez ensemble la veille : vêtements choisis, sac vérifié, tableau visuel des étapes du matin. Plus il participe à l’organisation, plus il se sent copropriétaire de la routine.
+
+          Le matin, donne des repères temporels et des choix limités (« Tu mets d’abord les chaussures ou tu finis ton petit-déjeuner ? »). Un minuteur visuel ou une playlist de durée fixe peut aussi servir de guide externe pour garder le calme.
+        </advice>
       </card>
       <card category="Arrivée du bébé">
         <content>Tu attends un nouveau-né et ton aîné s’inquiète de perdre sa place. Quelle conversation anticipatrice pourrais-tu avoir pour nourrir son besoin de sécurité et de contribution ?</content>
+        <advice>
+          Valide ses peurs : « Tu te demandes si j’aurai encore du temps pour toi, c’est important pour toi ». Partage concrètement comment vous passerez du temps ensemble, même après l’arrivée du bébé.
+
+          Implique-le dans la préparation avec des tâches valorisantes adaptées à son âge (choisir un vêtement, préparer une chanson). En lui confiant un rôle de grand allié, tu transformes l’inquiétude en sentiment de contribution.
+        </advice>
       </card>
       <card category="Apaiser un nourrisson">
         <content>Ton futur bébé pleure malgré le change et le repas. Quelles étapes d’observation et de co-régulation peux-tu prévoir pour rester présent et empathique ?</content>
+        <advice>
+          Passe en revue calmement les besoins de base (faim, fatigue, confort, contact). Observe son corps pour repérer des signes de tension ou de douleur et ajuste l’environnement (lumière, bruit, température).
+
+          Installe un rituel de co-régulation : peau à peau, bercements lents, respiration synchronisée. Chante doucement ou parle-lui pour l’ancrer dans ta présence. Même si les pleurs persistent, ton calme l’aide à sentir qu’il n’est pas seul.
+        </advice>
       </card>
       <card category="Réseau familial">
         <content>Un grand-parent minimise tes limites et offre des friandises en cachette. Comment poser une limite adulte à adulte tout en préservant la relation ?</content>
+        <advice>
+          Choisis un moment hors présence des enfants pour en parler. Utilise le « je » : « Quand les friandises sont données après que j’ai dit non, je me sens décrédibilisée et cela complique notre routine ».
+
+          Réaffirme votre objectif commun (le bien-être de l’enfant) et propose une alternative claire : « Si tu veux lui faire plaisir, nous pouvons prévoir ensemble un goûter spécial le mercredi ». Cette discussion posée rappelle le cadre tout en reconnaissant sa volonté d’être généreux.
+        </advice>
       </card>
       <card category="Moments de connexion">
         <content>Tu sens que les obligations prennent le dessus et que les moments de jeu se raréfient. Quelle micro-activité de connexion quotidienne pourrais-tu instaurer pour recharger le lien ?</content>
+        <advice>
+          Identifie un moment clé (réveil, retour d’école, coucher) et consacre-y un rituel court mais exclusif : cinq minutes de jeu du regard, une danse improvisée, un récit « le meilleur/le plus drôle de la journée ».
+
+          Note-le dans ton agenda comme un rendez-vous non négociable. En célébrant ce temps partagé, même bref, tu nourris la complicité et rends les obligations moins lourdes pour toute la famille.
+        </advice>
       </card>
     </cards>
   </script>
@@ -455,12 +658,20 @@
         this.selectAllEl = document.getElementById('selectAllThemes');
         this.applyThemeSelectionBtn = document.getElementById('applyThemeSelection');
         this.openThemeSelectorBtn = document.getElementById('openThemeSelector');
+        this.expertAdviceBtn = document.getElementById('expertAdviceBtn');
+        this.expertAdviceModalEl = document.getElementById('expertAdviceModal');
+        this.expertAdviceCategoryEl = document.getElementById('expertAdviceCategory');
+        this.expertAdviceSituationEl = document.getElementById('expertAdviceSituation');
+        this.expertAdviceContentEl = document.getElementById('expertAdviceContent');
+        this.closeExpertAdviceBtn = document.getElementById('closeExpertAdvice');
         this.activeCategories = new Set(this.cards.map(card=>card.category));
         this.updateCounter();
         this.createFloatingParticles();
         this.prepareWelcomeCard();
         this.populateThemeOptions();
         this.bindThemeSelectorEvents();
+        this.bindExpertAdviceEvents();
+        this.setExpertButtonState(false);
       }
 
       prepareWelcomeCard(){
@@ -468,6 +679,9 @@
         if(this.cardEl){ this.cardEl.classList.remove('flipping'); }
         if(this.cardCategoryEl){ this.cardCategoryEl.textContent = this.welcomeCard.category; }
         if(this.cardContentEl){ this.cardContentEl.textContent = this.welcomeCard.content; }
+        this.hideExpertAdvice();
+        this.clearExpertAdvicePanel();
+        this.setExpertButtonState(false);
       }
 
       loadCardsFromXML(){
@@ -475,10 +689,15 @@
         const parser = new DOMParser();
         const xmlDoc = parser.parseFromString(xmlData,'text/xml');
         const nodes = xmlDoc.querySelectorAll('card');
-        return Array.from(nodes).map(card=>({
-          category: card.getAttribute('category'),
-          content: card.querySelector('content').textContent.trim()
-        }));
+        return Array.from(nodes).map(card=>{
+          const contentNode = card.querySelector('content');
+          const adviceNode = card.querySelector('advice');
+          return {
+            category: card.getAttribute('category'),
+            content: contentNode ? contentNode.textContent.trim() : '',
+            advice: adviceNode ? adviceNode.textContent.trim() : ''
+          };
+        });
       }
 
       _takeRandomCard(){
@@ -502,7 +721,9 @@
         }
         this.animateDeck();
         this.currentCard = card;
+        this.hideExpertAdvice();
         this.prepareAndFlipCard(card);
+        this.setExpertButtonState(Boolean(card.advice));
         return card;
       }
 
@@ -513,6 +734,7 @@
       }
 
       prepareAndFlipCard(card){
+        this.hideExpertAdvice();
         if(this.cardEl.classList.contains('flipping')){
           this.cardEl.classList.remove('flipping');
           setTimeout(()=>{ this.updateCardContent(card); this.flipCard(); },400);
@@ -524,6 +746,7 @@
       updateCardContent(card){
         this.cardCategoryEl.textContent = card.category;
         this.cardContentEl.textContent = card.content;
+        this.clearExpertAdvicePanel();
       }
 
       flipCard(){
@@ -544,6 +767,7 @@
         this.usedCards=[];
         this.updateCounter();
         this.prepareWelcomeCard();
+        this.hideExpertAdvice();
       }
 
       showNoMoreCards(){
@@ -654,6 +878,67 @@
         this.updateCounter();
         this.prepareWelcomeCard();
         this.populateThemeOptions();
+      }
+
+      setExpertButtonState(enabled){
+        if(!this.expertAdviceBtn) return;
+        this.expertAdviceBtn.disabled = !enabled;
+        this.expertAdviceBtn.setAttribute('aria-disabled', String(!enabled));
+      }
+
+      clearExpertAdvicePanel(){
+        if(this.expertAdviceCategoryEl){ this.expertAdviceCategoryEl.textContent=''; }
+        if(this.expertAdviceSituationEl){ this.expertAdviceSituationEl.textContent=''; }
+        if(this.expertAdviceContentEl){ this.expertAdviceContentEl.innerHTML=''; }
+      }
+
+      bindExpertAdviceEvents(){
+        if(this.expertAdviceBtn){
+          this.expertAdviceBtn.addEventListener('click', ()=>{
+            if(!this.expertAdviceBtn.disabled){ this.showExpertAdvice(); }
+          });
+        }
+        if(this.closeExpertAdviceBtn){
+          this.closeExpertAdviceBtn.addEventListener('click', ()=> this.hideExpertAdvice());
+        }
+        if(this.expertAdviceModalEl){
+          this.expertAdviceModalEl.addEventListener('click', event=>{
+            if(event.target===this.expertAdviceModalEl){ this.hideExpertAdvice(); }
+          });
+        }
+      }
+
+      showExpertAdvice(){
+        if(!this.currentCard || !this.currentCard.advice || !this.expertAdviceModalEl) return;
+        this.populateExpertAdviceContent(this.currentCard);
+        this.expertAdviceModalEl.classList.add('visible');
+        this.expertAdviceModalEl.setAttribute('aria-hidden','false');
+      }
+
+      hideExpertAdvice(){
+        if(this.expertAdviceModalEl){
+          this.expertAdviceModalEl.classList.remove('visible');
+          this.expertAdviceModalEl.setAttribute('aria-hidden','true');
+        }
+      }
+
+      populateExpertAdviceContent(card){
+        if(!this.expertAdviceCategoryEl || !this.expertAdviceSituationEl || !this.expertAdviceContentEl) return;
+        this.expertAdviceCategoryEl.textContent = card.category;
+        this.expertAdviceSituationEl.textContent = card.content;
+        this.expertAdviceContentEl.innerHTML='';
+        const paragraphs = card.advice.split(/\n\s*\n/).map(text=>text.trim()).filter(text=>text.length>0);
+        if(paragraphs.length===0){
+          const fallback = document.createElement('p');
+          fallback.textContent = card.advice.trim();
+          this.expertAdviceContentEl.appendChild(fallback);
+          return;
+        }
+        paragraphs.forEach(text=>{
+          const p = document.createElement('p');
+          p.textContent = text;
+          this.expertAdviceContentEl.appendChild(p);
+        });
       }
 
       showThemeSelector(){
