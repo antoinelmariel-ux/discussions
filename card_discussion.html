@@ -282,24 +282,34 @@
         }));
       }
 
-      drawCard(){
-        if(this.availableCards.length===0){ this.showNoMoreCards(); return; }
-        this.animateDeck();
-        const i = Math.floor(Math.random()*this.availableCards.length);
-        this.currentCard = this.availableCards[i];
-        this.usedCards.push(this.currentCard);
-        this.availableCards.splice(i,1);
-        this.prepareAndFlipCard(this.currentCard);
+      _takeRandomCard(){
+        if(this.availableCards.length===0){
+          this.updateCounter();
+          return null;
+        }
+        const index = Math.floor(Math.random()*this.availableCards.length);
+        const card = this.availableCards[index];
+        this.usedCards.push(card);
+        this.availableCards.splice(index,1);
         this.updateCounter();
+        return card;
+      }
+
+      drawCard(){
+        const card = this._takeRandomCard();
+        if(!card){
+          this.showNoMoreCards();
+          return null;
+        }
+        this.animateDeck();
+        this.currentCard = card;
+        this.prepareAndFlipCard(card);
+        return card;
       }
 
       drawRandomCard(){
-        if(this.availableCards.length===0){ this.showNoMoreCards(); return null; }
-        const i = Math.floor(Math.random()*this.availableCards.length);
-        const card = this.availableCards[i];
-        this.usedCards.push(card);
-        this.availableCards.splice(i,1);
-        this.updateCounter();
+        const card = this._takeRandomCard();
+        if(!card){ this.showNoMoreCards(); return null; }
         return card;
       }
 
@@ -378,8 +388,7 @@
       document.getElementById('discussionCard').addEventListener('click', ()=>{
         const cardEl = document.getElementById('discussionCard');
         if(game.currentCard===game.welcomeCard && !cardEl.classList.contains('flipping')){
-          const newCard = game.drawRandomCard();
-          if(newCard){ game.currentCard=newCard; game.updateCardContent(newCard); game.flipCard(); }
+          game.drawCard();
         }else if(game.currentCard && game.currentCard!==game.welcomeCard){
           if(cardEl.classList.contains('flipping')){ cardEl.classList.remove('flipping'); }
           else{ cardEl.classList.add('flipping'); }
