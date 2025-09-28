@@ -260,6 +260,13 @@
           category:'Bienvenue',
           content:'Cliquez sur le tas de cartes pour découvrir votre première question de discussion !'
         };
+        this.cardEl = document.getElementById('discussionCard');
+        this.cardCategoryEl = document.getElementById('cardCategory');
+        this.cardContentEl = document.getElementById('cardContent');
+        this.deckEl = document.getElementById('cardDeck');
+        this.counterEl = document.getElementById('cardCounter');
+        this.cardContainerEl = document.getElementById('cardContainer');
+        this.floatingParticlesContainer = document.querySelector('.floating-particles');
         this.updateCounter();
         this.createFloatingParticles();
         this.prepareWelcomeCard();
@@ -267,8 +274,8 @@
 
       prepareWelcomeCard(){
         this.currentCard = this.welcomeCard;
-        document.getElementById('cardCategory').textContent = this.welcomeCard.category;
-        document.getElementById('cardContent').textContent = this.welcomeCard.content;
+        this.cardCategoryEl.textContent = this.welcomeCard.category;
+        this.cardContentEl.textContent = this.welcomeCard.content;
       }
 
       loadCardsFromXML(){
@@ -314,9 +321,8 @@
       }
 
       prepareAndFlipCard(card){
-        const cardEl = document.getElementById('discussionCard');
-        if(cardEl.classList.contains('flipping')){
-          cardEl.classList.remove('flipping');
+        if(this.cardEl.classList.contains('flipping')){
+          this.cardEl.classList.remove('flipping');
           setTimeout(()=>{ this.updateCardContent(card); this.flipCard(); },400);
         }else{
           this.updateCardContent(card); this.flipCard();
@@ -324,49 +330,46 @@
       }
 
       updateCardContent(card){
-        document.getElementById('cardCategory').textContent = card.category;
-        document.getElementById('cardContent').textContent = card.content;
+        this.cardCategoryEl.textContent = card.category;
+        this.cardContentEl.textContent = card.content;
       }
 
       flipCard(){
-        const cardEl = document.getElementById('discussionCard');
-        setTimeout(()=> cardEl.classList.add('flipping'),100);
+        setTimeout(()=> this.cardEl.classList.add('flipping'),100);
       }
 
       animateDeck(){
-        const deck = document.getElementById('cardDeck');
-        deck.style.transform='scale(0.95) translateY(5px)';
-        setTimeout(()=>{ deck.style.transform='scale(1) translateY(0)'; },150);
+        this.deckEl.style.transform='scale(0.95) translateY(5px)';
+        setTimeout(()=>{ this.deckEl.style.transform='scale(1) translateY(0)'; },150);
       }
 
       updateCounter(){
-        document.getElementById('cardCounter').textContent = this.availableCards.length;
+        this.counterEl.textContent = this.availableCards.length;
       }
 
       resetDeck(){
         this.availableCards=[...this.cards];
         this.usedCards=[];
         this.updateCounter();
-        const cardEl = document.getElementById('discussionCard');
-        cardEl.classList.remove('flipping');
+        this.cardEl.classList.remove('flipping');
         setTimeout(()=>{
-          document.getElementById('cardCategory').textContent='Bienvenue';
-          document.getElementById('cardContent').textContent='Cliquez sur le tas de cartes pour découvrir votre première question de discussion !';
+          this.cardCategoryEl.textContent='Bienvenue';
+          this.cardContentEl.textContent='Cliquez sur le tas de cartes pour découvrir votre première question de discussion !';
         },400);
       }
 
       showNoMoreCards(){
-        const cardEl = document.getElementById('discussionCard');
-        cardEl.classList.remove('flipping');
+        this.cardEl.classList.remove('flipping');
         setTimeout(()=>{
-          document.getElementById('cardCategory').textContent='Fin du Jeu';
-          document.getElementById('cardContent').textContent='Toutes les cartes ont été piochées ! Cliquez sur "Réinitialiser" pour recommencer.';
-          setTimeout(()=> cardEl.classList.add('flipping'),100);
+          this.cardCategoryEl.textContent='Fin du Jeu';
+          this.cardContentEl.textContent='Toutes les cartes ont été piochées ! Cliquez sur "Réinitialiser" pour recommencer.';
+          setTimeout(()=> this.cardEl.classList.add('flipping'),100);
         },400);
       }
 
       createFloatingParticles(){
-        const container = document.querySelector('.floating-particles');
+        const container = this.floatingParticlesContainer;
+        if(!container) return;
         for(let i=0;i<20;i++){
           const p = document.createElement('div');
           p.className='particle';
@@ -384,14 +387,13 @@
 
     window.addEventListener('load', ()=>{
       game = new DiscussionCardGame();
-      document.getElementById('cardContainer').classList.add('visible');
-      document.getElementById('discussionCard').addEventListener('click', ()=>{
-        const cardEl = document.getElementById('discussionCard');
-        if(game.currentCard===game.welcomeCard && !cardEl.classList.contains('flipping')){
+      game.cardContainerEl.classList.add('visible');
+      game.cardEl.addEventListener('click', ()=>{
+        if(game.currentCard===game.welcomeCard && !game.cardEl.classList.contains('flipping')){
           game.drawCard();
         }else if(game.currentCard && game.currentCard!==game.welcomeCard){
-          if(cardEl.classList.contains('flipping')){ cardEl.classList.remove('flipping'); }
-          else{ cardEl.classList.add('flipping'); }
+          if(game.cardEl.classList.contains('flipping')){ game.cardEl.classList.remove('flipping'); }
+          else{ game.cardEl.classList.add('flipping'); }
         }
       });
     });
