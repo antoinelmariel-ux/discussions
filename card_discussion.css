@@ -39,6 +39,18 @@ body{
   overflow-x:hidden;
 }
 
+.visually-hidden{
+  position:absolute;
+  width:1px;
+  height:1px;
+  padding:0;
+  margin:-1px;
+  overflow:hidden;
+  clip:rect(0,0,0,0);
+  white-space:nowrap;
+  border:0;
+}
+
 .title{
   color:var(--text-inverse);
   font-size:2.5rem;
@@ -180,6 +192,15 @@ body{
   transition:all .3s ease; text-transform:uppercase; letter-spacing:1px;
   box-shadow:0 4px 15px var(--shadow-2); position:relative; overflow:hidden;
 }
+
+.btn:focus-visible,
+.expert-button:focus-visible,
+.card-deck:focus-visible,
+.discussion-card:focus-visible,
+.modal-close:focus-visible{
+  outline:3px solid rgba(0,133,124,0.7);
+  outline-offset:4px;
+}
 .btn:hover{ transform: translateY(-2px); box-shadow:0 6px 20px rgba(0,0,0,0.3); }
 .btn:active{ transform: translateY(0); }
 
@@ -225,6 +246,24 @@ body{
   display:flex;
   flex-direction:column;
   gap:20px;
+  position:relative;
+}
+.modal-close{
+  position:absolute;
+  top:16px;
+  right:16px;
+  background:none;
+  border:none;
+  font-size:1.8rem;
+  color:var(--primary-1);
+  cursor:pointer;
+  line-height:1;
+  padding:4px;
+  transition:transform .2s ease;
+}
+.modal-close:hover,
+.modal-close:focus{
+  transform:scale(1.1);
 }
 
 .expert-modal-content{

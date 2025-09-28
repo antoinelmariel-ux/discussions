@@ -14,17 +14,17 @@
 
   <div class="game-container">
     <!-- Tas de cartes -->
-    <div class="card-deck" id="cardDeck" onclick="drawCard()">
+    <div class="card-deck" id="cardDeck" role="button" tabindex="0" aria-label="Piocher une nouvelle carte" onclick="drawCard()">
       <div class="deck-card"><div class="deck-icon">?</div></div>
       <div class="deck-card"><div class="deck-icon">?</div></div>
       <div class="deck-card"><div class="deck-icon">?</div></div>
-      <div class="deck-counter" id="cardCounter">24</div>
+      <div class="deck-counter" id="cardCounter" aria-live="polite" aria-atomic="true">24</div>
     </div>
 
     <!-- Carte de discussion avec effet flip -->
     <div class="card-container" id="cardContainer">
       <button class="expert-button" id="expertAdviceBtn" type="button" title="Voir les recommandations des experts" aria-label="Afficher les recommandations des experts">💡</button>
-      <div class="discussion-card" id="discussionCard">
+      <div class="discussion-card" id="discussionCard" role="button" tabindex="0" aria-label="Carte de discussion">
         <!-- Face avant (dos de carte) -->
         <div class="card-face card-front">
           <div class="card-front-content">
@@ -44,15 +44,18 @@
     </div>
   </div>
 
+  <p class="visually-hidden" id="cardStatus" aria-live="polite"></p>
+
   <div class="controls">
     <button class="btn btn-primary" onclick="drawCard()">Nouvelle Carte</button>
     <button class="btn btn-secondary" onclick="resetDeck()">Réinitialiser</button>
     <button class="btn" id="openThemeSelector">Choisir les thématiques</button>
   </div>
 
-  <div class="modal-overlay" id="themeSelectorModal">
-    <div class="modal-content">
-      <h2 class="modal-title">Choisissez vos thématiques</h2>
+  <div class="modal-overlay" id="themeSelectorModal" aria-hidden="true">
+    <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="themeSelectorTitle">
+      <button class="modal-close" id="closeThemeSelector" type="button" aria-label="Fermer la sélection des thématiques">×</button>
+      <h2 class="modal-title" id="themeSelectorTitle">Choisissez vos thématiques</h2>
       <p class="modal-description">Sélectionnez les thématiques que vous souhaitez voir apparaître dans votre partie. Vous pourrez modifier ce choix à tout moment.</p>
       <div class="select-all">
         <label for="selectAllThemes"><input type="checkbox" id="selectAllThemes" checked> Tout sélectionner</label>
