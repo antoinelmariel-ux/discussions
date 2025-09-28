@@ -1,5 +1,6 @@
 class DiscussionCardGame {
   constructor(){
+    this.persistenceVersion = 1;
     this.allCards = this.loadCardsFromXML();
     this.cards = [...this.allCards];
     this.availableCards = [...this.cards];
@@ -29,6 +30,9 @@ class DiscussionCardGame {
     this.expertAdviceSituationEl = document.getElementById('expertAdviceSituation');
     this.expertAdviceContentEl = document.getElementById('expertAdviceContent');
     this.closeExpertAdviceBtn = document.getElementById('closeExpertAdvice');
+    this.saveSessionBtn = document.getElementById('saveSession');
+    this.loadSessionBtn = document.getElementById('loadSession');
+    this.sessionFileInput = document.getElementById('sessionFileInput');
     this.cardStatusEl = document.getElementById('cardStatus');
     this.themeTriggerElement = null;
     this.expertTriggerElement = null;
@@ -42,6 +46,7 @@ class DiscussionCardGame {
     this.populateThemeOptions();
     this.bindThemeSelectorEvents();
     this.bindExpertAdviceEvents();
+    this.bindPersistenceEvents();
     this.bindAccessibilityInteractions();
     this.setExpertButtonState(false);
   }
@@ -63,15 +68,34 @@ class DiscussionCardGame {
     const parser = new DOMParser();
     const xmlDoc = parser.parseFromString(xmlData,'text/xml');
     const nodes = xmlDoc.querySelectorAll('card');
-    return Array.from(nodes).map(card=>{
+    return Array.from(nodes).map((card,index)=>{
       const contentNode = card.querySelector('content');
       const adviceNode = card.querySelector('advice');
       return {
+        id: index,
         category: card.getAttribute('category'),
         content: contentNode ? contentNode.textContent.trim() : '',
         advice: adviceNode ? adviceNode.textContent.trim() : ''
       };
     });
+  }
+
+  bindPersistenceEvents(){
+    if(this.saveSessionBtn){
+      this.saveSessionBtn.addEventListener('click', ()=> this.exportSessionState());
+    }
+    if(this.loadSessionBtn && this.sessionFileInput){
+      this.loadSessionBtn.addEventListener('click', ()=>{
+        this.sessionFileInput.value='';
+        this.sessionFileInput.click();
+      });
+      this.sessionFileInput.addEventListener('change', event=>{
+        const [file] = event.target.files || [];
+        if(file){
+          this.importSessionState(file);
+        }
+      });
+    }
   }
 
   _takeRandomCard(){
@@ -389,6 +413,120 @@ class DiscussionCardGame {
       this.updateCardFlipState(false);
     }
     document.addEventListener('keydown', this.handleGlobalKeyPress);
+  }
+
+  exportSessionState(){
+    try{
+      const state = this.serializeSessionState();
+      const json = JSON.stringify(state, null, 2);
+      const blob = new Blob([json], { type: 'application/json' });
+      const timestamp = new Date().toISOString().replace(/[-:]/g,'').split('.')[0];
+      const filename = `session-discussion-${timestamp}.json`;
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(link.href);
+      const remainingMessage = this.formatRemainingCardsMessage(this.availableCards.length);
+      this.updateStatus(`Session enregistrée (${remainingMessage}).`);
+    }catch(error){
+      console.error('Erreur lors de la sauvegarde de la session :', error);
+      this.updateStatus('Impossible d\'enregistrer la session.');
+    }
+  }
+
+  serializeSessionState(){
+    return {
+      version: this.persistenceVersion,
+      timestamp: new Date().toISOString(),
+      activeCategories: Array.from(this.activeCategories),
+      availableCardIds: this.availableCards.map(card=>card.id),
+      usedCardIds: this.usedCards.map(card=>card.id)
+    };
+  }
+
+  importSessionState(file){
+    const reader = new FileReader();
+    reader.onload = ()=>{
+      try{
+        const data = JSON.parse(reader.result);
+        this.applySessionState(data);
+        const remainingMessage = this.formatRemainingCardsMessage(this.availableCards.length);
+        this.updateStatus(`Session chargée avec succès (${remainingMessage}).`);
+      }catch(error){
+        console.error('Erreur lors du chargement de la session :', error);
+        this.updateStatus('Le fichier de session est invalide.');
+      }
+    };
+    reader.onerror = ()=>{
+      console.error('Erreur de lecture du fichier de session :', reader.error);
+      this.updateStatus('Impossible de lire le fichier de session.');
+    };
+    reader.readAsText(file, 'utf-8');
+  }
+
+  applySessionState(data){
+    const state = this.validateSessionData(data);
+    const activeCategories = state.activeCategories && state.activeCategories.length>0
+      ? state.activeCategories
+      : this.getAllCategories();
+    this.activeCategories = new Set(activeCategories);
+    this.cards = this.allCards.filter(card=>this.activeCategories.has(card.category));
+    const availableIds = new Set(state.availableCardIds || []);
+    const usedIds = new Set(state.usedCardIds || []);
+    const availableCards = this.mapIdsToCards(availableIds);
+    const usedCards = this.mapIdsToCards(usedIds);
+    const knownIds = new Set([...availableCards, ...usedCards].map(card=>card.id));
+    const missingCards = this.cards.filter(card=>!knownIds.has(card.id));
+    this.availableCards = [...availableCards, ...missingCards];
+    this.usedCards = usedCards;
+    this.populateThemeOptions();
+    this.syncSelectAllCheckbox();
+    this.updateCounter();
+    this.prepareWelcomeCard();
+    this.hideExpertAdvice();
+    this.setExpertButtonState(false);
+  }
+
+  validateSessionData(data){
+    if(!data || typeof data!=='object'){
+      throw new Error('Structure JSON invalide.');
+    }
+    if(data.version && data.version!==this.persistenceVersion){
+      throw new Error('Version de fichier non prise en charge.');
+    }
+    const validateIdArray = (value)=>{
+      if(!Array.isArray(value)) return [];
+      return value.reduce((acc,id)=>{
+        const numericId = Number(id);
+        if(Number.isInteger(numericId)){
+          acc.push(numericId);
+        }
+        return acc;
+      },[]);
+    };
+    const activeCategories = Array.isArray(data.activeCategories)
+      ? data.activeCategories.filter(cat=>typeof cat==='string')
+      : [];
+    return {
+      activeCategories,
+      availableCardIds: validateIdArray(data.availableCardIds),
+      usedCardIds: validateIdArray(data.usedCardIds)
+    };
+  }
+
+  mapIdsToCards(idSet){
+    if(!idSet || idSet.size===0) return [];
+    const mapped = [];
+    idSet.forEach(id=>{
+      const card = this.cards.find(item=>item.id===id);
+      if(card){
+        mapped.push(card);
+      }
+    });
+    return mapped;
   }
 
   handleDeckKeyPress(event){

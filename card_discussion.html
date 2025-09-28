@@ -50,7 +50,11 @@
     <button class="btn btn-primary" onclick="drawCard()">Nouvelle Carte</button>
     <button class="btn btn-secondary" onclick="resetDeck()">Réinitialiser</button>
     <button class="btn" id="openThemeSelector">Choisir les thématiques</button>
+    <button class="btn" id="saveSession" type="button">Enregistrer la session</button>
+    <button class="btn" id="loadSession" type="button">Charger une session</button>
   </div>
+
+  <input type="file" id="sessionFileInput" accept="application/json" class="visually-hidden" aria-hidden="true" tabindex="-1">
 
   <div class="modal-overlay" id="themeSelectorModal" aria-hidden="true">
     <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="themeSelectorTitle">
