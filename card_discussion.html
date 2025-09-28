@@ -372,9 +372,8 @@
     function drawCard(){ if(game) game.drawCard(); }
     function resetDeck(){ if(game) game.resetDeck(); }
 
-    window.addEventListener('load', async ()=>{
+    window.addEventListener('load', ()=>{
       game = new DiscussionCardGame();
-      while(game.cards.length===0){ await new Promise(r=>setTimeout(r,100)); }
       document.getElementById('cardContainer').classList.add('visible');
       document.getElementById('discussionCard').addEventListener('click', ()=>{
         const cardEl = document.getElementById('discussionCard');
