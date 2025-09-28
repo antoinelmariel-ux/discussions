@@ -22,12 +22,19 @@ class DiscussionCardGame {
     this.selectAllEl = document.getElementById('selectAllThemes');
     this.applyThemeSelectionBtn = document.getElementById('applyThemeSelection');
     this.openThemeSelectorBtn = document.getElementById('openThemeSelector');
+    this.closeThemeSelectorBtn = document.getElementById('closeThemeSelector');
     this.expertAdviceBtn = document.getElementById('expertAdviceBtn');
     this.expertAdviceModalEl = document.getElementById('expertAdviceModal');
     this.expertAdviceCategoryEl = document.getElementById('expertAdviceCategory');
     this.expertAdviceSituationEl = document.getElementById('expertAdviceSituation');
     this.expertAdviceContentEl = document.getElementById('expertAdviceContent');
     this.closeExpertAdviceBtn = document.getElementById('closeExpertAdvice');
+    this.cardStatusEl = document.getElementById('cardStatus');
+    this.themeTriggerElement = null;
+    this.expertTriggerElement = null;
+    this.handleDeckKeyPress = this.handleDeckKeyPress.bind(this);
+    this.handleCardKeyPress = this.handleCardKeyPress.bind(this);
+    this.handleGlobalKeyPress = this.handleGlobalKeyPress.bind(this);
     this.activeCategories = new Set(this.cards.map(card=>card.category));
     this.updateCounter();
     this.createFloatingParticles();
@@ -35,17 +42,20 @@ class DiscussionCardGame {
     this.populateThemeOptions();
     this.bindThemeSelectorEvents();
     this.bindExpertAdviceEvents();
+    this.bindAccessibilityInteractions();
     this.setExpertButtonState(false);
   }
 
   prepareWelcomeCard(){
     this.currentCard = this.welcomeCard;
     if(this.cardEl){ this.cardEl.classList.remove('flipping'); }
+    this.updateCardFlipState(false);
     if(this.cardCategoryEl){ this.cardCategoryEl.textContent = this.welcomeCard.category; }
     if(this.cardContentEl){ this.cardContentEl.textContent = this.welcomeCard.content; }
     this.hideExpertAdvice();
     this.clearExpertAdvicePanel();
     this.setExpertButtonState(false);
+    this.updateStatus('Carte de bienvenue affichée.');
   }
 
   loadCardsFromXML(){
@@ -88,6 +98,8 @@ class DiscussionCardGame {
     this.hideExpertAdvice();
     this.prepareAndFlipCard(card);
     this.setExpertButtonState(Boolean(card.advice));
+    const remainingMessage = this.formatRemainingCardsMessage(this.availableCards.length);
+    this.updateStatus(`Carte tirée : ${card.category}. ${remainingMessage}.`);
     return card;
   }
 
@@ -101,6 +113,7 @@ class DiscussionCardGame {
     this.hideExpertAdvice();
     if(this.cardEl.classList.contains('flipping')){
       this.cardEl.classList.remove('flipping');
+      this.updateCardFlipState(false);
       setTimeout(()=>{
         this.updateCardContent(card);
         this.flipCard();
@@ -118,7 +131,10 @@ class DiscussionCardGame {
   }
 
   flipCard(){
-    setTimeout(()=> this.cardEl.classList.add('flipping'),100);
+    setTimeout(()=>{
+      this.cardEl.classList.add('flipping');
+      this.updateCardFlipState(true);
+    },100);
   }
 
   animateDeck(){
@@ -136,15 +152,22 @@ class DiscussionCardGame {
     this.updateCounter();
     this.prepareWelcomeCard();
     this.hideExpertAdvice();
+    const remainingMessage = this.formatRemainingCardsMessage(this.availableCards.length);
+    this.updateStatus(`Le paquet a été réinitialisé : ${remainingMessage}.`);
   }
 
   showNoMoreCards(){
     this.cardEl.classList.remove('flipping');
+    this.updateCardFlipState(false);
     setTimeout(()=>{
       this.cardCategoryEl.textContent='Fin du Jeu';
       this.cardContentEl.textContent='Toutes les cartes ont été piochées ! Cliquez sur "Réinitialiser" pour recommencer.';
-      setTimeout(()=> this.cardEl.classList.add('flipping'),100);
+      setTimeout(()=>{
+        this.cardEl.classList.add('flipping');
+        this.updateCardFlipState(true);
+      },100);
     },400);
+    this.updateStatus('Toutes les cartes ont été piochées : aucune carte restante. Réinitialisez pour recommencer.');
   }
 
   createFloatingParticles(){
@@ -220,6 +243,9 @@ class DiscussionCardGame {
         this.hideThemeSelector();
       });
     }
+    if(this.closeThemeSelectorBtn){
+      this.closeThemeSelectorBtn.addEventListener('click', ()=> this.hideThemeSelector());
+    }
     if(this.selectAllEl){
       this.selectAllEl.addEventListener('change', (event)=>{
         const checked = event.target.checked;
@@ -230,6 +256,11 @@ class DiscussionCardGame {
     }
     if(this.themeOptionsEl){
       this.themeOptionsEl.addEventListener('change', ()=> this.syncSelectAllCheckbox());
+    }
+    if(this.themeModalEl){
+      this.themeModalEl.addEventListener('click', event=>{
+        if(event.target===this.themeModalEl){ this.hideThemeSelector(); }
+      });
     }
   }
 
@@ -246,6 +277,8 @@ class DiscussionCardGame {
     this.updateCounter();
     this.prepareWelcomeCard();
     this.populateThemeOptions();
+    const remainingMessage = this.formatRemainingCardsMessage(this.availableCards.length);
+    this.updateStatus(`Thématiques mises à jour (${selectedCategories.length}). ${remainingMessage}.`);
   }
 
   setExpertButtonState(enabled){
@@ -278,15 +311,23 @@ class DiscussionCardGame {
 
   showExpertAdvice(){
     if(!this.currentCard || !this.currentCard.advice || !this.expertAdviceModalEl) return;
+    this.expertTriggerElement = document.activeElement;
     this.populateExpertAdviceContent(this.currentCard);
     this.expertAdviceModalEl.classList.add('visible');
     this.expertAdviceModalEl.setAttribute('aria-hidden','false');
+    if(this.closeExpertAdviceBtn){ this.closeExpertAdviceBtn.focus(); }
   }
 
   hideExpertAdvice(){
     if(this.expertAdviceModalEl){
       this.expertAdviceModalEl.classList.remove('visible');
       this.expertAdviceModalEl.setAttribute('aria-hidden','true');
+    }
+    if(this.expertTriggerElement){
+      this.expertTriggerElement.focus();
+      this.expertTriggerElement = null;
+    }else if(this.expertAdviceBtn){
+      this.expertAdviceBtn.focus();
     }
   }
 
@@ -311,17 +352,101 @@ class DiscussionCardGame {
 
   showThemeSelector(){
     if(this.themeModalEl){
+      this.themeTriggerElement = document.activeElement;
       this.populateThemeOptions();
       if(this.themeErrorEl){ this.themeErrorEl.textContent=''; }
       this.themeModalEl.classList.add('visible');
+      this.themeModalEl.setAttribute('aria-hidden','false');
+      const firstCheckbox = this.themeModalEl.querySelector('input[type="checkbox"]');
+      if(firstCheckbox){
+        firstCheckbox.focus();
+      }else if(this.applyThemeSelectionBtn){
+        this.applyThemeSelectionBtn.focus();
+      }
     }
   }
 
   hideThemeSelector(){
     if(this.themeModalEl){
       this.themeModalEl.classList.remove('visible');
+      this.themeModalEl.setAttribute('aria-hidden','true');
     }
     if(this.themeErrorEl){ this.themeErrorEl.textContent=''; }
+    if(this.themeTriggerElement){
+      this.themeTriggerElement.focus();
+      this.themeTriggerElement = null;
+    }else if(this.openThemeSelectorBtn){
+      this.openThemeSelectorBtn.focus();
+    }
+  }
+
+  bindAccessibilityInteractions(){
+    if(this.deckEl){
+      this.deckEl.addEventListener('keydown', this.handleDeckKeyPress);
+    }
+    if(this.cardEl){
+      this.cardEl.addEventListener('keydown', this.handleCardKeyPress);
+      this.updateCardFlipState(false);
+    }
+    document.addEventListener('keydown', this.handleGlobalKeyPress);
+  }
+
+  handleDeckKeyPress(event){
+    if(!this.deckEl) return;
+    if(event.key==='Enter' || event.key===' '){
+      event.preventDefault();
+      this.drawCard();
+    }
+  }
+
+  handleCardKeyPress(event){
+    if(!this.cardEl) return;
+    if(event.key==='Enter' || event.key===' '){
+      event.preventDefault();
+      if(this.currentCard===this.welcomeCard && !this.cardEl.classList.contains('flipping')){
+        this.drawCard();
+        return;
+      }
+      if(this.currentCard && this.currentCard!==this.welcomeCard){
+        if(this.cardEl.classList.contains('flipping')){
+          this.cardEl.classList.remove('flipping');
+          this.updateCardFlipState(false);
+        }else{
+          this.cardEl.classList.add('flipping');
+          this.updateCardFlipState(true);
+        }
+      }
+    }
+  }
+
+  handleGlobalKeyPress(event){
+    if(event.key==='Escape'){
+      if(this.themeModalEl && this.themeModalEl.classList.contains('visible')){
+        this.hideThemeSelector();
+      }else if(this.expertAdviceModalEl && this.expertAdviceModalEl.classList.contains('visible')){
+        this.hideExpertAdvice();
+      }
+    }
+  }
+
+  updateCardFlipState(isFlipped){
+    if(this.cardEl){
+      this.cardEl.setAttribute('aria-pressed', String(Boolean(isFlipped)));
+    }
+  }
+
+  updateStatus(message){
+    if(this.cardStatusEl){
+      this.cardStatusEl.textContent = message;
+    }
+  }
+
+  formatRemainingCardsMessage(count){
+    if(count===0){
+      return 'aucune carte restante';
+    }
+    const label = count>1 ? 'cartes restantes' : 'carte restante';
+    return `${count} ${label}`;
   }
 }
 
@@ -336,8 +461,13 @@ window.addEventListener('load', ()=>{
     if(game.currentCard===game.welcomeCard && !game.cardEl.classList.contains('flipping')){
       game.drawCard();
     }else if(game.currentCard && game.currentCard!==game.welcomeCard){
-      if(game.cardEl.classList.contains('flipping')){ game.cardEl.classList.remove('flipping'); }
-      else{ game.cardEl.classList.add('flipping'); }
+      if(game.cardEl.classList.contains('flipping')){
+        game.cardEl.classList.remove('flipping');
+        game.updateCardFlipState(false);
+      }else{
+        game.cardEl.classList.add('flipping');
+        game.updateCardFlipState(true);
+      }
     }
   });
   game.showThemeSelector();
