@@ -552,11 +552,49 @@ class DiscussionCardGame {
       this.expertAdviceContentEl.appendChild(fallback);
       return;
     }
-    paragraphs.forEach(text=>{
+    paragraphs.forEach((text,index)=>{
+      let displayText = text;
+      if(index===1){
+        const filtered = this.filterActionParagraphForCard(text, card);
+        if(filtered && filtered.trim().length>0){
+          displayText = filtered;
+        }
+      }
       const p = document.createElement('p');
-      p.textContent = text;
+      p.textContent = displayText;
       this.expertAdviceContentEl.appendChild(p);
     });
+  }
+
+  filterActionParagraphForCard(paragraphText, card){
+    if(!paragraphText || !card){
+      return paragraphText;
+    }
+    const trimmed = paragraphText.trim();
+    if(!trimmed){
+      return trimmed;
+    }
+    const hasVariantSections = /Variante\s+«/.test(trimmed);
+    if(!hasVariantSections){
+      return trimmed;
+    }
+    if(card.type==='base'){
+      const [basePart] = trimmed.split(/Variante\s+«/);
+      return basePart ? basePart.trim() : trimmed;
+    }
+    if(card.type==='variation' && card.variationLabel){
+      const escapedLabel = this.escapeRegExp(card.variationLabel);
+      const regex = new RegExp(`Variante\\s+«\\s*${escapedLabel}\\s*»\\s*:?(.*?)(?=(Variante\\s+«|$))`, 's');
+      const match = trimmed.match(regex);
+      if(match){
+        return match[0].trim();
+      }
+    }
+    return trimmed;
+  }
+
+  escapeRegExp(text){
+    return text.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\$&');
   }
 
   handleMasteryToggle(mastered){
