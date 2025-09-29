@@ -241,12 +241,15 @@ body{
 .btn-menu-toggle{
   display:flex;
   align-items:center;
-  gap:12px;
+  justify-content:center;
+  width:56px;
+  height:56px;
+  padding:0;
+  border-radius:50%;
   background:var(--surface);
   color:var(--primary-1);
   text-transform:none;
   letter-spacing:0;
-  padding:15px 24px;
   box-shadow:0 8px 18px rgba(0,0,0,0.2);
 }
 
@@ -254,6 +257,12 @@ body{
 .btn-menu-toggle:focus{
   background:var(--surface-muted);
   color:var(--primary-2);
+}
+
+.controls .btn-menu-toggle{
+  align-self:flex-end;
+  width:56px;
+  height:56px;
 }
 
 .menu-toggle-icon{
@@ -319,6 +328,20 @@ body{
 .menu-action:focus{
   background:rgba(0,133,124,0.12);
   color:var(--primary-1);
+}
+
+@media (min-width:992px){
+  .controls-menu{
+    position:fixed;
+    top:24px;
+    right:24px;
+    z-index:120;
+  }
+
+  .controls-menu .menu-dropdown{
+    top:calc(100% + 16px);
+    right:0;
+  }
 }
 
 .btn{
@@ -658,6 +681,20 @@ body{
 
   .controls .btn{
     width:100%;
+  }
+
+  .controls-menu{
+    align-self:flex-end;
+  }
+
+  .controls .btn-menu-toggle{
+    width:56px;
+  }
+
+  .controls-menu .menu-dropdown{
+    width:min(260px, 88vw);
+    right:0;
+    left:auto;
   }
 
   .modal-content{
