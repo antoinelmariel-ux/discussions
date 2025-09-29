@@ -42,6 +42,9 @@ class DiscussionCardGame {
     this.saveSessionBtn = document.getElementById('saveSession');
     this.loadSessionBtn = document.getElementById('loadSession');
     this.sessionFileInput = document.getElementById('sessionFileInput');
+    this.advancedMenuToggle = document.getElementById('advancedMenuToggle');
+    this.advancedMenu = document.getElementById('advancedMenu');
+    this.advancedMenuWrapper = this.advancedMenuToggle ? this.advancedMenuToggle.closest('.controls-menu') : null;
     this.cardStatusEl = document.getElementById('cardStatus');
     this.themeTriggerElement = null;
     this.expertTriggerElement = null;
@@ -56,6 +59,7 @@ class DiscussionCardGame {
     this.bindExpertAdviceEvents();
     this.bindMasteryEvents();
     this.bindPersistenceEvents();
+    this.bindAdvancedMenuEvents();
     this.bindAccessibilityInteractions();
     this.setExpertButtonState(false);
   }
@@ -137,6 +141,82 @@ class DiscussionCardGame {
         }
       });
     }
+  }
+
+  bindAdvancedMenuEvents(){
+    if(!this.advancedMenuToggle || !this.advancedMenu || !this.advancedMenuWrapper) return;
+
+    const closeMenu = (restoreFocus=false)=>{
+      if(!this.advancedMenuWrapper.classList.contains('open')) return;
+      this.advancedMenuWrapper.classList.remove('open');
+      this.advancedMenuToggle.setAttribute('aria-expanded','false');
+      if(restoreFocus){
+        this.advancedMenuToggle.focus();
+      }
+    };
+
+    const openMenu = ()=>{
+      this.advancedMenuWrapper.classList.add('open');
+      this.advancedMenuToggle.setAttribute('aria-expanded','true');
+    };
+
+    const toggleMenu = ()=>{
+      const isOpen = this.advancedMenuWrapper.classList.toggle('open');
+      this.advancedMenuToggle.setAttribute('aria-expanded', String(isOpen));
+      if(isOpen){
+        const firstAction = this.advancedMenu.querySelector('button');
+        if(firstAction){
+          firstAction.focus();
+        }
+      }
+    };
+
+    this.advancedMenuToggle.addEventListener('click', event=>{
+      event.stopPropagation();
+      toggleMenu();
+    });
+
+    this.advancedMenuToggle.addEventListener('keydown', event=>{
+      if(event.key==='ArrowDown' || event.key==='Enter' || event.key===' '){
+        event.preventDefault();
+        if(!this.advancedMenuWrapper.classList.contains('open')){
+          openMenu();
+        }
+        const firstAction = this.advancedMenu.querySelector('button');
+        if(firstAction){
+          firstAction.focus();
+        }
+      }
+    });
+
+    this.advancedMenu.addEventListener('click', event=>{
+      const target = event.target;
+      if(target instanceof HTMLElement && target.matches('button')){
+        closeMenu(true);
+      }
+    });
+
+    this.advancedMenu.addEventListener('keydown', event=>{
+      if(event.key==='Escape'){
+        event.stopPropagation();
+        closeMenu(true);
+      }
+    });
+
+    document.addEventListener('click', event=>{
+      const target = event.target;
+      if(target instanceof Node && this.advancedMenuWrapper.contains(target)){
+        return;
+      }
+      closeMenu(false);
+    });
+
+    document.addEventListener('keydown', event=>{
+      if(event.key==='Escape' && this.advancedMenuWrapper.classList.contains('open')){
+        event.stopPropagation();
+        closeMenu(true);
+      }
+    });
   }
 
   _takeRandomCard(){
@@ -559,7 +639,11 @@ class DiscussionCardGame {
 
   showThemeSelector(){
     if(this.themeModalEl){
-      this.themeTriggerElement = document.activeElement;
+      if(this.advancedMenuWrapper && this.advancedMenuWrapper.classList.contains('open')){
+        this.themeTriggerElement = this.advancedMenuToggle;
+      }else{
+        this.themeTriggerElement = document.activeElement;
+      }
       this.populateThemeOptions();
       if(this.themeErrorEl){ this.themeErrorEl.textContent=''; }
       this.themeModalEl.classList.add('visible');
