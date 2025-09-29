@@ -649,6 +649,9 @@ class DiscussionCardGame {
       }
     }
     this.updateMasteryControls(targetCard);
+    if(this.expertAdviceModalEl && this.expertAdviceModalEl.classList.contains('visible')){
+      this.hideExpertAdvice();
+    }
   }
 
   getBaseCardId(card){
