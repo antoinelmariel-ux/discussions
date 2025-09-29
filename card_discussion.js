@@ -553,6 +553,7 @@ class DiscussionCardGame {
     this.populateExpertAdviceContent(cardToShow);
     this.expertAdviceModalEl.classList.add('visible');
     this.expertAdviceModalEl.setAttribute('aria-hidden','false');
+    this.scrollExpertAdviceToTop();
     this.updateMasteryControls(cardToShow);
     this.updateFavoriteButtonState(cardToShow);
     if(this.closeExpertAdviceBtn){ this.closeExpertAdviceBtn.focus(); }
@@ -596,6 +597,23 @@ class DiscussionCardGame {
       p.textContent = text;
       this.expertAdviceContentEl.appendChild(p);
     });
+  }
+
+  scrollExpertAdviceToTop(){
+    if(this.expertAdviceModalEl){
+      if(typeof this.expertAdviceModalEl.scrollTo === 'function'){
+        this.expertAdviceModalEl.scrollTo({ top:0, behavior:'smooth' });
+      }else{
+        this.expertAdviceModalEl.scrollTop = 0;
+      }
+      const modalContent = this.expertAdviceModalEl.querySelector('.modal-content');
+      if(modalContent){
+        modalContent.scrollTop = 0;
+      }
+    }
+    if(this.expertAdviceContentEl){
+      this.expertAdviceContentEl.scrollTop = 0;
+    }
   }
 
   handleMasteryToggle(mastered){
