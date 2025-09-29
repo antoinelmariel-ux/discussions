@@ -186,6 +186,16 @@ body{
   box-shadow:0 4px 15px rgba(0,133,124,0.35);
 }
 
+.card-variation-label{
+  color:var(--primary-2);
+  font-weight:600;
+  font-size:0.85rem;
+  margin-top:-10px;
+  margin-bottom:10px;
+  min-height:1.2em;
+  text-align:left;
+}
+
 .card-content{
   color:var(--text);
   font-size:1.05rem;
@@ -331,6 +341,13 @@ body{
   color:var(--primary-2);
 }
 
+.expert-variation{
+  font-weight:600;
+  color:#0f4c48;
+  margin-bottom:8px;
+  min-height:1.2em;
+}
+
 .expert-situation-text{
   font-size:1rem;
   line-height:1.6;
@@ -343,6 +360,49 @@ body{
 }
 
 .expert-advice-text p:last-child{ margin-bottom:0; }
+
+.expert-mastery{
+  background:var(--surface-muted);
+  border-radius:14px;
+  padding:18px;
+  border:1px solid rgba(0,133,124,0.2);
+  box-shadow:0 6px 18px rgba(11,49,74,0.08);
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+
+.expert-mastery-text{
+  font-size:0.95rem;
+  line-height:1.5;
+}
+
+.expert-mastery-actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+}
+
+.mastery-action{
+  flex:1 1 220px;
+  background:var(--surface);
+  color:var(--primary-1);
+  border:2px solid rgba(0,133,124,0.35);
+  font-size:0.9rem;
+  letter-spacing:0.5px;
+}
+
+.mastery-action.active{
+  background:var(--primary-grad);
+  color:var(--text-inverse);
+  border-color:transparent;
+}
+
+.expert-mastery-status{
+  font-size:0.9rem;
+  color:#1f2937;
+  min-height:1.4em;
+}
 
 .modal-title{
   font-size:1.6rem;

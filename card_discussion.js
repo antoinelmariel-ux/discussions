@@ -1,8 +1,12 @@
 class DiscussionCardGame {
   constructor(){
-    this.persistenceVersion = 1;
-    this.allCards = this.loadCardsFromXML();
-    this.cards = [...this.allCards];
+    this.persistenceVersion = 2;
+    const { cards, variationMap } = this.loadCardsFromXML();
+    this.allCards = cards;
+    this.variationMap = variationMap;
+    this.masteredPrinciples = new Set();
+    this.activeCategories = new Set(this.getAllCategories());
+    this.recomputeActiveCards();
     this.availableCards = [...this.cards];
     this.usedCards = [];
     this.currentCard = null;
@@ -13,6 +17,7 @@ class DiscussionCardGame {
     this.cardEl = document.getElementById('discussionCard');
     this.cardCategoryEl = document.getElementById('cardCategory');
     this.cardContentEl = document.getElementById('cardContent');
+    this.cardVariationLabelEl = document.getElementById('cardVariationLabel');
     this.deckEl = document.getElementById('cardDeck');
     this.counterEl = document.getElementById('cardCounter');
     this.cardContainerEl = document.getElementById('cardContainer');
@@ -27,9 +32,13 @@ class DiscussionCardGame {
     this.expertAdviceBtn = document.getElementById('expertAdviceBtn');
     this.expertAdviceModalEl = document.getElementById('expertAdviceModal');
     this.expertAdviceCategoryEl = document.getElementById('expertAdviceCategory');
+    this.expertAdviceVariationEl = document.getElementById('expertAdviceVariation');
     this.expertAdviceSituationEl = document.getElementById('expertAdviceSituation');
     this.expertAdviceContentEl = document.getElementById('expertAdviceContent');
     this.closeExpertAdviceBtn = document.getElementById('closeExpertAdvice');
+    this.masterySectionEl = document.getElementById('expertMasterySection');
+    this.masteryStatusEl = document.getElementById('expertMasteryStatus');
+    this.masteryActionButtons = Array.from(document.querySelectorAll('.mastery-action'));
     this.saveSessionBtn = document.getElementById('saveSession');
     this.loadSessionBtn = document.getElementById('loadSession');
     this.sessionFileInput = document.getElementById('sessionFileInput');
@@ -39,13 +48,13 @@ class DiscussionCardGame {
     this.handleDeckKeyPress = this.handleDeckKeyPress.bind(this);
     this.handleCardKeyPress = this.handleCardKeyPress.bind(this);
     this.handleGlobalKeyPress = this.handleGlobalKeyPress.bind(this);
-    this.activeCategories = new Set(this.cards.map(card=>card.category));
     this.updateCounter();
     this.createFloatingParticles();
     this.prepareWelcomeCard();
     this.populateThemeOptions();
     this.bindThemeSelectorEvents();
     this.bindExpertAdviceEvents();
+    this.bindMasteryEvents();
     this.bindPersistenceEvents();
     this.bindAccessibilityInteractions();
     this.setExpertButtonState(false);
@@ -57,6 +66,7 @@ class DiscussionCardGame {
     this.updateCardFlipState(false);
     if(this.cardCategoryEl){ this.cardCategoryEl.textContent = this.welcomeCard.category; }
     if(this.cardContentEl){ this.cardContentEl.textContent = this.welcomeCard.content; }
+    if(this.cardVariationLabelEl){ this.cardVariationLabelEl.textContent=''; }
     this.hideExpertAdvice();
     this.clearExpertAdvicePanel();
     this.setExpertButtonState(false);
@@ -68,16 +78,47 @@ class DiscussionCardGame {
     const parser = new DOMParser();
     const xmlDoc = parser.parseFromString(xmlData,'text/xml');
     const nodes = xmlDoc.querySelectorAll('card');
-    return Array.from(nodes).map((card,index)=>{
-      const contentNode = card.querySelector('content');
-      const adviceNode = card.querySelector('advice');
-      return {
-        id: index,
-        category: card.getAttribute('category'),
+    const cards = [];
+    const variationMap = new Map();
+    let idCounter = 0;
+    nodes.forEach(cardNode=>{
+      const contentNode = cardNode.querySelector('content');
+      const adviceNode = cardNode.querySelector('advice');
+      const adviceText = adviceNode ? adviceNode.textContent.trim() : '';
+      const baseId = idCounter++;
+      const baseCard = {
+        id: baseId,
+        category: cardNode.getAttribute('category'),
         content: contentNode ? contentNode.textContent.trim() : '',
-        advice: adviceNode ? adviceNode.textContent.trim() : ''
+        advice: adviceText,
+        type: 'base'
       };
+      cards.push(baseCard);
+
+      const variationNodes = cardNode.querySelectorAll('variations > variation');
+      if(variationNodes.length>0){
+        const variationIds = [];
+        variationNodes.forEach((variationNode,index)=>{
+          const variationContent = variationNode.textContent.trim();
+          if(!variationContent) return;
+          const variationCard = {
+            id: idCounter++,
+            category: baseCard.category,
+            content: variationContent,
+            advice: adviceText,
+            type: 'variation',
+            variationOf: baseId,
+            variationLabel: variationNode.getAttribute('title') || `Variante ${index+1}`
+          };
+          cards.push(variationCard);
+          variationIds.push(variationCard.id);
+        });
+        if(variationIds.length>0){
+          variationMap.set(baseId, variationIds);
+        }
+      }
     });
+    return { cards, variationMap };
   }
 
   bindPersistenceEvents(){
@@ -149,8 +190,19 @@ class DiscussionCardGame {
   }
 
   updateCardContent(card){
-    this.cardCategoryEl.textContent = card.category;
-    this.cardContentEl.textContent = card.content;
+    if(this.cardCategoryEl){
+      this.cardCategoryEl.textContent = card.category;
+    }
+    if(this.cardVariationLabelEl){
+      if(card.type==='variation'){
+        this.cardVariationLabelEl.textContent = card.variationLabel || 'Variante';
+      }else{
+        this.cardVariationLabelEl.textContent = '';
+      }
+    }
+    if(this.cardContentEl){
+      this.cardContentEl.textContent = card.content;
+    }
     this.clearExpertAdvicePanel();
   }
 
@@ -171,6 +223,7 @@ class DiscussionCardGame {
   }
 
   resetDeck(){
+    this.recomputeActiveCards();
     this.availableCards=[...this.cards];
     this.usedCards=[];
     this.updateCounter();
@@ -205,6 +258,32 @@ class DiscussionCardGame {
       p.style.animationDuration = (Math.random()*3+3)+'s';
       container.appendChild(p);
     }
+  }
+
+  recomputeActiveCards(){
+    this.cards = this.allCards.filter(card=>{
+      if(!this.activeCategories.has(card.category)){
+        return false;
+      }
+      if(card.type==='variation' && this.masteredPrinciples.has(card.variationOf)){
+        return false;
+      }
+      return true;
+    });
+  }
+
+  refreshDeckAfterMasteryChange(){
+    this.recomputeActiveCards();
+    const activeIds = new Set(this.cards.map(card=>card.id));
+    this.availableCards = this.availableCards.filter(card=>activeIds.has(card.id));
+    this.usedCards = this.usedCards.filter(card=>activeIds.has(card.id));
+    const presentIds = new Set([...this.availableCards, ...this.usedCards].map(card=>card.id));
+    this.cards.forEach(card=>{
+      if(!presentIds.has(card.id)){
+        this.availableCards.push(card);
+      }
+    });
+    this.updateCounter();
   }
 
   getAllCategories(){
@@ -295,7 +374,7 @@ class DiscussionCardGame {
 
   applyThemeSelection(selectedCategories){
     this.activeCategories = new Set(selectedCategories);
-    this.cards = this.allCards.filter(card=>this.activeCategories.has(card.category));
+    this.recomputeActiveCards();
     this.availableCards = [...this.cards];
     this.usedCards = [];
     this.updateCounter();
@@ -313,8 +392,16 @@ class DiscussionCardGame {
 
   clearExpertAdvicePanel(){
     if(this.expertAdviceCategoryEl){ this.expertAdviceCategoryEl.textContent=''; }
+    if(this.expertAdviceVariationEl){ this.expertAdviceVariationEl.textContent=''; }
     if(this.expertAdviceSituationEl){ this.expertAdviceSituationEl.textContent=''; }
     if(this.expertAdviceContentEl){ this.expertAdviceContentEl.innerHTML=''; }
+    if(this.masteryStatusEl){ this.masteryStatusEl.textContent=''; }
+    if(this.masteryActionButtons){
+      this.masteryActionButtons.forEach(button=>{
+        button.classList.remove('active');
+        button.setAttribute('aria-pressed','false');
+      });
+    }
   }
 
   bindExpertAdviceEvents(){
@@ -333,12 +420,23 @@ class DiscussionCardGame {
     }
   }
 
+  bindMasteryEvents(){
+    if(!this.masteryActionButtons || this.masteryActionButtons.length===0) return;
+    this.masteryActionButtons.forEach(button=>{
+      button.addEventListener('click', ()=>{
+        const mastered = button.dataset.mastered === 'true';
+        this.handleMasteryToggle(mastered);
+      });
+    });
+  }
+
   showExpertAdvice(){
     if(!this.currentCard || !this.currentCard.advice || !this.expertAdviceModalEl) return;
     this.expertTriggerElement = document.activeElement;
     this.populateExpertAdviceContent(this.currentCard);
     this.expertAdviceModalEl.classList.add('visible');
     this.expertAdviceModalEl.setAttribute('aria-hidden','false');
+    this.updateMasteryControls(this.currentCard);
     if(this.closeExpertAdviceBtn){ this.closeExpertAdviceBtn.focus(); }
   }
 
@@ -358,6 +456,13 @@ class DiscussionCardGame {
   populateExpertAdviceContent(card){
     if(!this.expertAdviceCategoryEl || !this.expertAdviceSituationEl || !this.expertAdviceContentEl) return;
     this.expertAdviceCategoryEl.textContent = card.category;
+    if(this.expertAdviceVariationEl){
+      if(card.type==='variation'){
+        this.expertAdviceVariationEl.textContent = card.variationLabel || 'Variante';
+      }else{
+        this.expertAdviceVariationEl.textContent = '';
+      }
+    }
     this.expertAdviceSituationEl.textContent = card.content;
     this.expertAdviceContentEl.innerHTML='';
     const paragraphs = card.advice.split(/\n\s*\n/).map(text=>text.trim()).filter(text=>text.length>0);
@@ -372,6 +477,84 @@ class DiscussionCardGame {
       p.textContent = text;
       this.expertAdviceContentEl.appendChild(p);
     });
+  }
+
+  handleMasteryToggle(mastered){
+    if(!this.currentCard || this.currentCard===this.welcomeCard) return;
+    const baseId = this.getBaseCardId(this.currentCard);
+    const wasMastered = this.masteredPrinciples.has(baseId);
+    if(mastered){
+      if(!wasMastered){
+        this.masteredPrinciples.add(baseId);
+        this.refreshDeckAfterMasteryChange();
+        const removedCount = this.getVariationCount(baseId);
+        if(removedCount>0){
+          const message = removedCount===1
+            ? 'Principe marqué comme maîtrisé : la variante associée a été retirée du paquet.'
+            : `Principe marqué comme maîtrisé : ${removedCount} variantes associées ont été retirées du paquet.`;
+          this.updateStatus(message);
+        }else{
+          this.updateStatus('Principe marqué comme maîtrisé.');
+        }
+      }
+    }else if(wasMastered){
+      this.masteredPrinciples.delete(baseId);
+      this.refreshDeckAfterMasteryChange();
+      const readded = this.getVariationCount(baseId);
+      if(readded>0){
+        const message = readded===1
+          ? 'Principe marqué à retravailler : la variante associée a été réintégrée dans le paquet.'
+          : `Principe marqué à retravailler : ${readded} variantes associées ont été réintégrées dans le paquet.`;
+        this.updateStatus(message);
+      }else{
+        this.updateStatus('Principe marqué à retravailler.');
+      }
+    }
+    this.updateMasteryControls(this.currentCard);
+  }
+
+  getBaseCardId(card){
+    if(card && card.type==='variation' && typeof card.variationOf==='number'){
+      return card.variationOf;
+    }
+    return card ? card.id : null;
+  }
+
+  getVariationCount(baseId){
+    const ids = this.variationMap ? this.variationMap.get(baseId) : null;
+    return ids ? ids.length : 0;
+  }
+
+  updateMasteryControls(card){
+    if(!card || card===this.welcomeCard) return;
+    const baseId = this.getBaseCardId(card);
+    const isMastered = this.masteredPrinciples.has(baseId);
+    if(this.masteryActionButtons){
+      this.masteryActionButtons.forEach(button=>{
+        const buttonMastered = button.dataset.mastered === 'true';
+        const isActive = buttonMastered === isMastered;
+        button.classList.toggle('active', isActive);
+        button.setAttribute('aria-pressed', String(isActive));
+      });
+    }
+    if(this.masteryStatusEl){
+      const variationCount = this.getVariationCount(baseId);
+      if(isMastered){
+        if(variationCount>0){
+          this.masteryStatusEl.textContent = variationCount===1
+            ? 'Vous avez indiqué maîtriser ce principe : la variante associée a été retirée du paquet.'
+            : `Vous avez indiqué maîtriser ce principe : les ${variationCount} variantes associées ont été retirées du paquet.`;
+        }else{
+          this.masteryStatusEl.textContent = 'Vous avez indiqué maîtriser ce principe.';
+        }
+      }else if(variationCount>0){
+        this.masteryStatusEl.textContent = variationCount===1
+          ? 'La variante associée reste disponible pour vous entraîner.'
+          : `Les ${variationCount} variantes associées restent disponibles pour vous entraîner.`;
+      }else{
+        this.masteryStatusEl.textContent = 'Aucune variante supplémentaire n’est liée à cette carte pour le moment.';
+      }
+    }
   }
 
   showThemeSelector(){
@@ -443,7 +626,8 @@ class DiscussionCardGame {
       timestamp: new Date().toISOString(),
       activeCategories: Array.from(this.activeCategories),
       availableCardIds: this.availableCards.map(card=>card.id),
-      usedCardIds: this.usedCards.map(card=>card.id)
+      usedCardIds: this.usedCards.map(card=>card.id),
+      masteredPrinciples: Array.from(this.masteredPrinciples)
     };
   }
 
@@ -473,7 +657,8 @@ class DiscussionCardGame {
       ? state.activeCategories
       : this.getAllCategories();
     this.activeCategories = new Set(activeCategories);
-    this.cards = this.allCards.filter(card=>this.activeCategories.has(card.category));
+    this.masteredPrinciples = new Set(state.masteredPrinciples || []);
+    this.recomputeActiveCards();
     const availableIds = new Set(state.availableCardIds || []);
     const usedIds = new Set(state.usedCardIds || []);
     const availableCards = this.mapIdsToCards(availableIds);
@@ -513,7 +698,8 @@ class DiscussionCardGame {
     return {
       activeCategories,
       availableCardIds: validateIdArray(data.availableCardIds),
-      usedCardIds: validateIdArray(data.usedCardIds)
+      usedCardIds: validateIdArray(data.usedCardIds),
+      masteredPrinciples: validateIdArray(data.masteredPrinciples)
     };
   }
 
