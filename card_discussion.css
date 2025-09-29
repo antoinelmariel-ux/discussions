@@ -1,35 +1,36 @@
 :root{
-  /* Palette principale (option 3) */
-  --primary-1:#00857C;
-  --primary-2:#4B7CA2;
-  --primary-grad: linear-gradient(135deg, var(--primary-1) 0%, var(--primary-2) 100%);
+  /* Palette inspirée des tonalités douces de prêtpourbébé */
+  --primary-1:#E99291;
+  --primary-2:#F5B5B2;
+  --primary-grad: linear-gradient(135deg, #FFEDE8 0%, #FBD9D3 100%);
 
-  /* Accents chauds pour appels à l’action / badges */
-  --accent-1:#F5B700;  /* or #F59E0B si tu préfères un peu plus orangé */
-  --accent-2:#F08A24;
+  /* Accents rosés pour les appels à l’action et badges */
+  --accent-1:#F4978E;
+  --accent-2:#F08A80;
   --accent-grad: linear-gradient(135deg, var(--accent-1), var(--accent-2));
 
   /* Surfaces & textes */
   --surface:#ffffff;
-  --surface-muted:#F3FAF9;
-  --text:#2d3748;
+  --surface-muted:#FFF7F4;
+  --text:#4A3B3B;
   --text-inverse:#ffffff;
 
-  /* Variantes foncées pour dos de carte (teal/bleu-gris profonds) */
-  --card-front-a:#0F4C48;
-  --card-front-b:#0B314A;
+  /* Variantes douces pour le dos des cartes */
+  --card-front-a:#FCD9D5;
+  --card-front-b:#F7C2BA;
 
   /* Bordures/ombres */
-  --border:#e2e8f0;
-  --shadow-1: rgba(0,0,0,0.2);
-  --shadow-2: rgba(0,0,0,0.3);
+  --border:#F5D7D2;
+  --shadow-1: rgba(233,146,145,0.25);
+  --shadow-2: rgba(209,133,126,0.35);
 }
 
 *{margin:0;padding:0;box-sizing:border-box;}
 
 body{
   font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: var(--primary-grad);
+  background: linear-gradient(180deg, #FFF8F4 0%, #FFE1D8 100%);
+  color:var(--text);
   min-height:100vh;
   display:flex;
   flex-direction:column;
@@ -52,12 +53,12 @@ body{
 }
 
 .title{
-  color:var(--text-inverse);
+  color:var(--text);
   font-size:2.5rem;
   font-weight:700;
   text-align:center;
   margin-bottom:3rem;
-  text-shadow:2px 2px 4px rgba(0,0,0,0.3);
+  text-shadow:0 4px 12px rgba(255,165,158,0.35);
 }
 
 .game-container{
@@ -123,12 +124,12 @@ body{
   display:flex;
   align-items:center;
   justify-content:center;
-  box-shadow:0 10px 25px rgba(240,138,36,0.35);
+  box-shadow:0 10px 25px rgba(244,151,142,0.4);
   cursor:pointer;
   transition:transform .3s ease, box-shadow .3s ease;
   z-index:5;
 }
-.expert-button:hover:not([disabled]){ transform:translateY(-4px) scale(1.05); box-shadow:0 12px 30px rgba(240,138,36,0.45);}
+.expert-button:hover:not([disabled]){ transform:translateY(-4px) scale(1.05); box-shadow:0 12px 30px rgba(244,151,142,0.45);}
 .expert-button:active:not([disabled]){ transform:translateY(0) scale(1); }
 .expert-button[disabled]{ opacity:0.4; cursor:not-allowed; box-shadow:none; }
 
@@ -180,14 +181,15 @@ body{
 
 .card-category{
   background: var(--primary-grad);
-  color:var(--text-inverse);
+  color:#B26761;
   padding:8px 16px; border-radius:20px; font-size:.8rem; font-weight:700;
   text-transform:uppercase; letter-spacing:1px; margin-bottom:20px;
-  box-shadow:0 4px 15px rgba(0,133,124,0.35);
+  border:1px solid rgba(233,146,145,0.4);
+  box-shadow:0 8px 24px rgba(233,146,145,0.35);
 }
 
 .card-variation-label{
-  color:var(--primary-2);
+  color:#C7736B;
   font-weight:600;
   font-size:0.85rem;
   margin-top:-10px;
@@ -247,7 +249,7 @@ body{
   padding:0;
   border-radius:50%;
   background:var(--surface);
-  color:var(--primary-1);
+  color:#E27F78;
   text-transform:none;
   letter-spacing:0;
   box-shadow:0 8px 18px rgba(0,0,0,0.2);
@@ -256,7 +258,7 @@ body{
 .btn-menu-toggle:hover,
 .btn-menu-toggle:focus{
   background:var(--surface-muted);
-  color:var(--primary-2);
+  color:var(--primary-1);
 }
 
 .controls .btn-menu-toggle{
@@ -324,7 +326,7 @@ body{
 
 .menu-action:hover,
 .menu-action:focus{
-  background:rgba(0,133,124,0.12);
+  background:rgba(233,146,145,0.18);
   color:var(--primary-1);
 }
 
@@ -342,10 +344,10 @@ body{
   }
 }
 
-.btn{
+.btn{ 
   padding:15px 30px; border:none; border-radius:50px; font-size:1rem; font-weight:700; cursor:pointer;
   transition:all .3s ease; text-transform:uppercase; letter-spacing:1px;
-  box-shadow:0 4px 15px var(--shadow-2); position:relative; overflow:hidden;
+  box-shadow:0 6px 20px rgba(233,146,145,0.25); position:relative; overflow:hidden;
 }
 
 .btn:focus-visible,
@@ -353,13 +355,13 @@ body{
 .card-deck:focus-visible,
 .discussion-card:focus-visible,
 .modal-close:focus-visible{
-  outline:3px solid rgba(0,133,124,0.7);
+  outline:3px solid rgba(233,146,145,0.7);
   outline-offset:4px;
 }
-.btn:hover{ transform: translateY(-2px); box-shadow:0 6px 20px rgba(0,0,0,0.3); }
+.btn:hover{ transform: translateY(-2px); box-shadow:0 8px 22px rgba(209,133,126,0.35); }
 .btn:active{ transform: translateY(0); }
 
-.btn-primary{ background: var(--primary-grad); color:var(--text-inverse); }
+.btn-primary{ background: var(--primary-grad); color:var(--text); }
 .btn-secondary{ background: var(--accent-grad); color:var(--text-inverse); }
 
 .deck-counter{
@@ -369,14 +371,14 @@ body{
   width:35px; height:35px; border-radius:50%;
   display:flex; align-items:center; justify-content:center;
   font-weight:800; font-size:.9rem;
-  box-shadow:0 4px 15px rgba(245,183,0,0.4);
+  box-shadow:0 4px 18px rgba(244,151,142,0.4);
   border:2px solid rgba(255,255,255,0.6);
 }
 
 .modal-overlay{
   position:fixed;
   inset:0;
-  background:rgba(8,33,41,0.75);
+  background:rgba(134,86,79,0.55);
   backdrop-filter:blur(6px);
   display:flex;
   align-items:center;
@@ -430,8 +432,8 @@ body{
   background:var(--surface-muted);
   border-radius:14px;
   padding:18px;
-  border:1px solid rgba(0,133,124,0.2);
-  box-shadow:0 6px 18px rgba(11,49,74,0.08);
+  border:1px solid rgba(233,146,145,0.25);
+  box-shadow:0 6px 18px rgba(209,133,126,0.18);
 }
 
 .expert-section-title{
@@ -446,12 +448,12 @@ body{
 .expert-category{
   font-weight:700;
   margin-bottom:6px;
-  color:var(--primary-2);
+  color:#C7736B;
 }
 
 .expert-variation{
   font-weight:600;
-  color:#0f4c48;
+  color:#B26761;
   margin-bottom:8px;
   min-height:1.2em;
 }
@@ -473,8 +475,8 @@ body{
   background:var(--surface-muted);
   border-radius:14px;
   padding:18px;
-  border:1px solid rgba(0,133,124,0.2);
-  box-shadow:0 6px 18px rgba(11,49,74,0.08);
+  border:1px solid rgba(233,146,145,0.25);
+  box-shadow:0 6px 18px rgba(209,133,126,0.18);
   display:flex;
   flex-direction:column;
   gap:12px;
@@ -494,21 +496,21 @@ body{
 .mastery-action{
   flex:1 1 220px;
   background:var(--surface);
-  color:var(--primary-1);
-  border:2px solid rgba(0,133,124,0.35);
+  color:#C06760;
+  border:2px solid rgba(233,146,145,0.4);
   font-size:0.9rem;
   letter-spacing:0.5px;
 }
 
 .mastery-action.active{
-  background:var(--primary-grad);
+  background:var(--accent-grad);
   color:var(--text-inverse);
   border-color:transparent;
 }
 
 .expert-mastery-status{
   font-size:0.9rem;
-  color:#1f2937;
+  color:#6F5957;
   min-height:1.4em;
 }
 
@@ -522,14 +524,14 @@ body{
   font-size:1rem;
   line-height:1.5;
   text-align:center;
-  color:#445869;
+  color:#6F5957;
 }
 
 .select-all{
   display:flex;
   justify-content:flex-end;
   font-weight:600;
-  color:#2b4d5c;
+  color:#B26761;
 }
 
 .theme-options{
@@ -549,14 +551,14 @@ body{
   align-items:center;
   gap:10px;
   font-weight:600;
-  border:1px solid rgba(0,133,124,0.15);
-  box-shadow:0 4px 12px rgba(11,49,74,0.06);
+  border:1px solid rgba(233,146,145,0.22);
+  box-shadow:0 4px 14px rgba(209,133,126,0.12);
   transition:transform .2s ease, box-shadow .2s ease;
 }
 
 .theme-option input{ accent-color:var(--primary-1); width:18px; height:18px; }
 
-.theme-option:hover{ transform:translateY(-2px); box-shadow:0 8px 20px rgba(11,49,74,0.12); }
+.theme-option:hover{ transform:translateY(-2px); box-shadow:0 10px 24px rgba(209,133,126,0.2); }
 
 .modal-actions{
   display:flex;
@@ -572,14 +574,14 @@ body{
   min-height:20px;
 }
 
-#openThemeSelector{ background:var(--surface); color:var(--primary-1); border:2px solid rgba(0,133,124,0.35); }
-#openThemeSelector:hover{ color:var(--text-inverse); background:var(--primary-grad); }
+#openThemeSelector{ background:var(--surface); color:#C06760; border:2px solid rgba(233,146,145,0.4); }
+#openThemeSelector:hover{ color:var(--text); background:var(--primary-grad); }
 
 .floating-particles{
   position:fixed; inset:0; pointer-events:none; z-index:-1;
 }
 .particle{
-  position:absolute; width:4px; height:4px; background: rgba(255,255,255,0.35);
+  position:absolute; width:4px; height:4px; background: rgba(255,205,197,0.55);
   border-radius:50%; animation: float 6s ease-in-out infinite;
 }
 @keyframes float{
