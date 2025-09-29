@@ -99,8 +99,8 @@ body{
 .deck-card:nth-child(3){ transform: translateZ(-4px) rotate(-1deg); }
 
 .card-container{
-  width:350px;
-  height:260px;
+  width:420px;
+  height:320px;
   perspective:1000px;
   transform:translateX(-50px);
   opacity:0;
@@ -142,7 +142,7 @@ body{
 .card-face{
   position:absolute; inset:0;
   border-radius:20px; border:3px solid var(--border);
-  padding:30px; display:flex; flex-direction:column;
+  padding:24px; display:flex; flex-direction:column;
   align-items:center; justify-content:center; text-align:center;
   box-shadow:0 15px 40px var(--shadow-1);
   backface-visibility:hidden;
@@ -161,7 +161,7 @@ body{
   align-items:stretch;
   justify-content:flex-start;
   text-align:left;
-  padding:30px 26px 26px;
+  padding:24px 20px 22px;
   gap:18px;
 }
 
@@ -204,7 +204,7 @@ body{
   text-shadow: 1px 1px 2px rgba(0,0,0,0.06);
   overflow-y:auto;
   padding-right:8px;
-  max-height:calc(100% - 60px);
+  max-height:calc(100% - 44px);
 }
 
 .card-content:focus{
@@ -612,7 +612,7 @@ body{
     width:100%;
     max-width:100%;
     height:auto;
-    min-height:300px;
+    min-height:320px;
     transform:none;
   }
 
@@ -621,7 +621,7 @@ body{
   }
 
   .discussion-card{
-    min-height:300px;
+    min-height:320px;
   }
 
   .card-face{
