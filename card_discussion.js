@@ -600,19 +600,36 @@ class DiscussionCardGame {
   }
 
   scrollExpertAdviceToTop(){
-    if(this.expertAdviceModalEl){
-      if(typeof this.expertAdviceModalEl.scrollTo === 'function'){
-        this.expertAdviceModalEl.scrollTo({ top:0, behavior:'smooth' });
-      }else{
-        this.expertAdviceModalEl.scrollTop = 0;
+    const resetScrollPositions = ()=>{
+      const modalContent = this.expertAdviceModalEl
+        ? this.expertAdviceModalEl.querySelector('.modal-content')
+        : null;
+      const elementsToReset = [
+        this.expertAdviceModalEl,
+        modalContent,
+        this.expertAdviceContentEl
+      ].filter(Boolean);
+
+      elementsToReset.forEach(element=>{
+        if(typeof element.scrollTo === 'function'){
+          try{
+            element.scrollTo({ top:0, behavior:'auto' });
+          }catch(error){
+            element.scrollTo(0,0);
+          }
+        }
+        element.scrollTop = 0;
+      });
+
+      if(modalContent && typeof modalContent.scrollIntoView === 'function'){
+        modalContent.scrollIntoView({ block:'start', inline:'nearest' });
       }
-      const modalContent = this.expertAdviceModalEl.querySelector('.modal-content');
-      if(modalContent){
-        modalContent.scrollTop = 0;
-      }
-    }
-    if(this.expertAdviceContentEl){
-      this.expertAdviceContentEl.scrollTop = 0;
+    };
+
+    if(typeof requestAnimationFrame === 'function'){
+      requestAnimationFrame(()=> requestAnimationFrame(resetScrollPositions));
+    }else{
+      setTimeout(resetScrollPositions,0);
     }
   }
 
