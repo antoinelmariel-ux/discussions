@@ -49,10 +49,18 @@
 
   <div class="controls">
     <button class="btn btn-primary" onclick="drawCard()">Nouvelle Carte</button>
-    <button class="btn btn-secondary" onclick="resetDeck()">Réinitialiser</button>
-    <button class="btn" id="openThemeSelector">Choisir les thématiques</button>
-    <button class="btn" id="saveSession" type="button">Enregistrer la session</button>
-    <button class="btn" id="loadSession" type="button">Charger une session</button>
+    <div class="controls-menu">
+      <button class="btn btn-menu-toggle" id="advancedMenuToggle" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="advancedMenu">
+        <span class="menu-toggle-icon" aria-hidden="true"></span>
+        <span class="menu-toggle-label">Plus d'actions</span>
+      </button>
+      <div class="menu-dropdown" id="advancedMenu" role="menu">
+        <button class="btn menu-action" role="menuitem" onclick="resetDeck()">Réinitialiser</button>
+        <button class="btn menu-action" id="openThemeSelector" type="button" role="menuitem">Choisir les thématiques</button>
+        <button class="btn menu-action" id="saveSession" type="button" role="menuitem">Enregistrer la session</button>
+        <button class="btn menu-action" id="loadSession" type="button" role="menuitem">Charger une session</button>
+      </div>
+    </div>
   </div>
 
   <input type="file" id="sessionFileInput" accept="application/json" class="visually-hidden" aria-hidden="true" tabindex="-1">
