@@ -57,6 +57,7 @@
       <div class="menu-dropdown" id="advancedMenu" role="menu">
         <button class="btn menu-action" role="menuitem" onclick="resetDeck()">Réinitialiser</button>
         <button class="btn menu-action" id="openThemeSelector" type="button" role="menuitem">Choisir les thématiques</button>
+        <button class="btn menu-action" id="openFavorites" type="button" role="menuitem">Mes favoris experts</button>
         <button class="btn menu-action" id="saveSession" type="button" role="menuitem">Enregistrer la session</button>
         <button class="btn menu-action" id="loadSession" type="button" role="menuitem">Charger une session</button>
       </div>
@@ -93,6 +94,13 @@
         <div class="expert-section-title" id="expertAdviceTitle">Recommandations des experts</div>
         <div class="expert-advice-text" id="expertAdviceContent"></div>
       </div>
+      <div class="expert-favorite" id="expertFavoriteSection">
+        <p class="expert-favorite-text">Gardez cette recommandation sous la main pour vos prochaines sessions.</p>
+        <button class="favorite-heart" id="toggleFavorite" type="button" aria-pressed="false" aria-label="Ajouter cette recommandation aux favoris">
+          <span class="heart-icon" aria-hidden="true">♡</span>
+        </button>
+        <p class="expert-favorite-status" id="favoriteStatus" aria-live="polite"></p>
+      </div>
       <div class="expert-mastery" id="expertMasterySection">
         <div class="expert-section-title">Maîtrise du principe</div>
         <p class="expert-mastery-text">Ce principe vous semble-t-il acquis dans cette situation ?</p>
@@ -104,6 +112,18 @@
       </div>
       <div class="modal-actions">
         <button class="btn btn-primary" id="closeExpertAdvice" type="button">Fermer</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="favoritesModal" aria-hidden="true">
+    <div class="modal-content favorites-modal-content" role="dialog" aria-modal="true" aria-labelledby="favoritesTitle">
+      <button class="modal-close" id="closeFavorites" type="button" aria-label="Fermer la liste des favoris">×</button>
+      <h2 class="modal-title" id="favoritesTitle">Mes recommandations favorites</h2>
+      <p class="modal-description">Accédez en un clic aux situations expertes que vous avez enregistrées.</p>
+      <div class="favorites-list" id="favoritesList" role="list"></div>
+      <div class="modal-actions">
+        <button class="btn btn-primary" id="closeFavoritesFooter" type="button">Fermer</button>
       </div>
     </div>
   </div>

@@ -1,15 +1,17 @@
 class DiscussionCardGame {
   constructor(){
-    this.persistenceVersion = 2;
+    this.persistenceVersion = 3;
     const { cards, variationMap } = this.loadCardsFromXML();
     this.allCards = cards;
     this.variationMap = variationMap;
     this.masteredPrinciples = new Set();
+    this.favoriteAdviceIds = new Set();
     this.activeCategories = new Set(this.getAllCategories());
     this.recomputeActiveCards();
     this.availableCards = [...this.cards];
     this.usedCards = [];
     this.currentCard = null;
+    this.activeExpertCard = null;
     this.welcomeCard = {
       category:'Bienvenue',
       content:'Cliquez sur le tas de cartes pour découvrir votre première question de discussion !'
@@ -36,18 +38,26 @@ class DiscussionCardGame {
     this.expertAdviceSituationEl = document.getElementById('expertAdviceSituation');
     this.expertAdviceContentEl = document.getElementById('expertAdviceContent');
     this.closeExpertAdviceBtn = document.getElementById('closeExpertAdvice');
+    this.favoriteToggleBtn = document.getElementById('toggleFavorite');
+    this.favoriteStatusEl = document.getElementById('favoriteStatus');
     this.masterySectionEl = document.getElementById('expertMasterySection');
     this.masteryStatusEl = document.getElementById('expertMasteryStatus');
     this.masteryActionButtons = Array.from(document.querySelectorAll('.mastery-action'));
     this.saveSessionBtn = document.getElementById('saveSession');
     this.loadSessionBtn = document.getElementById('loadSession');
     this.sessionFileInput = document.getElementById('sessionFileInput');
+    this.openFavoritesBtn = document.getElementById('openFavorites');
+    this.favoritesModalEl = document.getElementById('favoritesModal');
+    this.favoritesListEl = document.getElementById('favoritesList');
+    this.closeFavoritesBtns = Array.from(document.querySelectorAll('#closeFavorites, #closeFavoritesFooter'));
     this.advancedMenuToggle = document.getElementById('advancedMenuToggle');
     this.advancedMenu = document.getElementById('advancedMenu');
     this.advancedMenuWrapper = this.advancedMenuToggle ? this.advancedMenuToggle.closest('.controls-menu') : null;
     this.cardStatusEl = document.getElementById('cardStatus');
     this.themeTriggerElement = null;
     this.expertTriggerElement = null;
+    this.favoritesTriggerElement = null;
+    this.favoriteAnimationTimeout = null;
     this.handleDeckKeyPress = this.handleDeckKeyPress.bind(this);
     this.handleCardKeyPress = this.handleCardKeyPress.bind(this);
     this.handleGlobalKeyPress = this.handleGlobalKeyPress.bind(this);
@@ -60,12 +70,14 @@ class DiscussionCardGame {
     this.bindMasteryEvents();
     this.bindPersistenceEvents();
     this.bindAdvancedMenuEvents();
+    this.bindFavoritesEvents();
     this.bindAccessibilityInteractions();
     this.setExpertButtonState(false);
   }
 
   prepareWelcomeCard(){
     this.currentCard = this.welcomeCard;
+    this.activeExpertCard = null;
     if(this.cardEl){ this.cardEl.classList.remove('flipping'); }
     this.updateCardFlipState(false);
     if(this.cardCategoryEl){ this.cardCategoryEl.textContent = this.welcomeCard.category; }
@@ -243,6 +255,7 @@ class DiscussionCardGame {
     this.hideExpertAdvice();
     this.prepareAndFlipCard(card);
     this.setExpertButtonState(Boolean(card.advice));
+    this.activeExpertCard = null;
     const remainingMessage = this.formatRemainingCardsMessage(this.availableCards.length);
     this.updateStatus(`Carte tirée : ${card.category}. ${remainingMessage}.`);
     return card;
@@ -482,6 +495,20 @@ class DiscussionCardGame {
         button.setAttribute('aria-pressed','false');
       });
     }
+    if(this.favoriteToggleBtn){
+      this.favoriteToggleBtn.classList.remove('is-favorite','favorite-heart-animate');
+      this.favoriteToggleBtn.setAttribute('aria-pressed','false');
+      this.favoriteToggleBtn.setAttribute('aria-label','Ajouter cette recommandation aux favoris');
+      const heartIcon = this.favoriteToggleBtn.querySelector('.heart-icon');
+      if(heartIcon){ heartIcon.textContent = '♡'; }
+    }
+    if(this.favoriteAnimationTimeout){
+      clearTimeout(this.favoriteAnimationTimeout);
+      this.favoriteAnimationTimeout = null;
+    }
+    if(this.favoriteStatusEl){
+      this.favoriteStatusEl.textContent='';
+    }
   }
 
   bindExpertAdviceEvents(){
@@ -498,6 +525,14 @@ class DiscussionCardGame {
         if(event.target===this.expertAdviceModalEl){ this.hideExpertAdvice(); }
       });
     }
+    if(this.favoriteToggleBtn){
+      this.favoriteToggleBtn.addEventListener('click', ()=>{
+        const targetCard = this.activeExpertCard || this.currentCard;
+        if(targetCard){
+          this.toggleFavoriteForCard(targetCard);
+        }
+      });
+    }
   }
 
   bindMasteryEvents(){
@@ -510,13 +545,16 @@ class DiscussionCardGame {
     });
   }
 
-  showExpertAdvice(){
-    if(!this.currentCard || !this.currentCard.advice || !this.expertAdviceModalEl) return;
+  showExpertAdvice(cardOverride=null){
+    const cardToShow = cardOverride || this.currentCard;
+    if(!cardToShow || !cardToShow.advice || !this.expertAdviceModalEl) return;
     this.expertTriggerElement = document.activeElement;
-    this.populateExpertAdviceContent(this.currentCard);
+    this.activeExpertCard = cardToShow;
+    this.populateExpertAdviceContent(cardToShow);
     this.expertAdviceModalEl.classList.add('visible');
     this.expertAdviceModalEl.setAttribute('aria-hidden','false');
-    this.updateMasteryControls(this.currentCard);
+    this.updateMasteryControls(cardToShow);
+    this.updateFavoriteButtonState(cardToShow);
     if(this.closeExpertAdviceBtn){ this.closeExpertAdviceBtn.focus(); }
   }
 
@@ -525,6 +563,7 @@ class DiscussionCardGame {
       this.expertAdviceModalEl.classList.remove('visible');
       this.expertAdviceModalEl.setAttribute('aria-hidden','true');
     }
+    this.activeExpertCard = null;
     if(this.expertTriggerElement){
       this.expertTriggerElement.focus();
       this.expertTriggerElement = null;
@@ -560,8 +599,9 @@ class DiscussionCardGame {
   }
 
   handleMasteryToggle(mastered){
-    if(!this.currentCard || this.currentCard===this.welcomeCard) return;
-    const baseId = this.getBaseCardId(this.currentCard);
+    const targetCard = this.activeExpertCard || this.currentCard;
+    if(!targetCard || targetCard===this.welcomeCard) return;
+    const baseId = this.getBaseCardId(targetCard);
     const wasMastered = this.masteredPrinciples.has(baseId);
     if(mastered){
       if(!wasMastered){
@@ -590,7 +630,7 @@ class DiscussionCardGame {
         this.updateStatus('Principe marqué à retravailler.');
       }
     }
-    this.updateMasteryControls(this.currentCard);
+    this.updateMasteryControls(targetCard);
   }
 
   getBaseCardId(card){
@@ -682,6 +722,194 @@ class DiscussionCardGame {
     document.addEventListener('keydown', this.handleGlobalKeyPress);
   }
 
+  bindFavoritesEvents(){
+    if(this.openFavoritesBtn){
+      this.openFavoritesBtn.addEventListener('click', ()=> this.showFavoritesModal());
+    }
+    if(this.favoritesModalEl){
+      this.favoritesModalEl.addEventListener('click', event=>{
+        if(event.target===this.favoritesModalEl){
+          this.hideFavoritesModal();
+        }
+      });
+    }
+    if(this.closeFavoritesBtns && this.closeFavoritesBtns.length>0){
+      this.closeFavoritesBtns.forEach(button=>{
+        button.addEventListener('click', ()=> this.hideFavoritesModal());
+      });
+    }
+    if(this.favoritesListEl){
+      this.favoritesListEl.addEventListener('click', event=>{
+        const target = event.target;
+        if(!(target instanceof HTMLElement)) return;
+        const wrapper = target.closest('[data-favorite-id]');
+        if(!wrapper) return;
+        const id = Number(wrapper.dataset.favoriteId);
+        if(Number.isNaN(id)) return;
+        if(target.matches('.favorite-remove')){
+          this.removeFavorite(id);
+        }else if(target.matches('.favorite-open')){
+          const card = this.getCardById(id, true);
+          if(card){
+            this.hideFavoritesModal(false);
+            if(this.openFavoritesBtn){
+              this.openFavoritesBtn.focus();
+            }
+            this.showExpertAdvice(card);
+          }
+        }
+      });
+    }
+  }
+
+  showFavoritesModal(){
+    if(!this.favoritesModalEl) return;
+    this.favoritesTriggerElement = document.activeElement;
+    this.refreshFavoritesList();
+    this.favoritesModalEl.classList.add('visible');
+    this.favoritesModalEl.setAttribute('aria-hidden','false');
+    const firstInteractive = this.favoritesModalEl.querySelector('.favorite-open, .favorite-remove, .modal-close, .btn');
+    if(firstInteractive instanceof HTMLElement){
+      firstInteractive.focus();
+    }
+  }
+
+  hideFavoritesModal(restoreFocus=true){
+    if(this.favoritesModalEl){
+      this.favoritesModalEl.classList.remove('visible');
+      this.favoritesModalEl.setAttribute('aria-hidden','true');
+    }
+    if(restoreFocus && this.favoritesTriggerElement instanceof HTMLElement){
+      this.favoritesTriggerElement.focus();
+    }else if(restoreFocus && this.openFavoritesBtn){
+      this.openFavoritesBtn.focus();
+    }
+    this.favoritesTriggerElement = null;
+  }
+
+  toggleFavoriteForCard(card){
+    const id = card.id;
+    if(this.favoriteAdviceIds.has(id)){
+      this.favoriteAdviceIds.delete(id);
+      this.updateStatus('Recommandation retirée de vos favoris.');
+    }else{
+      this.favoriteAdviceIds.add(id);
+      this.updateStatus('Recommandation enregistrée dans vos favoris 💖.');
+    }
+    this.updateFavoriteButtonState(card);
+    this.animateFavoriteHeart();
+    this.refreshFavoritesList();
+  }
+
+  removeFavorite(id){
+    if(!this.favoriteAdviceIds.has(id)) return;
+    this.favoriteAdviceIds.delete(id);
+    const card = this.getCardById(id, true);
+    if(card && (this.activeExpertCard && this.activeExpertCard.id===id)){
+      this.updateFavoriteButtonState(card);
+      this.animateFavoriteHeart();
+    }
+    this.refreshFavoritesList();
+    this.updateStatus('Recommandation retirée de vos favoris.');
+  }
+
+  updateFavoriteButtonState(card){
+    if(!this.favoriteToggleBtn) return;
+    const isFavorite = this.isCardFavorite(card);
+    this.favoriteToggleBtn.classList.toggle('is-favorite', isFavorite);
+    this.favoriteToggleBtn.setAttribute('aria-pressed', String(isFavorite));
+    this.favoriteToggleBtn.setAttribute('aria-label', isFavorite
+      ? 'Retirer cette recommandation des favoris'
+      : 'Ajouter cette recommandation aux favoris'
+    );
+    const heartIcon = this.favoriteToggleBtn.querySelector('.heart-icon');
+    if(heartIcon){
+      heartIcon.textContent = isFavorite ? '❤' : '♡';
+    }
+    if(this.favoriteStatusEl){
+      this.favoriteStatusEl.textContent = isFavorite ? 'Ajoutée à vos favoris 💖' : '';
+    }
+  }
+
+  animateFavoriteHeart(){
+    if(!this.favoriteToggleBtn) return;
+    this.favoriteToggleBtn.classList.remove('favorite-heart-animate');
+    void this.favoriteToggleBtn.offsetWidth;
+    this.favoriteToggleBtn.classList.add('favorite-heart-animate');
+    if(this.favoriteAnimationTimeout){
+      clearTimeout(this.favoriteAnimationTimeout);
+    }
+    this.favoriteAnimationTimeout = setTimeout(()=>{
+      if(this.favoriteToggleBtn){
+        this.favoriteToggleBtn.classList.remove('favorite-heart-animate');
+      }
+      this.favoriteAnimationTimeout = null;
+    }, 600);
+  }
+
+  isCardFavorite(card){
+    if(!card) return false;
+    return this.favoriteAdviceIds.has(card.id);
+  }
+
+  refreshFavoritesList(){
+    if(!this.favoritesListEl) return;
+    this.favoritesListEl.innerHTML = '';
+    if(this.favoriteAdviceIds.size===0){
+      const empty = document.createElement('p');
+      empty.className = 'favorites-empty';
+      empty.textContent = 'Aucune recommandation enregistrée pour le moment.';
+      this.favoritesListEl.appendChild(empty);
+      return;
+    }
+    const fragment = document.createDocumentFragment();
+    this.favoriteAdviceIds.forEach(id=>{
+      const card = this.getCardById(id, true);
+      if(!card) return;
+      const item = document.createElement('article');
+      item.className = 'favorite-item';
+      item.dataset.favoriteId = String(id);
+      item.setAttribute('role','listitem');
+
+      const title = document.createElement('h3');
+      title.className = 'favorite-title';
+      const variationLabel = card.type==='variation' ? card.variationLabel : null;
+      title.textContent = variationLabel ? `${card.category} · ${variationLabel}` : card.category;
+
+      const excerpt = document.createElement('p');
+      excerpt.className = 'favorite-excerpt';
+      excerpt.textContent = card.content;
+
+      const actions = document.createElement('div');
+      actions.className = 'favorite-actions';
+
+      const openBtn = document.createElement('button');
+      openBtn.type = 'button';
+      openBtn.className = 'btn btn-secondary favorite-open';
+      openBtn.textContent = 'Afficher la recommandation';
+
+      const removeBtn = document.createElement('button');
+      removeBtn.type = 'button';
+      removeBtn.className = 'btn favorite-remove';
+      removeBtn.textContent = 'Retirer';
+
+      actions.appendChild(openBtn);
+      actions.appendChild(removeBtn);
+
+      item.appendChild(title);
+      item.appendChild(excerpt);
+      item.appendChild(actions);
+
+      fragment.appendChild(item);
+    });
+    this.favoritesListEl.appendChild(fragment);
+  }
+
+  getCardById(id, includeAll=false){
+    const source = includeAll ? this.allCards : this.cards;
+    return source.find(card=>card.id===id) || null;
+  }
+
   exportSessionState(){
     try{
       const state = this.serializeSessionState();
@@ -711,7 +939,8 @@ class DiscussionCardGame {
       activeCategories: Array.from(this.activeCategories),
       availableCardIds: this.availableCards.map(card=>card.id),
       usedCardIds: this.usedCards.map(card=>card.id),
-      masteredPrinciples: Array.from(this.masteredPrinciples)
+      masteredPrinciples: Array.from(this.masteredPrinciples),
+      favoriteCardIds: Array.from(this.favoriteAdviceIds)
     };
   }
 
@@ -751,19 +980,26 @@ class DiscussionCardGame {
     const missingCards = this.cards.filter(card=>!knownIds.has(card.id));
     this.availableCards = [...availableCards, ...missingCards];
     this.usedCards = usedCards;
+    const favoriteIds = new Set(state.favoriteCardIds || []);
+    const validFavorites = new Set();
+    favoriteIds.forEach(id=>{
+      if(this.getCardById(id, true)){ validFavorites.add(id); }
+    });
+    this.favoriteAdviceIds = validFavorites;
     this.populateThemeOptions();
     this.syncSelectAllCheckbox();
     this.updateCounter();
     this.prepareWelcomeCard();
     this.hideExpertAdvice();
     this.setExpertButtonState(false);
+    this.refreshFavoritesList();
   }
 
   validateSessionData(data){
     if(!data || typeof data!=='object'){
       throw new Error('Structure JSON invalide.');
     }
-    if(data.version && data.version!==this.persistenceVersion){
+    if(data.version && data.version>this.persistenceVersion){
       throw new Error('Version de fichier non prise en charge.');
     }
     const validateIdArray = (value)=>{
@@ -783,7 +1019,8 @@ class DiscussionCardGame {
       activeCategories,
       availableCardIds: validateIdArray(data.availableCardIds),
       usedCardIds: validateIdArray(data.usedCardIds),
-      masteredPrinciples: validateIdArray(data.masteredPrinciples)
+      masteredPrinciples: validateIdArray(data.masteredPrinciples),
+      favoriteCardIds: validateIdArray(data.favoriteCardIds)
     };
   }
 
@@ -833,6 +1070,8 @@ class DiscussionCardGame {
         this.hideThemeSelector();
       }else if(this.expertAdviceModalEl && this.expertAdviceModalEl.classList.contains('visible')){
         this.hideExpertAdvice();
+      }else if(this.favoritesModalEl && this.favoritesModalEl.classList.contains('visible')){
+        this.hideFavoritesModal();
       }
     }
   }
