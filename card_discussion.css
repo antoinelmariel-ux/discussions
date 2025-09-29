@@ -397,6 +397,8 @@ body{
   color:var(--text);
   max-width:520px;
   width:100%;
+  max-height:90vh;
+  overflow:auto;
   border-radius:18px;
   padding:30px;
   box-shadow:0 20px 45px rgba(0,0,0,0.25);
@@ -888,8 +890,6 @@ body{
   .modal-content{
     max-width:100%;
     padding:24px 20px;
-    max-height:90vh;
-    overflow:auto;
   }
 
   .theme-options{
