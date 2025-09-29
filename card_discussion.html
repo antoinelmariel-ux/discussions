@@ -18,7 +18,7 @@
       <div class="deck-card"><div class="deck-icon">?</div></div>
       <div class="deck-card"><div class="deck-icon">?</div></div>
       <div class="deck-card"><div class="deck-icon">?</div></div>
-      <div class="deck-counter" id="cardCounter" aria-live="polite" aria-atomic="true">24</div>
+      <div class="deck-counter" id="cardCounter" aria-live="polite" aria-atomic="true">72</div>
     </div>
 
     <!-- Carte de discussion avec effet flip -->
@@ -36,6 +36,7 @@
         <!-- Face arrière (contenu) -->
         <div class="card-face card-back">
           <div class="card-category" id="cardCategory">Bienvenue</div>
+          <div class="card-variation-label" id="cardVariationLabel" aria-live="polite"></div>
           <div class="card-content" id="cardContent">
             Cliquez sur cette carte ou sur le tas de cartes pour découvrir votre première question de discussion !
           </div>
@@ -77,11 +78,21 @@
       <div class="expert-situation">
         <div class="expert-section-title">Situation</div>
         <div class="expert-category" id="expertAdviceCategory"></div>
+        <div class="expert-variation" id="expertAdviceVariation"></div>
         <p class="expert-situation-text" id="expertAdviceSituation"></p>
       </div>
       <div class="expert-advice">
         <div class="expert-section-title" id="expertAdviceTitle">Recommandations des experts</div>
         <div class="expert-advice-text" id="expertAdviceContent"></div>
+      </div>
+      <div class="expert-mastery" id="expertMasterySection">
+        <div class="expert-section-title">Maîtrise du principe</div>
+        <p class="expert-mastery-text">Ce principe vous semble-t-il acquis dans cette situation ?</p>
+        <div class="expert-mastery-actions">
+          <button class="btn mastery-action" type="button" data-mastered="false" aria-pressed="false">Je veux encore pratiquer</button>
+          <button class="btn mastery-action" type="button" data-mastered="true" aria-pressed="false">Je maîtrise ce principe</button>
+        </div>
+        <p class="expert-mastery-status" id="expertMasteryStatus" aria-live="polite"></p>
       </div>
       <div class="modal-actions">
         <button class="btn btn-primary" id="closeExpertAdvice" type="button">Fermer</button>
@@ -99,6 +110,10 @@
 
           Rappelle ensuite la limite calmement en expliquant le pourquoi : « Notre corps a besoin de faire une pause avec le sucre ». Propose une alternative claire comme un verre d’eau ou un jeu de transition afin qu’il sente qu’il n’est pas laissé seul avec sa frustration.
         </advice>
+        <variations>
+          <variation title="Sortie du bain">Ton enfant explose en sanglots parce que tu annonces la fin du bain alors qu’il veut encore jouer avec l’eau. Quelle phrase d’accueil peux-tu utiliser pour reconnaître sa déception tout en gardant la limite ?</variation>
+          <variation title="Au moment de partir">À l’heure de quitter la maison, il se jette au sol en criant qu’il ne veut pas mettre son manteau. Quelle première réponse pourrait valider sa colère tout en maintenant la consigne ?</variation>
+        </variations>
       </card>
       <card category="Coopération quotidienne">
         <content>Au moment de se brosser les dents, ton enfant se cache sous la table en criant « Non ! ». Comment pourrais-tu reformuler la consigne pour créer une alliance et avancer ensemble ?</content>
@@ -107,6 +122,10 @@
 
           Offre un micro-choix pour restaurer son sentiment de contrôle : « Tu préfères que je commence par les dents du haut ou du bas ? ». En l’invitant dans la tâche, tu maintiens la limite tout en nourrissant l’alliance.
         </advice>
+        <variations>
+          <variation title="Enfiler le pyjama">À l’heure d’enfiler son pyjama, ton enfant se cache derrière le canapé et refuse de sortir. Quelle proposition ludique pourrais-tu inventer pour transformer la consigne en jeu coopératif ?</variation>
+          <variation title="Monter en voiture">Le matin, il s’accroche à la rambarde de l’escalier pour éviter de monter en voiture. Comment pourrais-tu reformuler la demande avec un défi amusant qui l’invite à participer ?</variation>
+        </variations>
       </card>
       <card category="Frustration et apprentissages">
         <content>Après avoir perdu à un jeu de société, ton enfant renverse le plateau. Quelle invitation à la réflexion pourrais-tu lui proposer pour l’aider à nommer sa frustration ?</content>
@@ -115,6 +134,10 @@
 
           Quand l’intensité baisse, propose une question ouverte : « Qu’est-ce qui t’aiderait la prochaine fois quand tu sens la colère arriver ? ». Encourage-le à imaginer une stratégie concrète (respirer, demander une pause, serrer un coussin) et co-créez un plan pour la prochaine partie.
         </advice>
+        <variations>
+          <variation title="Concours de dessin">Lors d’un concours de dessin improvisé avec sa cousine, il froisse sa feuille en disant qu’il est nul. Quelle question pourrait l’aider à mettre des mots sur sa frustration avant de trouver une idée pour recommencer ?</variation>
+          <variation title="Apprentissage du vélo">En apprenant à faire du vélo sans petites roues, il jette le casque après plusieurs essais. Comment pourrais-tu l’inviter à exprimer ce qu’il ressent pour envisager une stratégie de retour au calme ?</variation>
+        </variations>
       </card>
       <card category="Rivalités fraternelles">
         <content>Deux frères se disputent la même peluche et commencent à se pousser. Comment pourrais-tu intervenir pour reconnaître les besoins de chacun avant de chercher une solution ?</content>
@@ -123,6 +146,10 @@
 
           Donne la parole à tour de rôle : « J’écoute d’abord Paul, puis Léa ». Reformule leurs besoins (jouer, être rassuré, avoir un tour) puis sollicite leur créativité : « Quelles idées avez-vous pour que chacun soit satisfait ? ». Cette médiation les aide à apprendre la coopération plutôt que l’arbitrage automatique.
         </advice>
+        <variations>
+          <variation title="Construction de Lego">Deux enfants s’arrachent la même pièce de Lego et la tension monte. Comment pourrais-tu sécuriser la scène et verbaliser le besoin de chacun avant d’imaginer des tours de jeu ?</variation>
+          <variation title="Place dans la voiture">Sur le point de monter en voiture, ils se disputent pour savoir qui s’assied devant. Quelle intervention te permettrait de reconnaître leurs envies et de co-construire une règle équitable ?</variation>
+        </variations>
       </card>
       <card category="Rituels du soir">
         <content>À l’heure du coucher, ton enfant réclame encore une histoire et dit qu’il n’est pas fatigué. Quelle routine apaisante pourrais-tu co-construire pour sécuriser la transition vers le sommeil ?</content>
@@ -131,6 +158,10 @@
 
           Co-créez une séquence en trois temps : moment de connexion (câlin, mini jeu), histoire courte, puis rituel autonome (respiration, massage des mains). En lui donnant un rôle actif dans cette routine, tu facilites l’acceptation de la limite tout en nourrissant la sécurité.
         </advice>
+        <variations>
+          <variation title="Réveil nocturne">Ton enfant sort de son lit chaque nuit pour réclamer un verre d’eau supplémentaire. Quelle mini routine apaisante pourrais-tu imaginer avec lui pour qu’il retrouve le sommeil en se sentant rassuré ?</variation>
+          <variation title="Soirée chez les grands-parents">Après une soirée chez les grands-parents, il est excité et refuse de mettre son pyjama. Comment co-construire un enchaînement prévisible qui l’aide à redescendre en douceur ?</variation>
+        </variations>
       </card>
       <card category="Limites bienveillantes">
         <content>Ton enfant tape son parent quand la frustration monte. Quelle formulation claire et ferme, mais reliée, peux-tu utiliser pour rappeler la règle et proposer une alternative ?</content>
@@ -139,6 +170,10 @@
 
           Propose immédiatement un geste de substitution : « Tu peux serrer ce coussin ou taper tes pieds par terre pour dire ta colère ». Reste à proximité pour l’aider à traverser l’émotion, puis débriefe plus tard quand tout le monde est revenu au calme.
         </advice>
+        <variations>
+          <variation title="Frère bousculé">Ton enfant lève la main sur son frère lorsque celui-ci refuse de partager un jeu. Quelle phrase claire pourrais-tu utiliser pour protéger chacun tout en offrant un exutoire acceptable ?</variation>
+          <variation title="Crise au supermarché">En pleine file d’attente, il frappe ton bras parce que tu refuses un achat. Comment rappeler la règle en public tout en proposant une alternative pour libérer sa tension ?</variation>
+        </variations>
       </card>
       <card category="Autonomie accompagnée">
         <content>Il refuse de s’habiller seul mais rejette ton aide. Quel choix limité inspiré de l’éducation positive pourrais-tu offrir pour qu’il se sente compétent ?</content>
@@ -147,6 +182,10 @@
 
           Propose deux options gagnantes : « Tu choisis de mettre le tee-shirt et je t’aide pour le pantalon, ou l’inverse ». En explicitant que vous formez une équipe, il perçoit ton soutien sans se sentir envahi.
         </advice>
+        <variations>
+          <variation title="Se coiffer">Il refuse que tu l’aides à se coiffer mais n’arrive pas à démêler ses cheveux seul. Quel choix limité pourrais-tu lui proposer pour préserver son autonomie tout en l’accompagnant ?</variation>
+          <variation title="Mettre la table">Il veut participer à mettre la table mais s’agace parce qu’il renverse tout. Comment formuler deux options valorisantes qui l’aident à contribuer sans se sentir en échec ?</variation>
+        </variations>
       </card>
       <card category="Transitions douces">
         <content>Au parc, il est l’heure de partir mais ton enfant crie qu’il veut rester. Quelle stratégie d’anticipation ou de fermeture positive pourrais-tu proposer pour respecter le cadre sans rupture brutale ?</content>
@@ -155,6 +194,10 @@
 
           À l’heure dite, invite-le à un rituel de clôture : remercier le parc, saluer un copain ou prendre une photo mentale. Ensuite, propose une perspective agréable pour la suite (choisir la musique de la voiture, raconter son moment préféré). Cette continuité l’aide à changer d’activité sans se sentir arraché.
         </advice>
+        <variations>
+          <variation title="Fin de séance de piscine">À la piscine, il refuse de sortir de l’eau quand l’heure de la douche arrive. Quelle anticipation et quel geste de clôture pourrais-tu mettre en place pour rendre la transition plus douce ?</variation>
+          <variation title="Retour d’une fête d’anniversaire">Lorsqu’il faut quitter la fête d’un ami, il s’agrippe à toi en pleurant. Comment préparer le départ et proposer un rituel qui honore le bon moment tout en avançant ?</variation>
+        </variations>
       </card>
       <card category="Communication émotionnelle">
         <content>Ton enfant te dit « je te déteste » après un refus. Quelle réponse pourrait témoigner de ton ancrage et ouvrir un dialogue sur ce qu’il ressent vraiment ?</content>
@@ -163,6 +206,10 @@
 
           Invite-le à préciser ce qui se passe dedans : « Qu’est-ce qui te pique autant ? » ou « De quoi aurais-tu besoin maintenant ? ». Lorsque le calme revient, explique que toutes les émotions sont bienvenues mais que vous cherchez ensemble des mots qui respectent chacun.
         </advice>
+        <variations>
+          <variation title="Porte claquée">Après que tu as posé une limite d’écran, il claque la porte en criant « Tu es la pire maman du monde ! ». Quelle réponse ancrée pourrais-tu donner pour accueillir son émotion sans l’escalader ?</variation>
+          <variation title="Message écrit">Il glisse un mot sur ton oreiller disant « Je ne t’aime plus ». Comment réagir pour reconnaître le message émotionnel derrière ces mots tout en restant disponible au dialogue ?</variation>
+        </variations>
       </card>
       <card category="Empathie sociale">
         <content>Il revient de l’école triste car un camarade ne veut plus jouer avec lui. Comment l’aider à accueillir sa peine tout en explorant ce dont il a besoin pour se sentir soutenu ?</content>
@@ -171,6 +218,10 @@
 
           Demande-lui ce qui l’aiderait : un câlin, du temps seul, ou réfléchir à une invitation. Ensuite, explore ensemble différentes options (parler au camarade, proposer un autre jeu, demander de l’aide à l’enseignant) pour qu’il retrouve du pouvoir d’agir.
         </advice>
+        <variations>
+          <variation title="Invitation refusée">Il raconte qu’aucun camarade n’a voulu venir à son anniversaire. Comment peux-tu accueillir sa peine et l’aider à identifier le soutien dont il a besoin ?</variation>
+          <variation title="Jeu collectif">Pendant un match de foot, il a été mis de côté par l’équipe. Quelle conversation empathique pourrais-tu ouvrir pour valider son ressenti et explorer les pistes qui lui redonnent confiance ?</variation>
+        </variations>
       </card>
       <card category="Réparation et responsabilité">
         <content>Ton enfant casse volontairement le dessin de sa sœur. Quelle conversation pourrais-tu amorcer pour l’accompagner vers la réparation plutôt que la punition ?</content>
@@ -179,6 +230,10 @@
 
           Parlez ensuite de réparation : « Que peux-tu faire pour prendre soin de sa sœur et de votre lien ? ». Laisse-le proposer (recoller, refaire un dessin, offrir un temps ensemble) et soutiens-le dans la mise en œuvre pour qu’il expérimente la responsabilité plutôt que la honte.
         </advice>
+        <variations>
+          <variation title="Tour de blocs détruit">Il renverse exprès la tour de blocs que son frère vient de finir. Quelle discussion pourrais-tu entamer pour nommer les faits et ouvrir sur la réparation ?</variation>
+          <variation title="Livre abîmé">En colère, il rature un livre de la bibliothèque familiale. Comment pourrais-tu le guider vers une réparation concrète sans passer par la punition ?</variation>
+        </variations>
       </card>
       <card category="Participation aux tâches">
         <content>Chaque matin, il refuse de mettre son bol dans l’évier. Quelle manière ludique pourrais-tu co-créer pour transformer la consigne en responsabilité valorisante ?</content>
@@ -187,6 +242,10 @@
 
           Instaurez ensemble un tableau de réussite relationnelle : au lieu de récompenses matérielles, propose un moment de partage quand la mission est remplie (danse du matin, tape dans la main). Il sent alors que sa contribution compte réellement pour la famille.
         </advice>
+        <variations>
+          <variation title="Ranger les chaussures">Après l’école, il laisse ses chaussures au milieu du couloir. Quelle mission valorisante pourrais-tu inventer pour l’encourager à les ranger volontairement ?</variation>
+          <variation title="Sortir la poubelle de salle de bain">La petite poubelle de la salle de bain déborde et il refuse de la vider. Comment transformer cette tâche en rôle motivant qui lui donne envie de contribuer ?</variation>
+        </variations>
       </card>
       <card category="Gestion de ta propre émotion">
         <content>Tu sens la colère monter après une succession de refus. Quelle phrase d’auto-coaching ou micro-pause peux-tu utiliser pour revenir dans une présence calme avant de répondre ?</content>
@@ -195,6 +254,10 @@
 
           Si besoin, verbalise à ton enfant : « J’ai besoin de quelques secondes pour me calmer et revenir te voir ». En modélisant cette autorégulation, tu lui montres que prendre soin de ses émotions est une compétence à cultiver ensemble.
         </advice>
+        <variations>
+          <variation title="Fin de journée chargée">Après une journée de travail intense, tu te sens à bout quand ton enfant renverse son verre. Quelle auto-instruction ou pause brève peux-tu t’accorder avant de réagir ?</variation>
+          <variation title="Conflit entre enfants">Alors que deux enfants se disputent bruyamment, tu sens la tension monter. Quelle routine rapide de régulation peux-tu utiliser pour rester un adulte ressource ?</variation>
+        </variations>
       </card>
       <card category="Usage des écrans">
         <content>Ton enfant réclame « encore cinq minutes » de dessin animé et la négociation dégénère. Comment poser un cadre clair tout en proposant un plan de sortie qui respecte vos besoins ?</content>
@@ -203,6 +266,10 @@
 
           Au moment de couper, propose une activité passerelle : choisir une chanson, préparer le goûter, bouger le corps. Rappelle que la limite est non négociable tout en reconnaissant sa frustration : « Tu voulais continuer, c’est difficile de s’arrêter, je suis avec toi ».
         </advice>
+        <variations>
+          <variation title="Jeu vidéo">Pendant un jeu vidéo, il proteste quand tu annonces la fin de la partie. Quelle anticipation et quel plan de sortie pourrais-tu mettre en place pour rendre la coupure plus sereine ?</variation>
+          <variation title="Tablette au restaurant">Au restaurant, il se fâche lorsque tu retires la tablette pour passer à table. Comment pourrais-tu rappeler le cadre décidé et proposer une transition respectueuse ?</variation>
+        </variations>
       </card>
       <card category="Partenariat avec l’école">
         <content>L’enseignant signale que ton enfant coupe souvent la parole en classe. Quelle discussion à la maison pourrait encourager la conscience de soi et l’écoute active ?</content>
@@ -211,6 +278,10 @@
 
           Explore avec lui des stratégies d’autorégulation : lever la main, compter jusqu’à trois, noter son idée. Envisagez ensemble un signe discret avec l’enseignant ou un carnet d’idées. En l’impliquant dans le plan, tu développes son sentiment de compétence sociale.
         </advice>
+        <variations>
+          <variation title="Participation en groupe">L’animateur du centre de loisirs t’informe qu’il interrompt souvent les autres. Quelle conversation pourrais-tu ouvrir pour réfléchir ensemble à des outils d’écoute ?</variation>
+          <variation title="Présentations orales">Il raconte qu’il parle tellement en présentation qu’il oublie de laisser de la place à ses camarades. Comment discuter avec lui d’un plan pour gérer son enthousiasme tout en respectant le groupe ?</variation>
+        </variations>
       </card>
       <card category="Motivation intrinsèque">
         <content>Ton enfant rechigne à faire ses devoirs sans récompense. Comment pourrais-tu l’aider à identifier ce qui rend l’apprentissage important pour lui, plutôt que d’imposer une carotte ?</content>
@@ -219,6 +290,10 @@
 
           Fractionnez le travail en objectifs atteignables avec des pauses choisies ensemble. Félicite le processus (persévérance, stratégies utilisées) plutôt que le résultat pour renforcer la fierté intrinsèque.
         </advice>
+        <variations>
+          <variation title="Instrument de musique">Il boude son entraînement de piano sans récompense. Comment pourrais-tu relier la pratique à ce qui le motive vraiment et l’aider à choisir ses propres objectifs ?</variation>
+          <variation title="Projet scientifique">Il traîne pour terminer son exposé de sciences car il n’y voit pas d’intérêt. Quelle discussion pourrais-tu avoir pour relier la tâche à ses envies et célébrer les efforts plutôt que la note ?</variation>
+        </variations>
       </card>
       <card category="Gestion du stress parental">
         <content>Tu te sens submergé par les pleurs du soir et crains de perdre patience. Quel rituel de connexion courte pourrais-tu instaurer pour nourrir le lien avant d’aborder le problème ?</content>
@@ -227,6 +302,10 @@
 
           Identifie ensuite un co-régulateur possible (partenaire, proche, respiration guidée) pour t’accorder un relais lorsque la tension monte. Plus tu anticipes tes besoins de soutien, plus tu peux rester disponible sans te sacrifier.
         </advice>
+        <variations>
+          <variation title="Matins précipités">Les matins sont tendus et tu crains de t’emporter. Quel micro-rituel de connexion pourrais-tu planifier avant la course pour abaisser ton stress et nourrir le lien ?</variation>
+          <variation title="Retour du travail">Tu rentres tard et te sens vidé alors que ton enfant réclame de l’attention. Quelle pause de recentrage ou mini-connexion pourrais-tu instaurer avant de plonger dans la soirée familiale ?</variation>
+        </variations>
       </card>
       <card category="Courses au supermarché">
         <content>Au magasin, ton enfant se roule par terre pour obtenir une friandise. Quelle démarche en trois temps (connexion, limite, solution) pourrais-tu appliquer sur le moment ?</content>
@@ -235,6 +314,10 @@
 
           Réaffirme ensuite la limite : « Aujourd’hui nous n’achetons pas de bonbon » tout en proposant une alternative préparée (choisir le fruit du goûter, noter la friandise pour une autre occasion). Terminez par une action concrète pour le remettre en mouvement : porter la liste, aider à scanner un article, respirer ensemble.
         </advice>
+        <variations>
+          <variation title="Rayon jouets">Devant le rayon jouets, il s’accroche à une boîte en criant qu’il la veut absolument. Comment pourrais-tu suivre les trois temps connexion-limite-solution dans cette situation ?</variation>
+          <variation title="Boulangerie">À la boulangerie, il réclame un deuxième gâteau et se met à pleurer. Quelle réponse en trois étapes peux-tu donner pour rester ferme tout en accompagnant son émotion ?</variation>
+        </variations>
       </card>
       <card category="Questions existentielles">
         <content>Ton enfant de 5 ans te demande si Mamie va mourir bientôt. Comment répondre avec honnêteté et douceur tout en accueillant ses émotions ?</content>
@@ -243,6 +326,10 @@
 
           Autorise ses émotions : « C’est normal que cette question fasse peur ou rende triste ». Propose-lui une action réconfortante (dessiner pour Mamie, regarder des photos, faire un câlin) afin de transformer l’angoisse en lien.
         </advice>
+        <variations>
+          <variation title="Animaux de compagnie">Ton enfant demande si votre chat va mourir bientôt. Comment peux-tu répondre avec clarté et douceur tout en accueillant ce que cela lui fait ?</variation>
+          <variation title="Questions sur la naissance">Il s’interroge sur « où on est avant de naître ». Quelle réponse simple et ouverte pourrais-tu donner pour respecter sa curiosité tout en accueillant ses émotions ?</variation>
+        </variations>
       </card>
       <card category="Matins pressés">
         <content>Les départs à l’école sont chaotiques et se terminent en cris. Quelle stratégie de préparation la veille et de choix partagés pourrait fluidifier la routine ?</content>
@@ -251,6 +338,10 @@
 
           Le matin, donne des repères temporels et des choix limités (« Tu mets d’abord les chaussures ou tu finis ton petit-déjeuner ? »). Un minuteur visuel ou une playlist de durée fixe peut aussi servir de guide externe pour garder le calme.
         </advice>
+        <variations>
+          <variation title="Départ chez la nounou">Les matins où il faut aller chez la nounou, tout traîne. Quelle anticipation la veille et quels choix partagés pourrais-tu instaurer pour alléger le départ ?</variation>
+          <variation title="Activités extrascolaires">Avant son cours de sport du mercredi, il se disperse et oublie ses affaires. Comment préparer ensemble et proposer des choix limités pour que tout le monde parte sereinement ?</variation>
+        </variations>
       </card>
       <card category="Arrivée du bébé">
         <content>Tu attends un nouveau-né et ton aîné s’inquiète de perdre sa place. Quelle conversation anticipatrice pourrais-tu avoir pour nourrir son besoin de sécurité et de contribution ?</content>
@@ -259,6 +350,10 @@
 
           Implique-le dans la préparation avec des tâches valorisantes adaptées à son âge (choisir un vêtement, préparer une chanson). En lui confiant un rôle de grand allié, tu transformes l’inquiétude en sentiment de contribution.
         </advice>
+        <variations>
+          <variation title="Premier jour à la maternité">Il redoute de ne pas te voir pendant ton séjour à la maternité. Quelle discussion rassurante pourrais-tu avoir pour lui expliquer le déroulé et sa place ?</variation>
+          <variation title="Visites de proches">Il craint que les visiteurs ne s’occupent que du bébé. Comment préparer avec lui un plan qui reconnaît ses besoins de présence et de participation ?</variation>
+        </variations>
       </card>
       <card category="Apaiser un nourrisson">
         <content>Ton futur bébé pleure malgré le change et le repas. Quelles étapes d’observation et de co-régulation peux-tu prévoir pour rester présent et empathique ?</content>
@@ -267,6 +362,10 @@
 
           Installe un rituel de co-régulation : peau à peau, bercements lents, respiration synchronisée. Chante doucement ou parle-lui pour l’ancrer dans ta présence. Même si les pleurs persistent, ton calme l’aide à sentir qu’il n’est pas seul.
         </advice>
+        <variations>
+          <variation title="Balade en poussette">En promenade, ton nourrisson pleure sans raison apparente. Quelles étapes d’observation et de co-régulation peux-tu suivre pour rester présent ?</variation>
+          <variation title="Fin de journée">En fin de journée, il s’agite malgré les soins habituels. Comment pourrais-tu analyser ses besoins et instaurer un rituel de co-régulation pour l’apaiser ?</variation>
+        </variations>
       </card>
       <card category="Réseau familial">
         <content>Un grand-parent minimise tes limites et offre des friandises en cachette. Comment poser une limite adulte à adulte tout en préservant la relation ?</content>
@@ -275,6 +374,10 @@
 
           Réaffirme votre objectif commun (le bien-être de l’enfant) et propose une alternative claire : « Si tu veux lui faire plaisir, nous pouvons prévoir ensemble un goûter spécial le mercredi ». Cette discussion posée rappelle le cadre tout en reconnaissant sa volonté d’être généreux.
         </advice>
+        <variations>
+          <variation title="Temps d’écran chez les grands-parents">Les grands-parents autorisent des écrans sans te prévenir. Comment pourrais-tu poser le cadre avec eux pour rester aligné sur vos objectifs communs ?</variation>
+          <variation title="Cadeaux en excès">Un proche apporte de nombreux cadeaux malgré votre souhait de simplicité. Quelle conversation adulte à adulte pourrais-tu avoir pour poser la limite tout en honorant l’intention ?</variation>
+        </variations>
       </card>
       <card category="Moments de connexion">
         <content>Tu sens que les obligations prennent le dessus et que les moments de jeu se raréfient. Quelle micro-activité de connexion quotidienne pourrais-tu instaurer pour recharger le lien ?</content>
@@ -283,6 +386,10 @@
 
           Note-le dans ton agenda comme un rendez-vous non négociable. En célébrant ce temps partagé, même bref, tu nourris la complicité et rends les obligations moins lourdes pour toute la famille.
         </advice>
+        <variations>
+          <variation title="Lien en fratrie">Tu aimerais renforcer la connexion entre tes deux enfants malgré des emplois du temps chargés. Quelle micro-activité quotidienne pourrais-tu proposer pour nourrir leur lien ?</variation>
+          <variation title="Parent séparé">Tu es parent séparé et ne vois ton enfant que quelques soirs par semaine. Quel rituel court et significatif pourrais-tu instaurer pour entretenir la complicité ?</variation>
+        </variations>
       </card>
     </cards>
   </script>
