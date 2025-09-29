@@ -267,25 +267,23 @@ body{
 
 .menu-toggle-icon{
   position:relative;
+  display:block;
   width:22px;
-  height:2px;
-  background:currentColor;
-  border-radius:2px;
+  height:14px;
 }
 
-.menu-toggle-icon::before,
-.menu-toggle-icon::after{
+.menu-toggle-icon::before{
   content:"";
   position:absolute;
+  top:50%;
   left:0;
   width:22px;
   height:2px;
   background:currentColor;
   border-radius:2px;
+  transform:translateY(-50%);
+  box-shadow:0 -6px 0 currentColor, 0 6px 0 currentColor;
 }
-
-.menu-toggle-icon::before{ top:-6px; }
-.menu-toggle-icon::after{ top:6px; }
 
 .menu-dropdown{
   position:absolute;
