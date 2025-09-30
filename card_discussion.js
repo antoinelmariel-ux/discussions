@@ -1303,13 +1303,78 @@ class DiscussionCardGame {
 }
 
 let game;
+let domReady = document.readyState === 'complete' || document.readyState === 'interactive';
+let dataErrorDisplayed = false;
+
 function drawCard(){ if(game) game.drawCard(); }
 function resetDeck(){ if(game) game.resetDeck(); }
 
-window.addEventListener('load', ()=>{
-  const cardDefinitions = Array.isArray(window.DISCUSSION_CARDS_DATA) ? window.DISCUSSION_CARDS_DATA : [];
-  game = new DiscussionCardGame(cardDefinitions);
-  game.cardContainerEl.classList.add('visible');
+function extractCardDefinitions(){
+  const globalData = window.DISCUSSION_CARDS_DATA;
+  if(Array.isArray(globalData) && globalData.length>0){
+    return globalData;
+  }
+  if(globalData && typeof globalData==='object'){
+    if(Array.isArray(globalData.default) && globalData.default.length>0){
+      return globalData.default;
+    }
+    if(Array.isArray(globalData.cards) && globalData.cards.length>0){
+      return globalData.cards;
+    }
+  }
+  return null;
+}
+
+function showCardsDataError(){
+  if(dataErrorDisplayed || !domReady) return;
+  dataErrorDisplayed = true;
+  const themeOptions = document.getElementById('themeOptions');
+  if(themeOptions){
+    themeOptions.innerHTML='';
+    const message = document.createElement('p');
+    message.className = 'theme-options-empty-message';
+    message.textContent = 'Impossible de charger les thématiques. Vérifiez le fichier cards_data.js.';
+    themeOptions.appendChild(message);
+  }
+  const themeError = document.getElementById('themeError');
+  if(themeError){
+    themeError.textContent = 'Impossible de charger les thématiques. Vérifiez le fichier de données.';
+  }
+  const applyButton = document.getElementById('applyThemeSelection');
+  if(applyButton){
+    applyButton.disabled = true;
+    applyButton.setAttribute('aria-disabled','true');
+  }
+  const counterEl = document.getElementById('cardCounter');
+  if(counterEl){
+    counterEl.textContent = '0';
+  }
+  const statusEl = document.getElementById('cardStatus');
+  if(statusEl){
+    statusEl.textContent = 'Impossible de charger les cartes : aucune donnée disponible.';
+  }
+}
+
+function clearCardsDataError(){
+  if(!dataErrorDisplayed) return;
+  dataErrorDisplayed = false;
+  const themeError = document.getElementById('themeError');
+  if(themeError){
+    themeError.textContent='';
+  }
+  const applyButton = document.getElementById('applyThemeSelection');
+  if(applyButton){
+    applyButton.disabled = false;
+    applyButton.setAttribute('aria-disabled','false');
+  }
+  const statusEl = document.getElementById('cardStatus');
+  if(statusEl){
+    statusEl.textContent='';
+  }
+}
+
+function bindCardInteractions(){
+  if(!game || !game.cardEl) return;
   game.cardEl.addEventListener('click', ()=>{
     if(game.currentCard===game.welcomeCard && !game.cardEl.classList.contains('flipping')){
       game.drawCard();
@@ -1323,5 +1388,50 @@ window.addEventListener('load', ()=>{
       }
     }
   });
+}
+
+function instantiateGame(){
+  if(game) return true;
+  const definitions = extractCardDefinitions();
+  if(!Array.isArray(definitions) || definitions.length===0){
+    return false;
+  }
+  clearCardsDataError();
+  game = new DiscussionCardGame(definitions);
+  if(game.cardContainerEl){
+    game.cardContainerEl.classList.add('visible');
+  }
+  bindCardInteractions();
   game.showThemeSelector();
-});
+  return true;
+}
+
+function attemptGameInitialization(){
+  if(!domReady){
+    return false;
+  }
+  if(instantiateGame()){
+    window.removeEventListener('discussionCardsDataReady', handleCardsDataReady);
+    return true;
+  }
+  showCardsDataError();
+  return false;
+}
+
+function handleCardsDataReady(event){
+  if(event && Array.isArray(event.detail) && event.detail.length>0){
+    window.DISCUSSION_CARDS_DATA = event.detail;
+  }
+  attemptGameInitialization();
+}
+
+window.addEventListener('discussionCardsDataReady', handleCardsDataReady);
+
+if(domReady){
+  attemptGameInitialization();
+}else{
+  window.addEventListener('load', ()=>{
+    domReady = true;
+    attemptGameInitialization();
+  });
+}

@@ -482,3 +482,33 @@ window.DISCUSSION_CARDS_DATA =
 }
 ]
 ;
+
+(function(){
+  if(typeof window==='undefined' || typeof window.dispatchEvent!=='function'){
+    return;
+  }
+  const data = window.DISCUSSION_CARDS_DATA;
+  const detail = Array.isArray(data)
+    ? data
+    : (data && typeof data==='object' && Array.isArray(data.default) ? data.default : null);
+  if(!detail || detail.length===0){
+    return;
+  }
+  try{
+    const eventName = 'discussionCardsDataReady';
+    if(typeof window.CustomEvent==='function'){
+      window.dispatchEvent(new CustomEvent(eventName, { detail }));
+    }else if(typeof document!=='undefined' && document.createEvent){
+      const evt = document.createEvent('Event');
+      evt.initEvent(eventName, true, true);
+      evt.detail = detail;
+      window.dispatchEvent(evt);
+    }else{
+      const evt = new Event(eventName);
+      evt.detail = detail;
+      window.dispatchEvent(evt);
+    }
+  }catch(error){
+    console.warn('Impossible de signaler le chargement des données de discussion :', error);
+  }
+})();
