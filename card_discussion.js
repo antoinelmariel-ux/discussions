@@ -1,7 +1,10 @@
 class DiscussionCardGame {
-  constructor(){
+  constructor(cardDefinitions){
     this.persistenceVersion = 3;
-    const { cards, variationMap } = this.loadCardsFromXML();
+    const definitions = Array.isArray(cardDefinitions) && cardDefinitions.length>0
+      ? cardDefinitions
+      : (Array.isArray(window.DISCUSSION_CARDS_DATA) ? window.DISCUSSION_CARDS_DATA : []);
+    const { cards, variationMap } = this.prepareCards(definitions);
     this.allCards = cards;
     this.variationMap = variationMap;
     this.masteredPrinciples = new Set();
@@ -89,42 +92,59 @@ class DiscussionCardGame {
     this.updateStatus('Carte de bienvenue affichée.');
   }
 
-  loadCardsFromXML(){
-    const xmlData = document.getElementById('cardsData').textContent;
-    const parser = new DOMParser();
-    const xmlDoc = parser.parseFromString(xmlData,'text/xml');
-    const nodes = xmlDoc.querySelectorAll('card');
+  prepareCards(cardDefinitions){
     const cards = [];
     const variationMap = new Map();
     let idCounter = 0;
-    nodes.forEach(cardNode=>{
-      const contentNode = cardNode.querySelector('content');
-      const adviceNode = cardNode.querySelector('advice');
-      const adviceText = adviceNode ? adviceNode.textContent.trim() : '';
+
+    cardDefinitions.forEach((definition,index)=>{
+      if(!definition || typeof definition!=='object'){
+        return;
+      }
+
+      const category = typeof definition.category==='string' && definition.category.trim()
+        ? definition.category.trim()
+        : `Carte ${index+1}`;
+      const content = typeof definition.content==='string' ? definition.content.trim() : '';
+      if(!content){
+        return;
+      }
+
+      const advice = typeof definition.advice==='string' ? definition.advice.trim() : '';
       const baseId = idCounter++;
       const baseCard = {
         id: baseId,
-        category: cardNode.getAttribute('category'),
-        content: contentNode ? contentNode.textContent.trim() : '',
-        advice: adviceText,
+        category,
+        content,
+        advice,
         type: 'base'
       };
       cards.push(baseCard);
 
-      const variationNodes = cardNode.querySelectorAll('variations > variation');
-      if(variationNodes.length>0){
+      const variations = Array.isArray(definition.variations) ? definition.variations : [];
+      if(variations.length>0){
         const variationIds = [];
-        variationNodes.forEach((variationNode,index)=>{
-          const variationContent = variationNode.textContent.trim();
-          if(!variationContent) return;
+        variations.forEach((variationDefinition,variationIndex)=>{
+          if(!variationDefinition || typeof variationDefinition!=='object'){
+            return;
+          }
+          const variationContent = typeof variationDefinition.content==='string'
+            ? variationDefinition.content.trim()
+            : '';
+          if(!variationContent){
+            return;
+          }
+          const variationLabel = typeof variationDefinition.title==='string' && variationDefinition.title.trim()
+            ? variationDefinition.title.trim()
+            : `Variante ${variationIndex+1}`;
           const variationCard = {
             id: idCounter++,
             category: baseCard.category,
             content: variationContent,
-            advice: adviceText,
+            advice: baseCard.advice,
             type: 'variation',
             variationOf: baseId,
-            variationLabel: variationNode.getAttribute('title') || `Variante ${index+1}`
+            variationLabel
           };
           cards.push(variationCard);
           variationIds.push(variationCard.id);
@@ -134,6 +154,11 @@ class DiscussionCardGame {
         }
       }
     });
+
+    if(cards.length===0){
+      console.warn('Aucune carte de discussion n’a été chargée. Vérifiez cards_data.js.');
+    }
+
     return { cards, variationMap };
   }
 
@@ -1282,7 +1307,8 @@ function drawCard(){ if(game) game.drawCard(); }
 function resetDeck(){ if(game) game.resetDeck(); }
 
 window.addEventListener('load', ()=>{
-  game = new DiscussionCardGame();
+  const cardDefinitions = Array.isArray(window.DISCUSSION_CARDS_DATA) ? window.DISCUSSION_CARDS_DATA : [];
+  game = new DiscussionCardGame(cardDefinitions);
   game.cardContainerEl.classList.add('visible');
   game.cardEl.addEventListener('click', ()=>{
     if(game.currentCard===game.welcomeCard && !game.cardEl.classList.contains('flipping')){
