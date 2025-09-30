@@ -20,11 +20,12 @@ et de personnaliser vos sessions en fonction des thématiques qui vous intéress
 ├── card_discussion.html   # Page principale de l'application
 ├── card_discussion.css    # Styles, animations et mise en page responsive
 ├── card_discussion.js     # Logique du jeu, gestion des cartes, modales et persistance
+├── cards_data.js          # Contenu éditable des cartes et de leurs variantes
 └── README.md              # Vous êtes ici
 ```
 
-Le fichier HTML intègre les données des cartes au format XML, tandis que le script JavaScript se charge de les parser, de
-générer les cartes (variantes incluses) et de piloter toutes les interactions.
+Les données des cartes sont isolées dans `cards_data.js` (un simple tableau JavaScript), tandis que `card_discussion.js` se
+charge de transformer ces définitions en cartes jouables (variantes incluses) et de piloter toutes les interactions.
 
 ## Démarrage rapide
 
@@ -36,7 +37,7 @@ Aucune dépendance externe ni serveur n'est requis : tout fonctionne en local gr
 
 ## Personnalisation
 
-- Ajoutez de nouvelles cartes en suivant la structure XML (`<card>`, `<content>`, `<advice>`, `<variations>`).
+- Ajoutez de nouvelles cartes en éditant `cards_data.js` (catégorie, contenu, conseil, variations optionnelles).
 - Modifiez les couleurs, les animations ou la typographie dans `card_discussion.css` pour adapter l'ambiance à votre atelier.
 - Faites évoluer la logique (nouveaux filtres, modes de jeu, statistiques, etc.) dans `card_discussion.js`.
 
