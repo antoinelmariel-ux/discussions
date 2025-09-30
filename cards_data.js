@@ -314,5 +314,308 @@ window.DISCUSSION_CARDS_DATA = [
     "advice": "Il est courant que deux parents aient des visions éducatives différentes, surtout face aux premiers conflits avec un tout-petit. L'important est d'en discuter au calme, à distance des situations de crise. Écoutez les inquiétudes de votre conjoint/e : par exemple, il/elle peut craindre que l'enfant devienne capricieux si on ne sévit pas. Expliquez-lui vos raisons de prôner la bienveillance : un enfant de cet âge comprend mieux avec la répétition et l'accompagnement qu'avec des punitions qui peuvent le peiner sans lui enseigner clairement. Proposez de faire front commun sur quelques règles clés (comme ne pas taper, respecter l'heure du coucher) tout en restant d'accord sur une façon de réagir : par exemple, décider ensemble de toujours expliquer calmement la raison d'une interdiction, même si un petit temps calme (sans distraction) est nécessaire juste après un gros caprice. Vous pouvez suggérer à votre partenaire de lire un article ou un livre sur la parentalité positive pour nourrir la réflexion commune, ou encore participer à un atelier parents pour trouver un terrain d'entente. Le but n'est pas de savoir qui a raison mais de former une équipe cohérente : en communiquant et en faisant des essais ensemble, vous trouverez un équilibre entre fermeté sur les limites et bienveillance dans la manière de les faire respecter, qui convienne à vous deux et surtout sécurise votre enfant.",
     "variations": []
   }
+  {
+"category": "Apaiser un nourrisson",
+"content": "La nuit est tombée et votre bébé de 6 semaines pleure depuis une heure sans raison apparente, malgré son lange propre et son dernier repas. Vous commencez à vous sentir démuni tant il est difficile de le calmer.",
+"advice": "Il est normal de se sentir démuni quand un nourrisson pleure sans qu'on n'en comprenne la raison. Essayez de respirer profondément pour rester calme, car bébé ressent beaucoup vos émotions. Vous pouvez le bercer doucement contre vous en peau-à-peau ou lui chanter une berceuse d'une voix apaisante pour lui montrer que vous êtes là. Si cela ne le calme pas, tentez de changer d'environnement en marchant un peu ou de le masser délicatement, chaque bébé a ses préférences pour se sentir rassuré.",
+"variations": [
+{
+"title": "Trajet en voiture",
+"content": "En voiture, votre bébé se met à pleurer dès que le véhicule s'arrête, vous laissant désemparé pendant les trajets."
+}
+]
+},
+{
+"category": "Arrivée du bébé",
+"content": "Votre aîné de 2 ans vous réclame soudain les bras dès que vous allaitez le nouveau-né. Il pleure beaucoup ces derniers temps et refuse des choses qu'il faisait avant, comme s'habiller tout seul.",
+"advice": "Il est normal que votre aîné cherche à attirer davantage votre attention après l'arrivée d'un bébé : il peut se sentir un peu délaissé. Montrez-lui que ses émotions sont entendues en lui parlant avec douceur et en l'impliquant auprès du bébé. Par exemple, prévoyez un moment exclusif rien qu'avec lui chaque jour ou confiez-lui une "mission de grand" (comme apporter une couche propre) pour le valoriser et renforcer son rôle. Chaque enfant s'adapte à son rythme : continuez à lui témoigner de l'affection et du respect pour l'aider à trouver sa place.",
+"variations": [
+{
+"title": "Rejet du bébé",
+"content": "Par moments, votre aîné essaye de taper ou de crier sur le nouveau-né, manifestant ouvertement sa jalousie."
+}
+]
+},
+{
+"category": "Autonomie accompagnée",
+"content": "Votre enfant de 18 mois insiste pour monter les escaliers tout seul sans vous donner la main. Il repousse votre aide, déterminé à y arriver par lui-même malgré les risques de chute.",
+"advice": "C'est formidable qu'il veuille faire seul : cela montre sa confiance et son envie d'apprendre. En tant que parent, votre rôle est de l'accompagner en sécurité sans brider son enthousiasme. Restez tout près de lui, mains prêtes à le rattraper, et dites-lui par exemple : "Je te laisse essayer, je suis juste derrière toi si besoin." Il se sentira fier de son initiative tout en sachant que vous veillez sur lui. S'il se montre frustré de votre présence, expliquez que c'est pour sa sécurité et que petit à petit il pourra vraiment le faire seul.",
+"variations": []
+},
+{
+"category": "Communication émotionnelle",
+"content": "Votre tout-petit de 2 ans se met à hurler et jette son gobelet parce que vous lui avez donné de l'eau dans le verre vert au lieu du bleu. Il est inconsolable et n'arrive pas à exprimer ce qui le contrarie autrement que par des cris.",
+"advice": "Il est compréhensible d'être décontenancé par ce genre de crise, mais rappelez-vous que votre enfant de 2 ans n'a pas encore les mots pour exprimer sa déception. Essayez de garder une voix douce et mettez-vous à sa hauteur pour lui montrer que vous l'écoutez. Verbalisez ce qu'il ressent en disant par exemple : "Tu voulais le gobelet bleu et tu es très fâché". Nommer son émotion l'aidera à se sentir compris. Même s'il continue de pleurer, restez près de lui sans le gronder, et souvenez-vous que petit à petit il apprendra à exprimer son ressenti autrement que par des cris.",
+"variations": []
+},
+{
+"category": "Coopération quotidienne",
+"content": "Chaque soir, c'est la lutte pour que votre enfant de 2 ans accepte de se brosser les dents. Il serre les lèvres et secoue la tête dès qu'il voit la brosse à dents approcher.",
+"advice": "Beaucoup de tout-petits refusent ce rituel ; il est normal que cela teste votre patience. Plutôt que de forcer, essayez d'aborder ce moment de façon ludique. Par exemple, faites semblant que la brosse est une petite fée qui chasse les microbes cachés sur ses dents, ou chantez une chanson amusante pour rendre le brossage plus léger. Laissez-le tenir la brosse de temps en temps pour qu'il se sente acteur. S'il refuse toujours, marquez une courte pause et réessayez calmement un peu plus tard.",
+"variations": []
+},
+{
+"category": "Courses au supermarché",
+"content": "En plein milieu des courses, votre enfant de 2 ans s'effondre en pleurs dans l'allée parce que vous avez refusé de lui acheter des bonbons. Il se roule par terre sous le regard des autres clients.",
+"advice": "Ces colères en public sont éprouvantes, et un enfant de 2 ans ne sait pas encore gérer sa frustration face à un refus. Essayez de rester calme et de ne pas vous soucier du regard des autres ; concentrez-vous sur votre enfant. Accroupissez-vous près de lui et dites-lui doucement : "Je sais que tu voulais ces bonbons, c'est difficile d'entendre non". En reconnaissant son envie et sa déception, vous lui montrez que vous comprenez ce qu'il ressent. Proposez-lui ensuite une alternative pour détourner son attention (par exemple choisir un fruit pour le goûter) afin de l'apaiser ; si la crise continue, emmenez-le quelques instants dans un endroit plus calme en restant près de lui jusqu'à ce qu'il se réassure.",
+"variations": [
+{
+"title": "Explorateur dans les rayons",
+"content": "Au supermarché, votre enfant ne tient pas en place : il s'éloigne de votre caddie et touche à tous les produits à sa portée, ce qui rend les courses épuisantes."
+}
+]
+},
+{
+"category": "Empathie sociale",
+"content": "En visite chez des amis, votre fils de 3 ans refuse de prêter son camion en plastique à un autre enfant. Quand l'autre petit s'approche pour jouer avec, votre fils le serre fort contre lui en criant "non, à moi !".",
+"advice": "Il est fréquent qu'un enfant de 3 ans protège farouchement ses jouets ; partager n'est pas inné à cet âge. La tentation de le gronder ou de l'obliger à prêter est grande, mais cela risquerait de le braquer. Mettez-vous à sa hauteur et expliquez-lui calmement : "Regarde, ton copain est triste parce qu'il voudrait jouer avec le camion". En nommant ainsi les émotions de l'autre, vous semez une graine d'empathie chez votre enfant. Proposez enfin une solution qui le rassure — par exemple échanger de jouet pendant quelques minutes ou jouer tous ensemble — et impliquez-le dans ce compromis pour qu'il apprenne doucement à tenir compte des autres.",
+"variations": []
+},
+{
+"category": "Frustration et apprentissages",
+"content": "Votre enfant de 20 mois tente d'empiler quatre cubes l'un sur l'autre, mais la tour s'écroule à chaque essai. En colère, il jette violemment un des cubes à travers la pièce en pleurant de rage.",
+"advice": "Apprendre demande beaucoup d'efforts à cet âge, il est normal qu'il se fâche quand ça ne marche pas comme il veut. Restez calme et montrez-lui que vous comprenez sa frustration. Vous pouvez dire : "Tu es fâché parce que ta tour est tombée, c'est dur quand ça ne marche pas" pour mettre des mots sur son émotion. Offrez-lui un câlin ou encouragez-le à respirer un grand coup pour l'aider à se calmer. Proposez ensuite de réessayer ensemble ou de faire une pause si besoin, en valorisant ses efforts plus que le résultat.",
+"variations": []
+},
+{
+"category": "Gestion de ta propre émotion",
+"content": "En plein repas, votre enfant de 18 mois renverse délibérément son assiette par terre en vous regardant, pour la troisième fois de la semaine. Vous sentez la colère monter en vous alors que vous nettoyez encore une fois le sol.",
+"advice": "Il est normal de ressentir de la colère ou de l'exaspération dans cette situation. Sur le moment, efforcez-vous de respirer profondément quelques secondes pour ne pas crier. Exprimez ensuite posément votre émotion : "Je suis fâchée de devoir nettoyer encore la nourriture par terre" sans pour autant l'accabler. En restant authentique mais maître de vous, vous lui montrez l'exemple de la gestion de la colère. Si vous sentez que vous n'y parvenez pas, éloignez-vous quelques instants ou demandez le relais d'un proche le temps de vous apaiser.",
+"variations": []
+},
+{
+"category": "Gestion des émotions",
+"content": "Au son de l'aspirateur, votre petite fille de 2 ans se met à trembler et accourt affolée dans vos bras. Son cœur bat très fort et elle se cache le visage, clairement terrifiée par le bruit.",
+"advice": "Les tout-petits peuvent avoir très peur des bruits forts comme l'aspirateur ; sa réaction de panique est compréhensible. Prenez-la immédiatement dans vos bras pour la rassurer physiquement. Parlez-lui d'une voix douce en nommant sa peur : "Tu as eu peur du bruit de l'aspirateur, c'est très fort hein" pour qu'elle se sente comprise. Une fois calmée, montrez-lui l'aspirateur éteint et laissez-la le toucher si elle le souhaite, pour l'aider à apprivoiser progressivement ce qui lui fait peur. Chaque enfant surmonte ses craintes à son rythme ; l'important est de rester patient et présent.",
+"variations": []
+},
+{
+"category": "Gestion du stress parental",
+"content": "Il est 17 h : vous devez préparer le dîner, la maison est en désordre et votre bébé de 9 mois pleure depuis vingt minutes malgré toutes vos tentatives pour le calmer. Vous vous sentez complètement dépassée par la situation et à bout de nerfs.",
+"advice": "Se sentir dépassé par moments est courant chez les jeunes parents : vous n'êtes pas seul dans ce cas. Quand tout semble vous submerger, essayez de prendre mentalement un pas de recul pour déterminer ce qui est vraiment prioritaire. Posez votre bébé en sécurité quelques instants dans son lit ou son parc, le temps de respirer profondément. Même s'il pleure encore, ce court moment de recul vous aidera à retrouver votre calme. Rappelez-vous que la maison en désordre peut attendre : concentrez-vous sur l'essentiel (votre enfant en sécurité et un repas simple) et n'hésitez pas à demander du renfort si possible (partenaire, famille, ami).",
+"variations": []
+},
+{
+"category": "Limites bienveillantes",
+"content": "En jouant sur le canapé, votre fils de 2 ans vous tape brusquement au visage en riant. Le coup vous fait mal et vous ne souhaitez pas qu'il recommence ce geste.",
+"advice": "Il est normal d'être choqué ou fâché lorsqu'on se fait taper, même par son enfant. Plutôt que de crier, montrez-lui calmement mais fermement que ce geste n'est pas acceptable. Attrapez doucement sa main et dites d'une voix posée : "Je ne te laisserai pas me taper, ça fait mal". En posant cette limite avec calme, vous lui montrez que taper n'est pas permis, puis redirigez son énergie vers un geste sans danger (frapper un coussin ou faire un high five). Répétez ce message de façon cohérente chaque fois qu'il recommence, pour qu'il intègre progressivement la limite.",
+"variations": []
+},
+{
+"category": "Matins pressés",
+"content": "Un matin de semaine, vous êtes déjà en retard pour la crèche et votre fils de 2 ans court partout en riant au lieu de mettre ses chaussures. Vous sentez la pression monter car l'heure tourne, et il refuse obstinément de coopérer pour s'habiller.",
+"advice": "Les matins pressés sont stressants pour tout le monde ; c'est normal de perdre patience quand votre tout-petit fait le clown au mauvais moment. Plutôt que de crier, essayez de transformer l'habillage en jeu pour capter son attention. Par exemple, faites semblant que sa chaussure est une voiture qui doit vite se garer sur son pied avant le "départ", ou lancez-lui un défi rigolo : "Attrape ton manteau avant que j'aie compté jusqu'à 5 !". Même pressé, prenez quelques secondes pour vous reconnecter à lui avec une touche d'humour ou un câlin express : le mettre de bonne humeur peut finalement vous faire gagner du temps. Et si possible, prévoyez un peu de marge (se lever plus tôt, préparer les affaires la veille) : anticiper réduit la tension pour tout le monde.",
+"variations": []
+},
+{
+"category": "Moments de connexion",
+"content": "Depuis ce matin, vous n'avez pas arrêté entre le ménage et les lessives, et votre petit de 18 mois vous tire sur le pantalon en pleurnichant pour que vous jouiez avec lui. Vous réalisez qu'il vous réclame depuis un moment et que vous ne lui avez pas vraiment accordé d'attention de la journée.",
+"advice": "Il est facile d'être absorbé par les tâches ménagères et de repousser les moments de jeu ; mais votre enfant exprime là un besoin légitime de connexion. Plutôt que le faire patienter davantage, accordez-lui tout de suite un petit moment rien qu'à vous deux. Posez ce que vous faisiez et mettez-vous à son niveau pour une interaction exclusive : un câlin, une comptine en le regardant dans les yeux, ou un mini cache-cache improvisé. Même cinq minutes d'attention totale peuvent le combler pour un temps ; ensuite il jouera plus volontiers seul et vous pourrez reprendre vos tâches. Prendre régulièrement ces petites pauses de connexion l'aide à moins vous réclamer ensuite.",
+"variations": []
+},
+{
+"category": "Motivation intrinsèque",
+"content": "Tandis que votre fille de 2 ans apprend à enfiler ses chaussettes toute seule, vous hésitez entre la féliciter bruyamment ou lui promettre une récompense. Vous voulez l'encourager, mais sans qu'elle dépende de vos bravos ou d'un cadeau à chaque progrès.",
+"advice": "C'est génial que votre petite apprenne à se débrouiller ; il est normal de vouloir la féliciter. Pour nourrir sa motivation intrinsèque (celle qui vient d'elle), mieux vaut la valoriser sans passer par des récompenses matérielles ou des exclamations exagérées. Privilégiez des encouragements descriptifs qui mettent en avant ses efforts : par exemple : "Tu as réussi à tirer tes chaussettes jusqu'en haut, tu as persévéré !". En soulignant ce qu'elle a accompli par son propre effort, vous l'aidez à être fière d'elle-même et pas seulement à chercher votre approbation. Évitez de promettre une friandise ou un cadeau à chaque réussite : vos encouragements sincères et l'intérêt que vous lui portez suffiront à nourrir son envie d'apprendre.",
+"variations": []
+},
+{
+"category": "Partenariat avec l’école",
+"content": "La référente de la crèche vous informe que votre fils de 18 mois a mordu un autre enfant aujourd'hui. Elle vous propose de voir ensemble comment réagir, car ce n'est pas la première fois que cela arrive.",
+"advice": "Apprendre que son enfant mord peut être gênant, mais c'est un comportement assez courant chez les tout-petits qui ne parlent pas bien. Plutôt que de vous sentir accusé, considérez l'éducatrice comme une alliée pour aider votre enfant à dépasser ce comportement. Discutez calmement avec elle des situations où il mord : fatigue, disputes pour un jouet, frustration ? En échangeant vos observations, vous comprendrez mieux ce qui déclenche ces morsures. Mettez-vous d'accord sur une réaction commune : par exemple lui dire fermement "On ne mord pas" et le retirer du jeu quelques instants pour qu'il se calme. Avoir la même stratégie à la crèche et à la maison aidera votre enfant à intégrer la limite. Restez en contact régulier avec l'équipe pour suivre les progrès et ajuster si besoin : c'est un travail d'équipe.",
+"variations": []
+},
+{
+"category": "Participation aux tâches",
+"content": "Vous décidez de faire un gâteau et votre petit de 2 ans insiste pour vous aider à cuisiner. Il verse la farine en en mettant la moitié à côté du bol et s'en met plein les mains, ce qui ralentit la préparation mais il affiche un grand sourire fier.",
+"advice": "Laisser un enfant de 2 ans aider en cuisine peut être salissant et plus long, mais c'est une excellente occasion d'apprentissage pour lui. Acceptez que ce ne sera ni parfait ni rapide, et valorisez son envie de participer. Donnez-lui de petites tâches adaptées : remuer avec une cuillère en bois, verser un ingrédient pré-dosé, etc. Guidez ses gestes en restant à proximité pour éviter les accidents. En le faisant participer, vous lui montrez que vous avez confiance en ses capacités et il gagnera en adresse au fil du temps. Même si vous devez nettoyer derrière, gardez en tête que l'important n'est pas le gâteau parfait mais de partager ce moment et de l'encourager.",
+"variations": []
+},
+{
+"category": "Questions existentielles",
+"content": "Lors du bain, votre fils de 3 ans vous demande soudain avec sérieux : "Comment on fait les bébés ?" Pris au dépourvu par cette question, vous hésitez sur la réponse à donner à son si jeune âge.",
+"advice": "Les tout-petits sont très curieux et peuvent poser ce genre de questions tôt ; c'est normal d'être surpris. Il vaut mieux offrir une réponse sincère mais adaptée à son âge, plutôt que d'éluder ou d'inventer une histoire. Expliquez-lui simplement : "Le bébé grandit dans le ventre de maman, et quand il est prêt il sort par un chemin spécial." Cela répond à sa question sans entrer dans des détails qu'il n'a pas demandés. Demandez-lui s'il est content de la réponse (par exemple : "Tu as compris ?" ou "Tu veux savoir autre chose ?"). S'il pose d'autres questions, suivez son rythme sans donner plus de détails qu'il n'en cherche.",
+"variations": []
+},
+{
+"category": "Rituels du soir",
+"content": "Il est 20 h 30, l'heure du coucher, mais votre fille de 3 ans réclame une troisième histoire et un cinquième câlin pour retarder le moment d'éteindre la lumière. Dès que vous dites qu'il est temps de dormir, elle se met à pleurnicher et à protester.",
+"advice": "Beaucoup d'enfants essayent de retarder le coucher ; à 3 ans, c'est normal qu'elle demande encore de l'attention. Restez ferme sur le rituel tout en la rassurant. Instaurez par exemple un "dernier câlin" bien défini : prévenez-la qu'après ce câlin, on éteint la lumière. Donnez-lui son gros câlin puis rappelez-lui doucement que tout le monde doit dormir. Offrez-lui un objet ou un geste de réconfort : sa peluche préférée à serrer fort, ou une petite berceuse de trente secondes qui marque la fin de la journée. En maintenant un cadre cohérent (par exemple 2 histoires, 1 câlin chaque soir), elle saura à quoi s'attendre et acceptera plus facilement. Si elle pleurniche, restez calme et répétez sereinement la routine sans céder aux exceptions.",
+"variations": []
+},
+{
+"category": "Réparation et responsabilité",
+"content": "Au parc, votre fils de 2 ans fait tomber exprès la tour de blocs qu'un autre enfant avait construite. L'autre petit se met à pleurer en voyant sa tour détruite tandis que votre fils observe sans trop réaliser la peine causée.",
+"advice": "À 2 ans, il ne se rend pas bien compte qu'il a fait de la peine ; ce n'est pas de la méchanceté, mais il doit commencer à apprendre à réparer. C'est l'occasion de lui enseigner doucement la responsabilité de ses actes. Accroupissez-vous près de lui, aux côtés de l'autre enfant, et dites-lui calmement : "Tu as renversé sa tour, il est triste. Qu'est-ce qu'on peut faire pour l'aider ?". Proposez-lui de reconstruire la tour ensemble ou de présenter ses excuses avec votre aide. Montrez-lui comment dire pardon en faisant un geste gentil (comme rendre un bloc ou faire un câlin si l'autre est d'accord). Même s'il est encore petit, répéter cette réparation l'aidera à comprendre peu à peu l'impact de ses actes et à développer son empathie. Valorisez-le quand il fait l'effort de réparer pour l'encourager à recommencer.",
+"variations": []
+},
+{
+"category": "Réseau familial",
+"content": "Vos parents gardent votre fille de 2 ans cet après-midi et vous découvrez en arrivant qu'ils lui ont donné des bonbons, alors que vous leur aviez demandé d'éviter le sucre. Votre mère dit en souriant "ce n'est pas grave, c'est juste une petite gâterie", ce qui vous agace car vous tenez à cette règle.",
+"advice": "Il est frustrant de voir ses consignes ignorées, surtout par ses propres parents ; votre agacement est compréhensible. Gardez un ton respectueux mais affirmé pour réexpliquer votre position. En privé, expliquez calmement à vos parents pourquoi vous limitez le sucre (par exemple pour sa santé et éviter qu'elle prenne l'habitude). Soulignez que vous appréciez leur aide et que vous avez besoin de pouvoir leur faire confiance sur ce point. Proposez une alternative acceptable : par exemple avoir des fruits ou un laitage sucré à donner en cas de petit creux à la place des bonbons ; ainsi ils peuvent faire plaisir sans contredire vos règles. Maintenez votre ligne éducative avec constance. Si le message passe en douceur mais fermeté, vos proches finiront par respecter vos choix. Gardez en tête qu'ils veulent bien faire : en communiquant clairement et sans accusation, vous préserverez la bonne entente familiale.",
+"variations": []
+},
+{
+"category": "Transitions douces",
+"content": "À la fin de l'après-midi au parc, votre petit garçon de 2 ans refuse de partir alors qu'il s'amuse beaucoup sur le toboggan. Quand vous lui dites qu'il est l'heure de rentrer, il se met à crier "non !" et s'accroche aux barreaux de l'échelle, prêt à faire une crise.",
+"advice": "Il est difficile pour lui de quitter une activité amusante ; à son âge il ne gère pas bien la frustration de devoir arrêter. Pour éviter ce clash, préparez la transition un peu à l'avance. Prévenez-le quelques minutes avant : "Encore deux tours de toboggan et après on dit au revoir au parc". Cette anticipation lui laisse le temps de se faire à l'idée du départ. Vous pouvez aussi rendre le départ ludique : proposez une dernière chose amusante en chemin (par exemple faire la course jusqu'au portail ou chanter une chanson du départ). Restez ferme une fois le moment venu en le prenant par la main avec douceur mais détermination. S'il se met en colère malgré tout, gardez votre calme, rappelez-lui qu'il pourra revenir jouer une prochaine fois et tenez bon pour qu'il comprenne que c'est l'heure de partir.",
+"variations": []
+},
+{
+"category": "Usage des écrans",
+"content": "En rentrant du travail, vous consultez votre téléphone et votre fils de 2 ans s'agite pour l'attraper. Il réclame de regarder des vidéos dessus en disant "téléphone !" de façon insistante, alors que vous aimeriez éviter les écrans le soir.",
+"advice": "À 2 ans, voir l'écran de papa ou maman suscite une envie immédiate ; c'est normal qu'il insiste sans comprendre vos raisons. Au lieu de céder par fatigue ou d'entrer dans un bras de fer, fixez un cadre clair et offrez une alternative. Expliquez-lui calmement : "Le téléphone de papa, ce n'est pas pour jouer maintenant." Rangez le téléphone hors de sa vue pour réduire la tentation. Proposez-lui à la place une activité apaisante ensemble : lire un livre, faire un puzzle, ou vous "aider" à préparer le dîner. En détournant ainsi son attention, il oubliera vite l'écran. Tenez-vous-en à votre règle sur les écrans de façon constante, même si c'est difficile sur le moment. À force de cohérence, il comprendra que le téléphone n'est pas un jouet pour lui – surtout si vous lui offrez en échange des moments de qualité.",
+"variations": []
+},
+{
+"category": "Coopération quotidienne",
+"content": "À l'heure de changer la couche, votre bébé de 12 mois se tortille et se retourne sur la table à langer dès que vous enlevez la couche sale. Il rigole et attrape tout ce qui est à portée, transformant chaque change en épreuve sportive pour vous.",
+"advice": "Beaucoup de bébés n'aiment pas être immobilisés pour le change ; il est normal que cela devienne sportif. Au lieu de vous énerver, rendez ce moment plus interactif pour le captiver. Donnez-lui un petit objet sans danger à manipuler pendant le change (un jouet spécial pour la table à langer par exemple). Chantez-lui une chanson en même temps ou commentez ce que vous faites d'une voix enjouée. En le distrayant et en le faisant participer (par exemple : "tu me donnes la couche propre ? bravo et merci !"), vous transformez le change en jeu plutôt qu'en contrainte. S'il continue de se tortiller, restez patient : mieux vaut quelques secondes de plus dans la bonne humeur qu'une lutte stressante.",
+"variations": []
+},
+{
+"category": "Limites bienveillantes",
+"content": "En promenade, votre tout-petit de 22 mois lâche soudain votre main et se met à courir vers la route. Vous le rattrapez de justesse avant qu'il n'atteigne la chaussée, le cœur battant.",
+"advice": "Cette situation vous a fait très peur : c'est normal de vous sentir effrayé et en colère à la fois. Même si l'émotion est forte, efforcez-vous de poser le cadre sans crier. Accroupissez-vous à sa hauteur une fois en sécurité et dites d'une voix ferme mais calme : "On s'arrête toujours au bord de la route, c'est trop dangereux de courir sur la route". Montrez-lui où il doit s'arrêter en lui tenant la main au bord du trottoir. Répétez cette règle à chaque promenade et tenez-le bien par la main (ou utilisez une laisse de sécurité) pour prévenir les fuites. Avec la répétition, il comprendra qu'il doit s'arrêter et attendre votre accord avant de traverser.",
+"variations": []
+}
+  {
+"category": "Apaiser un nourrisson",
+"content": "Votre bébé de 2 mois pleure chaque soir au moment où vous aimeriez dîner. Vous ne trouvez pas de cause évidente et vous vous sentez frustré de ne pas réussir à l’apaiser.",
+"advice": "Les pleurs du soir sont fréquents chez les nourrissons et ne signifient pas forcément que vous faites mal les choses. Essayez de rester calme, car votre bébé ressent vos émotions. Portez-le en écharpe, mettez une musique douce ou bercez-le dans une pièce moins stimulante. Si vous avez besoin d’une pause, confiez-le quelques minutes à un proche ou posez-le en sécurité dans son lit pour respirer. Ces épisodes diminuent avec le temps : votre présence bienveillante est déjà un grand réconfort pour lui.",
+"variations": []
+},
+{
+"category": "Arrivée du bébé",
+"content": "Depuis la naissance de votre bébé, vous et votre partenaire avez du mal à trouver des moments à deux. Vous craignez que votre relation de couple en souffre.",
+"advice": "Il est normal que l’arrivée d’un bébé chamboule l’équilibre du couple. Prenez conscience que cette étape est temporaire et demande beaucoup d’énergie. Parlez ensemble de vos besoins et trouvez de petits moments de connexion (un café ensemble, un mot tendre, un câlin rapide). Acceptez aussi l’aide d’un proche pour garder le bébé quelques heures afin de souffler. Préserver votre lien de couple, même par de petites attentions, contribue aussi au bien-être de votre enfant.",
+"variations": []
+},
+{
+"category": "Autonomie accompagnée",
+"content": "Votre fille de 2 ans veut absolument choisir seule ses vêtements le matin, même si cela donne des associations improbables.",
+"advice": "Son envie de choisir seule montre qu’elle développe son autonomie et sa confiance. Offrez-lui des choix limités : deux hauts ou deux pantalons parmi lesquels elle peut décider. Cela lui permet d’exercer sa liberté tout en gardant un cadre. Félicitez son choix et valorisez sa créativité, même si la tenue n’est pas parfaite. Si la météo n’est pas adaptée, expliquez-lui calmement et proposez une alternative acceptable. Cette autonomie l’aidera à renforcer son estime de soi.",
+"variations": []
+},
+{
+"category": "Communication émotionnelle",
+"content": "Votre enfant de 3 ans revient de la crèche et vous dit soudain : "Je suis triste" sans pouvoir expliquer pourquoi.",
+"advice": "Accueillir cette émotion sans chercher immédiatement à la résoudre est précieux. Dites-lui simplement : "Tu es triste, merci de me le dire." Proposez-lui un câlin, ou invitez-le à dessiner ce qu’il ressent. Parfois, il n’a pas besoin d’explication mais juste d’être entendu. En valorisant son expression, vous l’encouragez à mettre des mots sur ses émotions à l’avenir.",
+"variations": []
+},
+{
+"category": "Coopération quotidienne",
+"content": "Votre enfant de 18 mois refuse d’entrer dans la poussette alors que vous devez rentrer rapidement à la maison.",
+"advice": "Il exprime son besoin de liberté de mouvement, ce qui est normal à cet âge. Accueillez sa résistance avec calme et proposez un compromis : marcher quelques pas en tenant votre main, puis monter dans la poussette pour le reste du trajet. Expliquez-lui clairement pourquoi vous avez besoin d’avancer vite. Pour rendre la poussette plus attractive, chantez une chanson ou proposez un petit jeu de cache-cache en route. Donner du choix et de la clarté favorise sa coopération.",
+"variations": []
+},
+{
+"category": "Courses au supermarché",
+"content": "Votre enfant de 3 ans réclame d’appuyer sur tous les boutons de la caisse automatique et s’énerve quand vous lui refusez.",
+"advice": "Sa curiosité est naturelle, mais il doit apprendre les limites. Expliquez-lui calmement que certains boutons ne sont pas pour lui et proposez-lui une mission adaptée : tenir un sac, scanner un article choisi. En lui donnant un rôle valorisant, vous canalisez son envie d’agir. Si la frustration reste forte, verbalisez-la : "Tu aurais aimé appuyer, c’est dur d’attendre." Plus il se sent entendu, plus il acceptera vos règles.",
+"variations": []
+},
+{
+"category": "Empathie sociale",
+"content": "Votre fille de 2 ans rit quand un camarade tombe, au lieu de montrer de la compassion.",
+"advice": "À cet âge, elle ne mesure pas encore l’impact de ses réactions. Aidez-la à comprendre en nommant l’émotion de l’autre : "Regarde, il est tombé, il a peut-être mal." Invitez-la à proposer un geste de réconfort, comme donner la main ou offrir un jouet. Ces petites expériences répétées nourrissent progressivement l’empathie. Montrez aussi l’exemple en réagissant avec douceur devant elle.",
+"variations": []
+},
+{
+"category": "Frustration et apprentissages",
+"content": "Votre enfant de 3 ans essaie de faire un puzzle difficile et jette les pièces par terre en criant.",
+"advice": "Sa frustration montre qu’il a envie de réussir mais qu’il se heurte à une limite. Validez son émotion : "C’est difficile et tu es fâché." Proposez de l’aider à chercher une pièce ensemble ou suggérez une pause avant d’y revenir. Encouragez ses efforts plutôt que le résultat final. L’expérience de la frustration est aussi un apprentissage essentiel pour développer persévérance et patience.",
+"variations": []
+},
+{
+"category": "Gestion de ta propre émotion",
+"content": "Après une longue journée de travail, votre bébé de 10 mois refuse de dormir et vous vous surprenez à lever la voix.",
+"advice": "Reconnaître que vous êtes à bout est un premier pas important. Avant de réagir brusquement, posez-le en sécurité quelques minutes pour souffler et reprendre votre calme. Souvenez-vous que ses pleurs ne sont pas contre vous mais un besoin d’apaisement. Reprenez-le ensuite avec douceur, en lui parlant calmement. En prenant soin de vous, vous montrez l’exemple d’une gestion émotionnelle saine.",
+"variations": []
+},
+{
+"category": "Gestion des émotions",
+"content": "Votre fils de 2 ans se met à pleurer bruyamment quand il perd à un petit jeu de société adapté à son âge.",
+"advice": "Perdre est une expérience nouvelle et frustrante pour lui. Accueillez ses pleurs et dites-lui que c’est normal d’être déçu. Expliquez que dans un jeu, on gagne parfois et on perd parfois, mais l’important est de s’amuser ensemble. Proposez une revanche ou un autre jeu coopératif où vous gagnez tous les deux. Avec le temps, il apprendra à mieux tolérer ces émotions.",
+"variations": []
+},
+{
+"category": "Gestion du stress parental",
+"content": "Vous devez répondre à des mails urgents et votre fille de 15 mois insiste pour grimper sur vos genoux en pleurnichant.",
+"advice": "Il est difficile de concilier obligations professionnelles et besoins de l’enfant. Respirez et rappelez-vous qu’elle exprime un besoin de proximité. Si possible, accordez-lui quelques minutes de connexion exclusive avant de reprendre vos mails. Installez-la ensuite avec une petite activité près de vous pour qu’elle se sente incluse. Si la situation se reproduit souvent, fixez des temps de travail clairs et demandez du relais si vous en avez la possibilité.",
+"variations": []
+},
+{
+"category": "Limites bienveillantes",
+"content": "Votre enfant de 3 ans se met à dessiner au feutre sur les murs du salon malgré vos avertissements.",
+"advice": "Il explore et teste les règles, c’est typique de son âge. Posez une limite claire sans colère : "On ne dessine pas sur les murs." Proposez immédiatement une alternative : papier, tableau ou carnet. Valorisez ensuite son dessin sur le support autorisé. En répétant ce cadre fermement et avec bienveillance, il comprendra où s’exprimer sans que cela devienne un conflit permanent.",
+"variations": []
+},
+{
+"category": "Matins pressés",
+"content": "Vous devez partir vite et votre enfant de 3 ans refuse catégoriquement de mettre son manteau.",
+"advice": "Les matins pressés amplifient les tensions. Essayez de transformer la tâche en jeu : "Qui met son manteau le plus vite ?" ou imaginez que le manteau est une cape de super-héros. Prévenez-le aussi à l’avance du départ pour éviter la surprise. Si la résistance persiste, restez calme et proposez votre aide, en valorisant chaque petit progrès. L’humour et l’anticipation sont vos meilleurs alliés pour fluidifier ces moments.",
+"variations": []
+},
+{
+"category": "Moments de connexion",
+"content": "Vous remarquez que votre bébé de 8 mois éclate de rire chaque fois que vous jouez à cache-cache avec vos mains.",
+"advice": "Ces éclats de rire montrent combien il aime interagir avec vous. Prenez le temps de répéter ce petit jeu, car il nourrit votre lien et son sens de l’anticipation. Variez légèrement les gestes pour entretenir la surprise. Même quelques minutes de jeu exclusif par jour ont un effet immense sur son développement affectif. Savourez ces instants simples mais précieux.",
+"variations": []
+},
+{
+"category": "Motivation intrinsèque",
+"content": "Votre fille de 3 ans vous montre fièrement la tour de blocs qu’elle a construite. Vous hésitez entre lui dire "bravo" ou trouver autre chose.",
+"advice": "Plutôt que de limiter votre réponse à un simple "bravo", décrivez ce que vous observez : "Ta tour est haute et tu as bien équilibré les blocs." Cela l’aide à être fière de son effort et de sa créativité, pas seulement de votre validation. Encouragez-la à vous expliquer comment elle a fait. Cela nourrit sa confiance et sa curiosité tout en renforçant son autonomie.",
+"variations": []
+},
+{
+"category": "Partenariat avec l’école",
+"content": "L’éducatrice vous dit que votre enfant de 2 ans a du mal à se séparer de vous le matin. Elle propose d’instaurer un rituel d’au revoir.",
+"advice": "Plutôt que de vous inquiéter, saisissez cette proposition comme une aide précieuse. Discutez avec l’éducatrice pour créer un petit rituel simple et constant : un bisou spécial, un geste de la main, une phrase clé. Ce rituel sécurise votre enfant et facilite la séparation. Montrez-lui confiance dans l’équipe éducative, car il ressent votre assurance. La cohérence entre maison et crèche l’aidera à s’adapter plus vite.",
+"variations": []
+},
+{
+"category": "Participation aux tâches",
+"content": "Votre fils de 2 ans veut vous aider à arroser les plantes mais en met partout autour du pot.",
+"advice": "Son envie de participer est précieuse. Donnez-lui un petit arrosoir adapté et laissez-le faire, même si c’est imparfait. Montrez-lui doucement comment viser la terre. Valorisez son effort avec un mot positif : "Merci, tu aides la plante à grandir." En l’impliquant, vous développez sa confiance et son sens de la responsabilité. Le désordre est un apprentissage utile.",
+"variations": []
+},
+{
+"category": "Questions existentielles",
+"content": "Votre fille de 3 ans vous demande pourquoi la lune apparaît seulement la nuit.",
+"advice": "C’est une belle occasion de nourrir sa curiosité. Répondez simplement : "La lune brille surtout la nuit parce que le soleil n’est plus là." Vous pouvez regarder le ciel ensemble pour observer. Encouragez-la à poser d’autres questions, même si vous n’avez pas toujours les réponses. L’important est de valoriser sa soif de comprendre.",
+"variations": []
+},
+{
+"category": "Rituels du soir",
+"content": "Votre bébé de 9 mois s’agite beaucoup au moment de l’endormissement et semble avoir besoin de plus de temps pour se calmer.",
+"advice": "Chaque bébé a son rythme d’endormissement. Proposez une routine apaisante et constante : lumière tamisée, histoire ou chanson douce, câlin. Répétez toujours les mêmes gestes pour créer des repères rassurants. S’il s’agite, restez présent calmement jusqu’à ce qu’il s’apaise. Cette cohérence lui permettra peu à peu d’associer le rituel au sommeil.",
+"variations": []
+},
+{
+"category": "Réparation et responsabilité",
+"content": "Votre fils de 3 ans casse volontairement un jouet qu’il avait emprunté à la crèche.",
+"advice": "Même petit, il peut apprendre à réparer ses actes. Expliquez calmement : "Ce jouet est cassé, il n’appartient pas à nous." Proposez de participer à sa réparation ou d’en parler à l’éducatrice pour trouver une solution. L’impliquer dans ce processus l’aide à comprendre la conséquence de ses gestes. Félicitez-le quand il collabore, car l’objectif est l’apprentissage, pas la punition.",
+"variations": []
+},
+{
+"category": "Réseau familial",
+"content": "Votre belle-sœur critique vos choix éducatifs devant votre enfant, en disant qu’il est "trop gâté".",
+"advice": "Ces remarques peuvent être blessantes. Respirez et rappelez-vous que vous êtes le parent. Évitez de réagir devant l’enfant pour ne pas l’inquiéter. En privé, exprimez calmement votre besoin de respect : "Nous faisons ces choix pour des raisons précises, merci de les respecter devant lui." Entourez-vous de personnes qui soutiennent vos décisions pour renforcer votre confiance parentale.",
+"variations": []
+},
+{
+"category": "Transitions douces",
+"content": "Votre fils de 18 mois pleure quand il faut sortir du bain pour aller dîner.",
+"advice": "Les transitions sont difficiles pour les tout-petits. Prévenez-le avant : "Encore deux jouets et après on sort du bain." Proposez un jeu de transition : emmener un jouet du bain jusqu’à la table ou chanter une chanson spéciale. Cette anticipation et ce rituel facilitent le passage. Restez ferme mais doux pour qu’il s’habitue en confiance.",
+"variations": []
+},
+{
+"category": "Usage des écrans",
+"content": "Votre enfant de 3 ans réclame de regarder des dessins animés dès le matin au réveil.",
+"advice": "Il est normal qu’il soit attiré par les écrans, mais vous pouvez poser un cadre clair. Expliquez que les écrans ne sont pas pour le matin et proposez une activité alternative : lire un livre, jouer avec ses figurines, écouter une chanson. Anticipez ses demandes en instaurant des moments précis autorisés et respectez-les avec constance. Plus vous proposez d’activités engageantes à la place, plus la règle sera acceptée.",
+"variations": []
+}
 ]
 ;
