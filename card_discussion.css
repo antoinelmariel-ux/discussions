@@ -341,6 +341,17 @@ body{
     z-index:120;
   }
 
+  .btn-menu-toggle{
+    color:var(--text);
+  }
+
+  .menu-toggle-icon,
+  .menu-toggle-icon::before,
+  .menu-toggle-icon::after{
+    height:3px;
+    background:var(--text);
+  }
+
   .controls-menu .menu-dropdown{
     top:calc(100% + 16px);
     right:0;
