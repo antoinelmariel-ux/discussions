@@ -765,6 +765,17 @@ body{
   padding-right:4px;
 }
 
+.theme-options-empty-message{
+  grid-column:1 / -1;
+  text-align:center;
+  font-weight:600;
+  color:#C06760;
+  background:var(--surface-muted);
+  border-radius:12px;
+  padding:16px 12px;
+  border:1px dashed rgba(233,146,145,0.4);
+}
+
 .theme-option{
   background:var(--surface-muted);
   border-radius:14px;
