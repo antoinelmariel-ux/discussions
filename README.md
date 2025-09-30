@@ -41,6 +41,47 @@ Aucune dépendance externe ni serveur n'est requis : tout fonctionne en local gr
 - Modifiez les couleurs, les animations ou la typographie dans `card_discussion.css` pour adapter l'ambiance à votre atelier.
 - Faites évoluer la logique (nouveaux filtres, modes de jeu, statistiques, etc.) dans `card_discussion.js`.
 
+## Prompt recommandé pour générer de nouvelles cartes avec ChatGPT
+
+Pour obtenir rapidement de nouveaux scénarios cohérents avec l'application, vous pouvez copier-coller ce prompt dans ChatGPT.
+Il contextualise l'outil, rappelle la structure attendue et propose des consignes éditoriales pour obtenir des cartes variées
+et exploitables immédiatement :
+
+```text
+Tu es un·e expert·e en parentalité positive et en animation d'ateliers collaboratifs.
+Ta mission : proposer __{{nombre_de_cartes}}__ nouvelles cartes pour notre jeu "Lanceur de discussion".
+
+Contraintes :
+- Vise un public de parents ou accompagnant·es d'enfants de 2 à 12 ans.
+- Utilise un ton bienveillant, concret et orienté vers l'action.
+- Mets l'accent sur des situations du quotidien qui ouvrent la discussion (gestes, paroles, émotions).
+- Varie les thématiques (gestion des émotions, coopération, communication, autonomie, etc.).
+- Lorsque c'est pertinent, ajoute 1 à 3 variations par carte pour explorer d'autres contextes similaires.
+
+Format de sortie obligatoire (JSON compatible avec `cards_data.js`) :
+[
+  {
+    "category": "<Catégorie principale>",
+    "content": "<Question ou mise en situation pour lancer la discussion>",
+    "advice": "<Conseil d'expert synthétique en 3 à 5 phrases>",
+    "variations": [
+      {
+        "title": "<Titre court de la variation>",
+        "content": "<Mise en situation alternative>"
+      }
+    ]
+  }
+]
+
+Rappelle-toi :
+- Chaque `content` doit pouvoir se lire seul et tenir en 2 ou 3 phrases.
+- Les conseils doivent proposer une posture + une action concrète.
+- Si une carte n'a pas de variation utile, renvoie un tableau vide pour `variations`.
+- Évite les doublons avec les cartes existantes (tu peux inventer de nouvelles situations).
+```
+
+Adaptez librement les contraintes (public, âge, nombre de cartes, tonalité) avant d'envoyer le prompt selon vos besoins.
+
 ## Licence
 
 Ce projet est fourni sans licence explicite. Ajoutez votre propre licence si vous souhaitez le partager publiquement.
