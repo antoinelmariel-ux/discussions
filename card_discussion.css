@@ -473,6 +473,24 @@ body{
 
 .expert-advice-text p:last-child{ margin-bottom:0; }
 
+.expert-advice-text .advice-section{
+  margin-bottom:18px;
+}
+
+.expert-advice-text .advice-section:last-of-type{
+  margin-bottom:0;
+}
+
+.advice-section-heading{
+  font-weight:600;
+  color:#B26761;
+  margin-bottom:8px;
+}
+
+.advice-section p:last-child{
+  margin-bottom:0;
+}
+
 .expert-favorite{
   background:var(--surface-muted);
   border-radius:14px;
