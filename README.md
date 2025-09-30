@@ -41,6 +41,85 @@ Aucune dépendance externe ni serveur n'est requis : tout fonctionne en local gr
 - Modifiez les couleurs, les animations ou la typographie dans `card_discussion.css` pour adapter l'ambiance à votre atelier.
 - Faites évoluer la logique (nouveaux filtres, modes de jeu, statistiques, etc.) dans `card_discussion.js`.
 
+## Prompt recommandé pour générer de nouvelles cartes avec ChatGPT
+
+Pour créer de nouvelles cartes sans avoir à expliquer l'application à chaque fois, copiez-collez le prompt ci-dessous dans
+ChatGPT (ou tout autre modèle compatible). Il fournit le contexte indispensable, décrit précisément la structure JSON
+attendue et encadre le ton éditorial.
+
+```text
+Tu es un·e expert·e en parentalité positive, habitué·e à concevoir des supports d'animation pour des ateliers collaboratifs destinés aux nouveaux parents.
+
+Contexte :
+- Nous disposons d'un jeu de cartes numérique 100 % autonome nommé « Lanceur de discussion ».
+- Chaque carte aide un nouveau parent à lancer une conversation autour de la parentalité bienveillante avec un enfant âgé de 0 à 3 ans.
+- Les cartes sont organisées par thématique, affichent une mise en situation, un conseil d'expert et, si besoin, des variations.
+
+Ta mission : produire exactement <NOMBRE_DE_CARTES> nouvelles cartes originales, prêtes à être ajoutées telles quelles dans notre
+fichier de données.
+
+Contraintes éditoriales :
+- Ton chaleureux, concret et orienté vers l'action (priorité à l'expérimentation et aux formulations positives) pour soutenir des parents de jeunes enfants.
+- Varie les âges représentés dans la plage 0-3 ans (nouveau-né, bébé, tout-petit), les contextes (maison, crèche, extérieur, routines de soin, transitions, etc.)
+  et les enjeux parentaux (émotions, coopération, autonomie émergente, communication, relationnel, limites bienveillantes...).
+- Chaque carte doit proposer une situation quotidienne réaliste, décrite en 2 à 3 phrases maximum, suffisamment claire pour être
+  lue seule sans contexte supplémentaire.
+- Les conseils d'experts font 3 à 5 phrases et combinent : validation émotionnelle, posture de l'adulte, action concrète à tester
+  et piste d'adaptation.
+- Ajoute entre 0 et 3 variations pertinentes. Utilise un tableau vide `[]` lorsqu'aucune variation n'est nécessaire.
+- Évite toute duplication manifeste des propositions au sein d'une même réponse et n'invente pas de fonctionnalités extérieures
+  à ce jeu.
+
+Catégories disponibles (choisis celle qui correspond le mieux à chaque carte, ou crée-en une nouvelle seulement si elle est
+cohérente avec la liste) :
+- Apaiser un nourrisson
+- Arrivée du bébé
+- Autonomie accompagnée
+- Communication émotionnelle
+- Coopération quotidienne
+- Courses au supermarché
+- Empathie sociale
+- Frustration et apprentissages
+- Gestion de ta propre émotion
+- Gestion des émotions
+- Gestion du stress parental
+- Limites bienveillantes
+- Matins pressés
+- Moments de connexion
+- Motivation intrinsèque
+- Partenariat avec l’école
+- Participation aux tâches
+- Questions existentielles
+- Rituels du soir
+- Rivalités fraternelles
+- Réparation et responsabilité
+- Réseau familial
+- Transitions douces
+- Usage des écrans
+
+Format de sortie obligatoire (JSON strict, un unique tableau, guillemets doubles, aucun commentaire ni texte supplémentaire) :
+[
+  {
+    "category": "<Catégorie principale parmi la liste ci-dessus>",
+    "content": "<Question ou mise en situation en 2-3 phrases>",
+    "advice": "<Conseil d'expert en 3-5 phrases>",
+    "variations": [
+      {
+        "title": "<Titre court de la variation>",
+        "content": "<Scénario alternatif résumant la mise en situation>"
+      }
+    ]
+  }
+]
+
+Règles de forme supplémentaires :
+- Pas de retour à la ligne à l'intérieur des valeurs JSON (chaque chaîne reste sur une seule ligne).
+- Utilise des guillemets droits standards `"` et échappe tout guillemet interne avec `\"` si nécessaire.
+- Ne précède ni ne suis le tableau d'aucun texte explicatif.
+```
+
+Pensez à remplacer `<NOMBRE_DE_CARTES>` par la quantité désirée avant d'envoyer le prompt.
+
 ## Licence
 
 Ce projet est fourni sans licence explicite. Ajoutez votre propre licence si vous souhaitez le partager publiquement.
