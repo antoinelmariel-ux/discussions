@@ -585,6 +585,63 @@ class DiscussionCardGame {
     }
     this.expertAdviceSituationEl.textContent = card.content;
     this.expertAdviceContentEl.innerHTML='';
+    const adviceSegments = this.parseAdviceSegments(card);
+    const sections = [];
+
+    if(adviceSegments.generalParagraphs.length>0){
+      const generalSection = this.createAdviceSection(
+        'Recommandation générale',
+        adviceSegments.generalParagraphs,
+        'general-advice'
+      );
+      if(generalSection){
+        sections.push(generalSection);
+      }
+    }
+
+    let specificParagraphs = [];
+    let specificTitle = 'Recommandation spécifique';
+
+    if(card.type==='variation'){
+      const normalizedLabel = this.normalizeVariantLabel(card.variationLabel || '');
+      let variantEntry = null;
+      if(normalizedLabel){
+        variantEntry = adviceSegments.variantMap.get(normalizedLabel) || null;
+        if(!variantEntry){
+          for(const entry of adviceSegments.variantMap.values()){
+            if(this.normalizeVariantLabel(entry.label) === normalizedLabel){
+              variantEntry = entry;
+              break;
+            }
+          }
+        }
+      }
+      if(variantEntry){
+        specificParagraphs = variantEntry.paragraphs;
+        specificTitle = `Recommandation spécifique – ${variantEntry.label}`;
+      }
+    }else{
+      specificParagraphs = adviceSegments.baseSpecificParagraphs;
+    }
+
+    if(specificParagraphs && specificParagraphs.length>0){
+      const specificSection = this.createAdviceSection(
+        specificTitle,
+        specificParagraphs,
+        'specific-advice'
+      );
+      if(specificSection){
+        sections.push(specificSection);
+      }
+    }
+
+    if(sections.length>0){
+      sections.forEach(section=>{
+        this.expertAdviceContentEl.appendChild(section);
+      });
+      return;
+    }
+
     const paragraphs = card.advice.split(/\n\s*\n/).map(text=>text.trim()).filter(text=>text.length>0);
     if(paragraphs.length===0){
       const fallback = document.createElement('p');
@@ -597,6 +654,91 @@ class DiscussionCardGame {
       p.textContent = text;
       this.expertAdviceContentEl.appendChild(p);
     });
+  }
+
+  createAdviceSection(title, paragraphs, sectionClass=''){
+    if(!paragraphs || paragraphs.length===0) return null;
+    const section = document.createElement('div');
+    const classNames = ['advice-section'];
+    if(sectionClass){
+      classNames.push(sectionClass);
+    }
+    section.className = classNames.join(' ');
+    if(title){
+      const heading = document.createElement('div');
+      heading.className = 'advice-section-heading';
+      heading.textContent = title;
+      section.appendChild(heading);
+    }
+    paragraphs.forEach(text=>{
+      const p = document.createElement('p');
+      p.textContent = text;
+      section.appendChild(p);
+    });
+    return section;
+  }
+
+  parseAdviceSegments(card){
+    const adviceText = (card.advice || '').trim();
+    if(!adviceText){
+      return {
+        generalParagraphs: [],
+        baseSpecificParagraphs: [],
+        variantMap: new Map()
+      };
+    }
+
+    const variantRegex = /Variante «([^»]+)»\s*:\s*([\s\S]*?)(?=(?:Variante «|$))/g;
+    const variantMap = new Map();
+    const generalPieces = [];
+    let lastIndex = 0;
+    let match;
+
+    while((match = variantRegex.exec(adviceText))!==null){
+      const startIndex = match.index;
+      if(startIndex>lastIndex){
+        generalPieces.push(adviceText.slice(lastIndex, startIndex));
+      }
+      const label = match[1].trim();
+      const variantContent = match[2].trim();
+      const normalizedLabel = this.normalizeVariantLabel(label);
+      const variantParagraphs = variantContent
+        ? variantContent.split(/\n\s*\n/).map(text=>text.trim()).filter(text=>text.length>0)
+        : [];
+      variantMap.set(normalizedLabel, { label, paragraphs: variantParagraphs });
+      lastIndex = variantRegex.lastIndex;
+    }
+
+    if(lastIndex<adviceText.length){
+      generalPieces.push(adviceText.slice(lastIndex));
+    }
+
+    const combinedGeneral = generalPieces
+      .map(piece=>piece.trim())
+      .filter(text=>text.length>0)
+      .join('\n\n');
+
+    const allParagraphs = combinedGeneral
+      ? combinedGeneral.split(/\n\s*\n/).map(text=>text.trim()).filter(text=>text.length>0)
+      : [];
+
+    const generalParagraphs = allParagraphs.slice(0, 1);
+    const baseSpecificParagraphs = allParagraphs.slice(1);
+
+    return {
+      generalParagraphs,
+      baseSpecificParagraphs,
+      variantMap
+    };
+  }
+
+  normalizeVariantLabel(label){
+    if(typeof label!=='string') return '';
+    const normalized = typeof label.normalize==='function' ? label.normalize('NFD') : label;
+    return normalized
+      .replace(/[\u0300-\u036f]/g,'')
+      .replace(/[^a-zA-Z0-9]+/g,'')
+      .toLowerCase();
   }
 
   scrollExpertAdviceToTop(){
