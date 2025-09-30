@@ -895,17 +895,35 @@ body{
   }
 
   .controls-menu{
-    align-self:flex-end;
+    position:fixed;
+    top:16px;
+    left:16px;
+    align-self:flex-start;
+    z-index:140;
   }
 
   .controls .btn-menu-toggle{
-    width:56px;
+    width:auto;
+    height:auto;
   }
 
   .controls-menu .menu-dropdown{
     width:min(260px, 88vw);
-    right:0;
-    left:auto;
+    left:0;
+    right:auto;
+  }
+
+  .btn-menu-toggle{
+    background:transparent;
+    box-shadow:none;
+    border-radius:0;
+    padding:12px;
+  }
+
+  .btn-menu-toggle:hover,
+  .btn-menu-toggle:focus{
+    background:transparent;
+    color:var(--primary-1);
   }
 
   .modal-content{
